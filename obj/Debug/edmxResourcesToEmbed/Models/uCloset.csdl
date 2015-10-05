@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="uClosetSQLAdminModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="uClosetSQLAdminEntities1" annotation:LazyLoadingEnabled="true">
+    <FunctionImport Name="AddSession" ReturnType="Collection(uClosetSQLAdminModel.AddSession_Result)">
+      <Parameter Name="asSessionID" Mode="In" Type="String" />
+      <Parameter Name="asUserID" Mode="In" Type="String" />
+      <Parameter Name="asUserName" Mode="In" Type="String" />
+      <Parameter Name="asPrivID" Mode="In" Type="Int32" />
+      <Parameter Name="asReqPage" Mode="In" Type="String" />
+      <Parameter Name="asAuthor" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="CreateUser" ReturnType="Collection(uClosetSQLAdminModel.CreateUser_Result)">
+      <Parameter Name="EmailAddr" Mode="In" Type="String" />
+      <Parameter Name="Username" Mode="In" Type="String" />
+      <Parameter Name="usrPASSWORD" Mode="In" Type="String" />
+      <Parameter Name="Firstname" Mode="In" Type="String" />
+      <Parameter Name="Lastname" Mode="In" Type="String" />
+      <Parameter Name="ActivateCode" Mode="In" Type="String" />
+      <Parameter Name="privID" Mode="In" Type="Int32" />
+      <Parameter Name="spUserID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="Login" ReturnType="Collection(uClosetSQLAdminModel.Login_Result)">
+      <Parameter Name="myEmailAddr" Mode="In" Type="String" />
+      <Parameter Name="myPASSWORD" Mode="In" Type="String" />
+      <Parameter Name="mySessionID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spAdd_File" ReturnType="Collection(uClosetSQLAdminModel.spAdd_File_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="ClothingTypeID" Mode="In" Type="Int32" />
+      <Parameter Name="DocDesc" Mode="In" Type="String" />
+      <Parameter Name="DocType" Mode="In" Type="String" />
+      <Parameter Name="Size" Mode="In" Type="Decimal" />
+      <Parameter Name="File" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="spAdd_UserOutfit_OBJ" ReturnType="Collection(uClosetSQLAdminModel.spAdd_UserOutfit_OBJ_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="OutfitGroupID" Mode="In" Type="Int32" />
+      <Parameter Name="AttachID" Mode="In" Type="String" />
+      <Parameter Name="FrameID" Mode="In" Type="Int32" />
+      <Parameter Name="UserOutfitDesc" Mode="In" Type="String" />
+      <Parameter Name="SessionFG" Mode="In" Type="Boolean" />
+      <Parameter Name="CreateUser" Mode="In" Type="String" />
+      <Parameter Name="UserOutfitID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spGet_File" ReturnType="Collection(uClosetSQLAdminModel.spGet_File_Result)">
+      <Parameter Name="FileID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spGet_UserGarmentAttachmentList" ReturnType="Collection(uClosetSQLAdminModel.spGet_UserGarmentAttachmentList_Result)">
+      <Parameter Name="SessionID" Mode="In" Type="String" />
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="ClothingtypeID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spModify_UserOutfit_OBJ">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="UserOutfitID" Mode="In" Type="String" />
+      <Parameter Name="OutfitGroupID" Mode="In" Type="Int32" />
+      <Parameter Name="SessionID" Mode="In" Type="String" />
+      <Parameter Name="AttachID" Mode="In" Type="String" />
+      <Parameter Name="FrameID" Mode="In" Type="Int32" />
+      <Parameter Name="UserOutfitDesc" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spSave_Outfit" ReturnType="Collection(uClosetSQLAdminModel.spSave_Outfit_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="OutfitID" Mode="In" Type="String" />
+      <Parameter Name="OutfitDesc" Mode="In" Type="String" />
+      <Parameter Name="OutfitCategoryID" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="spUpdate_File" ReturnType="Collection(uClosetSQLAdminModel.spUpdate_File_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="FileID" Mode="In" Type="String" />
+      <Parameter Name="File" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="spView_ClothingCategories" ReturnType="Collection(uClosetSQLAdminModel.spView_ClothingCategories_Result)">
+      <Parameter Name="fgShow" Mode="In" Type="Boolean" />
+      <Parameter Name="ClothParentID" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="spView_ClothingParentCategories" ReturnType="Collection(uClosetSQLAdminModel.spView_ClothingParentCategories_Result)">
+      <Parameter Name="fgShow" Mode="In" Type="Boolean" />
+      <Parameter Name="ClothParentID" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="spView_Files" ReturnType="Collection(uClosetSQLAdminModel.spView_Files_Result)">
+      <Parameter Name="ClothingTypeID" Mode="In" Type="Decimal" />
+      <Parameter Name="UserID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spView_OutfitGroup" ReturnType="Collection(uClosetSQLAdminModel.spView_OutfitGroup_Result)">
+      <Parameter Name="fgShow" Mode="In" Type="Boolean" />
+      <Parameter Name="OutfitGroupParentID" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="spView_OutfitGroupParentCategories" ReturnType="Collection(uClosetSQLAdminModel.spView_OutfitGroupParentCategories_Result)">
+      <Parameter Name="fgShow" Mode="In" Type="Boolean" />
+      <Parameter Name="OutfitGroupParentID" Mode="In" Type="Decimal" />
+    </FunctionImport>
+    <FunctionImport Name="spView_UserOutfits" ReturnType="Collection(uClosetSQLAdminModel.spView_UserOutfits_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="OutfitID" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="spView_UserOutfitsDesc" ReturnType="Collection(uClosetSQLAdminModel.spView_UserOutfitsDesc_Result)">
+      <Parameter Name="UserID" Mode="In" Type="String" />
+      <Parameter Name="OutfitGroupID" Mode="In" Type="Int32" />
+    </FunctionImport>
+  </EntityContainer>
+  <ComplexType Name="AddSession_Result">
+    <Property Type="String" Name="SessionID" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="UserID" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="Firstname" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="LastName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="EmailAddress" Nullable="true" MaxLength="200" />
+    <Property Type="Boolean" Name="LoggedIN" Nullable="false" />
+    <Property Type="Int32" Name="PrivID" Nullable="false" />
+    <Property Type="String" Name="PrivilegesDesc" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SessionStatus" Nullable="true" MaxLength="1" />
+    <Property Type="DateTime" Name="SessionCreateTime" Nullable="false" Precision="23" />
+    <Property Type="DateTime" Name="SessionLastActivityTime" Nullable="true" Precision="23" />
+    <Property Type="String" Name="sessError" Nullable="false" MaxLength="1" />
+  </ComplexType>
+  <ComplexType Name="CreateUser_Result">
+    <Property Type="Guid" Name="UserID" Nullable="false" />
+    <Property Type="String" Name="usrFirstname" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="usrLastName" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="usrUsername" Nullable="true" MaxLength="100" />
+    <Property Type="String" Name="usrEmailAddress" Nullable="false" MaxLength="200" />
+    <Property Type="DateTime" Name="usrCreateDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="ActivateCode" Nullable="false" MaxLength="255" />
+    <Property Type="DateTime" Name="ActivateDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="myError" Nullable="false" MaxLength="1" />
+  </ComplexType>
+  <ComplexType Name="Login_Result">
+    <Property Type="String" Name="SessionID" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="UserID" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="UserName" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="Firstname" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="LastName" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="LoggedIN" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="PrivID" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="PrivilegesDesc" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="SessionStatus" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="SessionCreateTime" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="SessionLastActivityTime" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="sessError" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="myError" Nullable="false" MaxLength="1" />
+  </ComplexType>
+  <ComplexType Name="spAdd_File_Result">
+    <Property Type="Guid" Name="attachID" Nullable="false" />
+    <Property Type="String" Name="attachUserID" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="attachclothingTypeID" Nullable="false" />
+    <Property Type="String" Name="attachDocDesc" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="attachDocFiletype" Nullable="false" MaxLength="100" />
+    <Property Type="Int64" Name="attachSIZE" Nullable="false" />
+    <Property Type="String" Name="CreateDTE" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="attachment" Nullable="false" MaxLength="1" />
+  </ComplexType>
+  <ComplexType Name="spAdd_UserOutfit_OBJ_Result">
+    <Property Type="Guid" Name="uoUserOutfitID" Nullable="false" />
+    <Property Type="String" Name="uoUserID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="uoUserOutfitDesc" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="uoOutfitGroupID" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="uoSessionOutfit" Nullable="false" />
+    <Property Type="String" Name="uoCreateDate" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="uoCreateUser" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="uoModifyDate" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="uoModifyUser" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="uopAttachmentID" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="uopUserOutfitsPartID" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="uofCreateDate" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="uopFrameID" Nullable="false" MaxLength="1" />
+  </ComplexType>
+  <ComplexType Name="spGet_File_Result">
+    <Property Type="Guid" Name="attachID" Nullable="false" />
+    <Property Type="String" Name="attachUserID" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="attachclothingTypeID" Nullable="false" />
+    <Property Type="String" Name="attachDocDesc" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="attachDocFiletype" Nullable="false" MaxLength="100" />
+    <Property Type="Int64" Name="attachSIZE" Nullable="false" />
+    <Property Type="String" Name="CreateDTE" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="attachment" Nullable="false" MaxLength="1" />
+  </ComplexType>
+  <ComplexType Name="spGet_UserGarmentAttachmentList_Result">
+    <Property Type="Guid" Name="attachID" Nullable="false" />
+    <Property Type="String" Name="UserID" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SessionID" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="ClothingTypeID" Nullable="false" />
+    <Property Type="String" Name="DocDesc" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="DocFileType" Nullable="false" MaxLength="100" />
+    <Property Type="Int64" Name="DocSize" Nullable="false" />
+    <Property Type="String" Name="CreateDate" Nullable="true" MaxLength="20" />
+    <Property Type="String" Name="SessionUserID" Nullable="false" MaxLength="255" />
+    <Property Type="Boolean" Name="LoggedIN" Nullable="false" />
+  </ComplexType>
+  <ComplexType Name="spSave_Outfit_Result">
+    <Property Type="Guid" Name="uoUserOutfitID" Nullable="false" />
+    <Property Type="String" Name="uoUserID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="uoUserOutfitDesc" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="uoOutfitGroupID" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="uoSessionOutfit" Nullable="false" />
+    <Property Type="DateTime" Name="uoCreateDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="uoCreateUser" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="uoModifyDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="uoModifyUser" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="uopAttachmentID" Nullable="true" MaxLength="50" />
+    <Property Type="Guid" Name="uopUserOutfitsPartID" Nullable="true" />
+    <Property Type="DateTime" Name="uofCreateDate" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="uopFrameID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="spUpdate_File_Result">
+    <Property Type="Guid" Name="attachID" Nullable="false" />
+    <Property Type="String" Name="attachUserID" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="attachclothingTypeID" Nullable="false" />
+    <Property Type="String" Name="attachDocDesc" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="attachDocFiletype" Nullable="false" MaxLength="100" />
+    <Property Type="Int64" Name="attachSIZE" Nullable="false" />
+    <Property Type="String" Name="CreateDTE" Nullable="true" MaxLength="30" />
+    <Property Type="String" Name="attachment" Nullable="false" MaxLength="1" />
+  </ComplexType>
+  <ComplexType Name="spView_ClothingCategories_Result">
+    <Property Type="Int32" Name="ClothingID" Nullable="false" />
+    <Property Type="String" Name="ClothingDescription" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="ClothingParentID" Nullable="false" />
+    <Property Type="Int32" Name="ClothingRank" Nullable="false" />
+    <Property Type="Boolean" Name="ClothingShow" Nullable="false" />
+    <Property Type="Int32" Name="CategoryRank" Nullable="true" />
+    <Property Type="Int32" Name="ChildCount" Nullable="true" />
+    <Property Type="String" Name="HasChild" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="ClothingPath" Nullable="false" MaxLength="1" />
+  </ComplexType>
+  <ComplexType Name="spView_ClothingParentCategories_Result">
+    <Property Type="Int32" Name="ClothingID" Nullable="false" />
+    <Property Type="String" Name="ClothingDescription" Nullable="false" MaxLength="50" />
+    <Property Type="Int32" Name="ClothingParentID" Nullable="false" />
+    <Property Type="Int32" Name="ClothingRank" Nullable="false" />
+    <Property Type="Boolean" Name="ClothingShow" Nullable="false" />
+    <Property Type="Int32" Name="CategoryRank" Nullable="true" />
+    <Property Type="Int32" Name="ChildCount" Nullable="true" />
+    <Property Type="String" Name="HasChild" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="ClothingPath" Nullable="false" MaxLength="1" />
+  </ComplexType>
+  <ComplexType Name="spView_Files_Result">
+    <Property Type="Guid" Name="attachID" Nullable="false" />
+    <Property Type="String" Name="attachUserID" Nullable="true" MaxLength="50" />
+    <Property Type="Int32" Name="attachclothingTypeID" Nullable="false" />
+    <Property Type="String" Name="attachDocDesc" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="attachDocFiletype" Nullable="false" MaxLength="100" />
+    <Property Type="Int64" Name="attachSIZE" Nullable="false" />
+    <Property Type="String" Name="CreateDTE" Nullable="true" MaxLength="30" />
+    <Property Type="Binary" Name="attachment" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="spView_OutfitGroup_Result">
+    <Property Type="Int32" Name="OutfitGroupID" Nullable="false" />
+    <Property Type="String" Name="OutfitGroupDesc" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="OutfitGroupParentID" Nullable="false" />
+    <Property Type="Int32" Name="OutfitGroupRank" Nullable="false" />
+    <Property Type="Boolean" Name="OutfitGroupShow" Nullable="false" />
+    <Property Type="Int32" Name="ChildCount" Nullable="true" />
+    <Property Type="String" Name="HasChild" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="OutfitGroupPath" Nullable="false" MaxLength="1" />
+  </ComplexType>
+  <ComplexType Name="spView_OutfitGroupParentCategories_Result">
+    <Property Type="Int32" Name="OutfitGroupID" Nullable="false" />
+    <Property Type="String" Name="OutfitGroupDesc" Nullable="false" MaxLength="100" />
+    <Property Type="Int32" Name="OutfitGroupParentID" Nullable="false" />
+    <Property Type="Int32" Name="OutfitGroupRank" Nullable="false" />
+    <Property Type="Boolean" Name="OutfitGroupShow" Nullable="false" />
+    <Property Type="Int32" Name="OutfitGroupChildCNT" Nullable="false" />
+    <Property Type="String" Name="HasChild" Nullable="false" MaxLength="5" />
+    <Property Type="String" Name="ClothingPath" Nullable="false" MaxLength="1" />
+  </ComplexType>
+  <ComplexType Name="spView_UserOutfits_Result">
+    <Property Type="Guid" Name="uoUserOutfitID" Nullable="false" />
+    <Property Type="String" Name="uoUserID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="uoUserOutfitDesc" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="uoOutfitGroupID" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="uoSessionOutfit" Nullable="false" />
+    <Property Type="DateTime" Name="uoCreateDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="uoCreateUser" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="uoModifyDate" Nullable="true" Precision="23" />
+    <Property Type="String" Name="uoModifyUser" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="uopAttachmentID" Nullable="true" MaxLength="50" />
+    <Property Type="Guid" Name="uopUserOutfitsPartID" Nullable="true" />
+    <Property Type="DateTime" Name="uofCreateDate" Nullable="true" Precision="23" />
+    <Property Type="Int32" Name="uopFrameID" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="spView_UserOutfitsDesc_Result">
+    <Property Type="Guid" Name="uoUserOutfitID" Nullable="false" />
+    <Property Type="String" Name="uoUserID" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="uoUserOutfitDesc" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="uoOutfitGroupID" Nullable="false" MaxLength="50" />
+    <Property Type="Boolean" Name="uoSessionOutfit" Nullable="false" />
+    <Property Type="DateTime" Name="uoCreateDate" Nullable="false" Precision="23" />
+    <Property Type="String" Name="uoCreateUser" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="uoModifyDate" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="uoModifyUser" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="uopAttachmentID" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="uopUserOutfitsPartID" Nullable="false" MaxLength="1" />
+    <Property Type="String" Name="uofCreateDate" Nullable="false" MaxLength="1" />
+    <Property Type="Int32" Name="uopFrameID" Nullable="false" />
+  </ComplexType>
+</Schema>

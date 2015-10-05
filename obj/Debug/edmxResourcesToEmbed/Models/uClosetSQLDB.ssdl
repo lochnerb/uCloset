@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="uClosetSQLAdminModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <Function Name="AddfbUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fbID" Type="varchar" Mode="In" />
+    <Parameter Name="fbFirstname" Type="nvarchar" Mode="In" />
+    <Parameter Name="fbLastname" Type="varchar" Mode="In" />
+    <Parameter Name="fbUsername" Type="varchar" Mode="In" />
+    <Parameter Name="fbUser" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="AddSession" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="asSessionID" Type="varchar" Mode="In" />
+    <Parameter Name="asUserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="asUserName" Type="varchar" Mode="In" />
+    <Parameter Name="asPrivID" Type="int" Mode="In" />
+    <Parameter Name="asReqPage" Type="nvarchar" Mode="In" />
+    <Parameter Name="asAuthor" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="ClearOutfitsandSharing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="ClearWardrobeandSharing" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="CreateUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmailAddr" Type="varchar" Mode="In" />
+    <Parameter Name="Username" Type="varchar" Mode="In" />
+    <Parameter Name="usrPASSWORD" Type="varchar" Mode="In" />
+    <Parameter Name="Firstname" Type="varchar" Mode="In" />
+    <Parameter Name="Lastname" Type="varchar" Mode="In" />
+    <Parameter Name="ActivateCode" Type="varchar" Mode="In" />
+    <Parameter Name="privID" Type="int" Mode="In" />
+    <Parameter Name="spUserID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="Login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="myEmailAddr" Type="varchar" Mode="In" />
+    <Parameter Name="myPASSWORD" Type="varchar" Mode="In" />
+    <Parameter Name="mySessionID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="spAdd_CustomCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fgShow" Type="bit" Mode="In" />
+    <Parameter Name="CustomDesc" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomParentID" Type="numeric" Mode="In" />
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spAdd_CustomOutfitCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fgShow" Type="bit" Mode="In" />
+    <Parameter Name="CustomDesc" Type="nvarchar" Mode="In" />
+    <Parameter Name="CustomParentID" Type="numeric" Mode="In" />
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spAdd_File" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="ClothingTypeID" Type="int" Mode="In" />
+    <Parameter Name="DocDesc" Type="varchar" Mode="In" />
+    <Parameter Name="FileName" Type="varchar" Mode="In" />
+    <Parameter Name="DocType" Type="varchar" Mode="In" />
+    <Parameter Name="Size" Type="numeric" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="Web" Type="varchar(max)" Mode="In" />
+    <Parameter Name="Designer" Type="varchar" Mode="In" />
+    <Parameter Name="ProductName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="spAdd_OutfitImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="OutfitID" Type="varchar" Mode="In" />
+    <Parameter Name="Filename" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="spAdd_UserOutfit_OBJ" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="OutfitGroupID" Type="int" Mode="In" />
+    <Parameter Name="AttachID" Type="nvarchar" Mode="In" />
+    <Parameter Name="FrameID" Type="int" Mode="In" />
+    <Parameter Name="UserOutfitDesc" Type="nvarchar" Mode="In" />
+    <Parameter Name="SessionFG" Type="bit" Mode="In" />
+    <Parameter Name="CreateUser" Type="nvarchar" Mode="In" />
+    <Parameter Name="UserOutfitID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spAddShareFriends" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AttachmentID" Type="nvarchar" Mode="In" />
+    <Parameter Name="FriendID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spAddShareOutfitFriends" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="OutfitID" Type="nvarchar" Mode="In" />
+    <Parameter Name="FriendID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spCheck_Dup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="ClothingTypeID" Type="int" Mode="In" />
+    <Parameter Name="SourceName" Type="varchar" Mode="In" />
+    <Parameter Name="Designer" Type="varchar" Mode="In" />
+    <Parameter Name="ProductName" Type="varchar" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="DupCHKType" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spChildren" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spClearShareFriends" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AttachmentID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spClearShareOutfitFriends" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="OutfitID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spDeleteHideOufit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="dhoUserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="dhoOutfitID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spDeleteHideWardrobeImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="dhwiUserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="dhwiImageID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spGet_File" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FileID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spGet_FileList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="OwnerUserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="ClothingTypeID" Type="int" Mode="In" />
+    <Parameter Name="SessionID" Type="nvarchar" Mode="In" />
+    <Parameter Name="VendorTypeID" Type="int" Mode="In" />
+    <Parameter Name="Show" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="spGet_MerchantList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="MerchantInit" Type="char" Mode="In" />
+  </Function>
+  <Function Name="spGet_UserGarmentAttachmentList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="SessionID" Type="nvarchar" Mode="In" />
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="ClothingtypeID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spGetAttachment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AttachmentID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spGetFBUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="FBUserID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="spGetFBUserList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="spGetFBUserOutfitList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="spGetOutfitUsedMenuItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fgShow" Type="bit" Mode="In" />
+    <Parameter Name="OutfitGroupParentID" Type="numeric" Mode="In" />
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="ClosetUserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="SessionID" Type="nvarchar" Mode="In" />
+    <Parameter Name="UserType" Type="char" Mode="In" />
+  </Function>
+  <Function Name="spGetShareFriends" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="AttachmentID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spGetShareOutfitFriends" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="OutfitID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spGetUsersUsedMenuItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fgShow" Type="bit" Mode="In" />
+    <Parameter Name="ClothParentID" Type="numeric" Mode="In" />
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="ClosetUserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="SessionID" Type="nvarchar" Mode="In" />
+    <Parameter Name="UserType" Type="char" Mode="In" />
+  </Function>
+  <Function Name="spSave_Outfit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="varchar" Mode="In" />
+    <Parameter Name="OutfitID" Type="varchar" Mode="In" />
+    <Parameter Name="OutfitDesc" Type="varchar" Mode="In" />
+    <Parameter Name="OutfitCategoryID" Type="int" Mode="In" />
+  </Function>
+  <Function Name="spUserType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="utUserID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spView_ClothingCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fgShow" Type="bit" Mode="In" />
+    <Parameter Name="ClothParentID" Type="numeric" Mode="In" />
+  </Function>
+  <Function Name="spView_ClothingParentCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fgShow" Type="bit" Mode="In" />
+    <Parameter Name="ClothParentID" Type="numeric" Mode="In" />
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="SessionID" Type="nvarchar" Mode="In" />
+    <Parameter Name="UserType" Type="char" Mode="In" />
+  </Function>
+  <Function Name="spView_CustomCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fgShow" Type="bit" Mode="In" />
+    <Parameter Name="CustomParentID" Type="numeric" Mode="In" />
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spView_FeaturedOutfit" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spView_OutfitGroup" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fgShow" Type="bit" Mode="In" />
+    <Parameter Name="OutfitGroupParentID" Type="numeric" Mode="In" />
+  </Function>
+  <Function Name="spView_OutfitGroupParentCategories" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="fgShow" Type="bit" Mode="In" />
+    <Parameter Name="OutfitGroupParentID" Type="numeric" Mode="In" />
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="SessionID" Type="nvarchar" Mode="In" />
+    <Parameter Name="UserType" Type="char" Mode="In" />
+  </Function>
+  <Function Name="spView_UserOutfits" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="OutfitID" Type="nvarchar" Mode="In" />
+    <Parameter Name="SessionID" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="spView_UserOutfitsDesc" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserID" Type="nvarchar" Mode="In" />
+    <Parameter Name="OutfitGroupID" Type="int" Mode="In" />
+    <Parameter Name="SessionID" Type="nvarchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="uClosetSQLAdminModelStoreContainer" />
+</Schema>

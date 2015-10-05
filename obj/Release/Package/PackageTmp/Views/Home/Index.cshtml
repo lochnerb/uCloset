@@ -1,0 +1,131 @@
+﻿@using fbuCloset.Models
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@model MyAppUser
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(document).ready
+    (
+        function () {
+            //////////////////////////////////////
+            // Required to close body gap - BEGIN
+            //////////////////////////////////////
+            var bdyHght = $('#dvBodyContent').height();
+            $('#dvBodyContent').height(bdyHght + 75);
+            //////////////////////////////////////
+            // Required to close body gap - END
+            //////////////////////////////////////
+            //var startTime = Date();
+
+            ClearOutfitCK();
+            ClearWardrobeCK();
+            ClearSelectionTxT();
+
+            //window.location.href = window.location.href;
+            //HomePage;
+            //window.setTimeout(HomePage, 5000);
+            window.location.href = "/Landing";
+            //alert('Location:' + window.location.href);
+        }
+    );
+
+    function HomePage() {
+        window.location.href = "/Landing";
+    }
+
+    function ClearWardrobeCK() {
+        $.cookie("bxClothingtypeID", null);
+
+        //Wardrobe
+        $.cookie("ckWardrobeLVL0", null);
+        $.cookie('ckWardrobeLVL1', null);
+        $.cookie('ckWardrobeLVL2', null);
+        $.cookie('ckWardrobeLVL3', null);
+        $.cookie('ckWardrobeLVL4', null);
+        $.cookie('ckWardrobeLVL5', null);
+        $.cookie('ckWardrobeLVL6', null);
+
+        //Outfit
+        $.cookie("WardrobeLVL0", null);
+        $.cookie('WardrobeLVL1', null);
+        $.cookie('WardrobeLVL2', null);
+        $.cookie('WardrobeLVL3', null);
+        $.cookie('WardrobeLVL4', null);
+        $.cookie('WardrobeLVL5', null);
+        $.cookie('WardrobeLVL6', null);
+    }
+
+    function ClearOutfitCK() {
+        ClearWardrobeCK();
+
+        $.cookie("bxOutFitCategoryID", null);
+        $.cookie("GenderID", null);
+        $.cookie('ckOutfitID', null);
+        $.cookie('ckSaveOutfit', null);
+        $.cookie('ckOutfitLoadID', null);
+        $.cookie('bxClothingtypeID', null);
+        $.cookie('ckSelectImageID', null);
+        $.cookie('ckSelectImageTitle', null);
+        $.cookie('ckSelectImageALT', null);
+        $.cookie('ckSelectImageGUID', null);
+        $.cookie('ckMannequinTop', null);
+        $.cookie('ckMannequinLegs', null);
+        $.cookie('ckMannequinFeet', null);
+        $.cookie('ckMannequinHand', null);
+        $.cookie('ckMannequinFoot', null);
+        $.cookie('ckOutfitLBL', null);
+
+        $.cookie('OutfitLVL1', null);
+        $.cookie('OutfitLVL2', null);
+        $.cookie('OutfitLVL3', null);
+        $.cookie('OutfitLVL4', null);
+        $.cookie('OutfitLVL5', null);
+        $.cookie('OutfitLVL6', null);
+    }
+
+    function ClearSelectionTxT() {
+        //Wardrobe Cookies
+        $.cookie('ckWardrobeLVL0TXT', null);
+        $.cookie('ckWardrobeLVL1TXT', null);
+        $.cookie('ckWardrobeLVL2TXT', null);
+        $.cookie('ckWardrobeLVL3TXT', null);
+        $.cookie('ckWardrobeLVL4TXT', null);
+        $.cookie('ckWardrobeLVL5TXT', null);
+        $.cookie('ckWardrobeLVL6TXT', null);
+
+        //Outfit Cookies
+        $.cookie('WardrobeLVL0TXT', null);
+        $.cookie('WardrobeLVL1TXT', null);
+        $.cookie('WardrobeLVL2TXT', null);
+        $.cookie('WardrobeLVL3TXT', null);
+        $.cookie('WardrobeLVL4TXT', null);
+        $.cookie('WardrobeLVL5TXT', null);
+        $.cookie('WardrobeLVL6TXT', null);
+    }
+
+    $.cookie('UserID', '@ViewBag.UserID');
+
+</script>
+
+<div id="dvLead">
+    <center>
+        <h2 style="text-decoration-color: #9781b3">
+            <font color="#9781b3">
+                <b>
+                    Welcome to
+                    <font color="#01b2fc">u</font><font color="#c239db">Closet</font>!
+                </b>
+                <br />
+                An exciting and innovative way to interact with fashion!<br />
+                <br />
+            </font>
+        </h2>
+        <img src="~/Images/Loading.gif" />
+    </center>
+</div>
+

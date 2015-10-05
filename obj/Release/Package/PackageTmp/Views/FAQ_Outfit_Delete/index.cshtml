@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "How to delete an outfit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(document).ready
+    (
+        function () {
+
+            //////////////////////////////////////
+            // Required to close body gap - BEGIN
+            //////////////////////////////////////
+            var bdyHght = $('#dvBodyContent').height();
+            $('#dvBodyContent').height(bdyHght + 50);
+            //////////////////////////////////////
+            // Required to close body gap - END
+            //////////////////////////////////////
+        }
+    );
+</script>
+
+<center>
+    <h2>
+        How to delete an outfit
+    </h2>
+    <p>
+        <b>Step 1. Go To The Outfit Page.</b>
+        <br />
+        <img src="~/Images/OutfitStep1.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 2. Choose <font color="#01b2fc">u</font><font color="#c239db">Closet</font> area containing Outfit to delete.</b>
+        <br />
+        <img src="~/Images/OutfitPostStep2.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 3. Double click on outfit to load the outfit.</b>
+        <br />
+        <img src="~/Images/OutfitPostStep3.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 4. Click Trash Can button.</b>
+        <br />
+        <img src="~/Images/OutfitDeleteStep4.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 5. Confirm deleting of outfit.</b>
+        <br />
+        <img src="~/Images/OutfitDeleteStep5.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 6. Outfit has been deleted.</b>
+        <br />
+        <img src="~/Images/OutfitDeleteStep6.PNG" width="400" height="200" />
+        <br /><br />
+    </p>
+</center>
+
+
+

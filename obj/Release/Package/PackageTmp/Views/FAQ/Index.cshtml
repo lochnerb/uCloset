@@ -1,0 +1,58 @@
+﻿@using fbuCloset.Models
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@model MyAppUser
+
+@{
+    ViewBag.Title = "FAQ";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(document).ready
+    (
+        function () {
+
+            //////////////////////////////////////
+            // Required to close body gap - BEGIN
+            //////////////////////////////////////
+            var bdyHght = $('#dvBodyContent').height();
+            $('#dvBodyContent').height(bdyHght + 50);
+            //////////////////////////////////////
+            // Required to close body gap - END
+            //////////////////////////////////////
+        }
+    );
+</script>
+
+<center>
+    <h1>
+        General FAQs About Using <font color="#01b2fc">u</font><font color="#c239db">Closet</font>
+    </h1>
+</center>
+
+<div id="dvWardrobe" style="align-self:center">
+    <h3>
+        <u>Wardrobe</u>
+    </h3>
+    @Html.ActionLink("How to create a wardrobe category.", "Index", "FAQWardrobeCategory")
+    <br /><br />
+    @Html.ActionLink("How to create garments within my wardrobe.", "Index", "FAQ_Create_Garment")
+    <br /><br />
+    @Html.ActionLink("How to share a garment within Facebook Friends.", "Index", "FAQ_Share_Garment")
+    <br /><br />
+    @Html.ActionLink("How to delete a garment.", "Index", "FAQ_Wardrobe_Delete")
+</div>
+<div id="dvWardrobe" style="align-self:center">
+    <h3>
+        <u>Outfit</u>
+    </h3>
+    @Html.ActionLink("How to create an outfit.", "Index", "FAQ_Create_Outfit")
+    <br /><br />
+    @Html.ActionLink("How to share an outfit within Facebook Friends.", "Index", "FAQ_Share_Outfit")
+    <br /><br />
+    @Html.ActionLink("How to post an outfit to Facebook.", "Index", "FAQ_Outfit_Post")
+    <br /><br />
+    @Html.ActionLink("How to delete an outfit.", "Index", "FAQ_Outfit_Delete")
+    <br /><br />
+</div>

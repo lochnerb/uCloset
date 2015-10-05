@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "How to delete a garment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(document).ready
+    (
+        function () {
+
+            //////////////////////////////////////
+            // Required to close body gap - BEGIN
+            //////////////////////////////////////
+            var bdyHght = $('#dvBodyContent').height();
+            $('#dvBodyContent').height(bdyHght + 50);
+            //////////////////////////////////////
+            // Required to close body gap - END
+            //////////////////////////////////////
+        }
+    );
+</script>
+
+<center>
+    <h2>
+        How to delete a garment
+    </h2>
+    <p>
+        <b>Step 1. Go To The Wardrobe Page.</b>
+        <br />
+        <img src="~/Images/WardrobeCategoryStep1.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 2. Choose <font color="#01b2fc">u</font><font color="#c239db">Closet</font> category garment is within.</b>
+        <br />
+        <img src="~/Images/WardrobeDeleteStep2.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 3. Double click on garment to select it.</b>
+        <br />
+        <img src="~/Images/WardrobeDeleteStep3.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 4. Click the trash can button to delete image.</b>
+        <br />
+        <img src="~/Images/WardrobeDeleteStep4.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 5. Confirm delete by clicking "OK".</b>
+        <br />
+        <img src="~/Images/WardrobeDeleteStep5.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 6. Garment has been deleted.</b>
+        <br />
+        <img src="~/Images/WardrobeDeleteStep6.PNG" width="400" height="200" />
+
+    </p>
+</center>
+
+
+

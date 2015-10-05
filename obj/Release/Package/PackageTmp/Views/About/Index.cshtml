@@ -1,0 +1,42 @@
+﻿@using fbuCloset.Models
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@model MyAppUser
+
+@{
+    ViewBag.Title = "About";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(document).ready
+    (
+        function () {
+
+            //////////////////////////////////////
+            // Required to close body gap - BEGIN
+            //////////////////////////////////////
+            var bdyHght = $('#dvBodyContent').height();
+            $('#dvBodyContent').height(bdyHght + 10);
+            //////////////////////////////////////
+            // Required to close body gap - END
+            //////////////////////////////////////
+        }
+    );
+</script>
+
+    <div id="dvText" style="position:absolute;left:150px;width:500px;">
+        <p>
+            We are BL Consulting (BL Co) -a small company with one simple goal: delivering an excellent product to our 
+            customers!
+            <br /><br />
+            Based in Arlington Virginia, Lochner Consulting creates websites, web applications, and assesses the 
+            client needs to create innovative solutions for maximum results!
+            <br /><br />
+            The idea for ucloset.net was born when the lead developer’s girlfriend realized his complete lack 
+            of ability for putting together outfits! Further brainstorming and creative process led to the ability 
+            for all to categorize their clothing and share cool outfits with friends, family, and girlfriends! 
+            The Lochner Consulting Team hopes that you find uCloset to be a fun tool to maximize time in the closet 
+            and dress to impress!
+        </p>
+    </div>

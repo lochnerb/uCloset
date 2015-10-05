@@ -1,0 +1,32 @@
+﻿@using fbuCloset.Models
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@model MyAppUser
+
+@{
+    ViewBag.Title = "Contact";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(document).ready
+    (
+        function () {
+
+            //////////////////////////////////////
+            // Required to close body gap - BEGIN
+            //////////////////////////////////////
+            var bdyHght = $('#dvBodyContent').height();
+            $('#dvBodyContent').height(bdyHght + 10);
+            //////////////////////////////////////
+            // Required to close body gap - END
+            //////////////////////////////////////
+        }
+    );
+</script>
+
+<center>
+    <p>
+        Please contact the design team at <a href="mailto:info@ucloset.net">info@ucloset.net</a>
+    </p>
+</center>

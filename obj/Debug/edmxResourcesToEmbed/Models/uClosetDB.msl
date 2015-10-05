@@ -1,0 +1,530 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="uClosetSQLAdminModelStoreContainer" CdmEntityContainer="uClosetSQLAdminEntities">
+    <FunctionImportMapping FunctionImportName="AddfbUser" FunctionName="uClosetSQLAdminModel.Store.AddfbUser">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.AddfbUser_Result">
+          <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="LoggedIN" ColumnName="LoggedIN" />
+          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="PrivID" ColumnName="PrivID" />
+          <ScalarProperty Name="PrivilegesDesc" ColumnName="PrivilegesDesc" />
+          <ScalarProperty Name="SessionStatus" ColumnName="SessionStatus" />
+          <ScalarProperty Name="SessionCreateTime" ColumnName="SessionCreateTime" />
+          <ScalarProperty Name="SessionLastActivityTime" ColumnName="SessionLastActivityTime" />
+          <ScalarProperty Name="sessError" ColumnName="sessError" />
+          <ScalarProperty Name="fbUserFacebookID" ColumnName="fbUserFacebookID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="AddSession" FunctionName="uClosetSQLAdminModel.Store.AddSession">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.AddSession_Result">
+          <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="FBUserID" ColumnName="FBUserID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="LoggedIN" ColumnName="LoggedIN" />
+          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+          <ScalarProperty Name="PrivID" ColumnName="PrivID" />
+          <ScalarProperty Name="PrivilegesDesc" ColumnName="PrivilegesDesc" />
+          <ScalarProperty Name="SessionStatus" ColumnName="SessionStatus" />
+          <ScalarProperty Name="SessionCreateTime" ColumnName="SessionCreateTime" />
+          <ScalarProperty Name="SessionLastActivityTime" ColumnName="SessionLastActivityTime" />
+          <ScalarProperty Name="sessError" ColumnName="sessError" />
+          <ScalarProperty Name="fbUserFacebookID" ColumnName="fbUserFacebookID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="ClearOutfitsandSharing" FunctionName="uClosetSQLAdminModel.Store.ClearOutfitsandSharing" />
+    <FunctionImportMapping FunctionImportName="ClearWardrobeandSharing" FunctionName="uClosetSQLAdminModel.Store.ClearWardrobeandSharing" />
+    <FunctionImportMapping FunctionImportName="CreateUser" FunctionName="uClosetSQLAdminModel.Store.CreateUser" />
+    <FunctionImportMapping FunctionImportName="Login" FunctionName="uClosetSQLAdminModel.Store.Login" />
+    <FunctionImportMapping FunctionImportName="spAdd_CustomCategories" FunctionName="uClosetSQLAdminModel.Store.spAdd_CustomCategories">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spAdd_CustomCategories_Result">
+          <ScalarProperty Name="ClothingID" ColumnName="ClothingID" />
+          <ScalarProperty Name="ClothingDescription" ColumnName="ClothingDescription" />
+          <ScalarProperty Name="ClothingParentID" ColumnName="ClothingParentID" />
+          <ScalarProperty Name="ClothingRank" ColumnName="ClothingRank" />
+          <ScalarProperty Name="ClothingShow" ColumnName="ClothingShow" />
+          <ScalarProperty Name="CategoryRank" ColumnName="CategoryRank" />
+          <ScalarProperty Name="asChildCount" ColumnName="asChildCount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spAdd_CustomOutfitCategories" FunctionName="uClosetSQLAdminModel.Store.spAdd_CustomOutfitCategories">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spAdd_CustomOutfitCategories_Result">
+          <ScalarProperty Name="OutfitGroupID" ColumnName="OutfitGroupID" />
+          <ScalarProperty Name="OutfitGroupDesc" ColumnName="OutfitGroupDesc" />
+          <ScalarProperty Name="OutfitGroupParentID" ColumnName="OutfitGroupParentID" />
+          <ScalarProperty Name="OutfitGroupRank" ColumnName="OutfitGroupRank" />
+          <ScalarProperty Name="OutfitGroupShow" ColumnName="OutfitGroupShow" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spAdd_File" FunctionName="uClosetSQLAdminModel.Store.spAdd_File">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spAdd_File_Result">
+          <ScalarProperty Name="attachID" ColumnName="attachID" />
+          <ScalarProperty Name="attachUserID" ColumnName="attachUserID" />
+          <ScalarProperty Name="attachclothingTypeID" ColumnName="attachclothingTypeID" />
+          <ScalarProperty Name="attachFilename" ColumnName="attachFilename" />
+          <ScalarProperty Name="attachDocDesc" ColumnName="attachDocDesc" />
+          <ScalarProperty Name="attachDocFiletype" ColumnName="attachDocFiletype" />
+          <ScalarProperty Name="attachSIZE" ColumnName="attachSIZE" />
+          <ScalarProperty Name="CreateDTE" ColumnName="CreateDTE" />
+          <ScalarProperty Name="attachment" ColumnName="attachment" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spAdd_OutfitImage" FunctionName="uClosetSQLAdminModel.Store.spAdd_OutfitImage">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spAdd_OutfitImage_Result">
+          <ScalarProperty Name="ufoPostID" ColumnName="ufoPostID" />
+          <ScalarProperty Name="ufoUserID" ColumnName="ufoUserID" />
+          <ScalarProperty Name="ufoOutfitID" ColumnName="ufoOutfitID" />
+          <ScalarProperty Name="ufoFilename" ColumnName="ufoFilename" />
+          <ScalarProperty Name="CreateDTE" ColumnName="CreateDTE" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spAdd_UserOutfit_OBJ" FunctionName="uClosetSQLAdminModel.Store.spAdd_UserOutfit_OBJ">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spAdd_UserOutfit_OBJ_Result">
+          <ScalarProperty Name="uoUserOutfitID" ColumnName="uoUserOutfitID" />
+          <ScalarProperty Name="uoUserID" ColumnName="uoUserID" />
+          <ScalarProperty Name="uoUserOutfitDesc" ColumnName="uoUserOutfitDesc" />
+          <ScalarProperty Name="uoOutfitGroupID" ColumnName="uoOutfitGroupID" />
+          <ScalarProperty Name="uoSessionOutfit" ColumnName="uoSessionOutfit" />
+          <ScalarProperty Name="uoCreateDate" ColumnName="uoCreateDate" />
+          <ScalarProperty Name="uoCreateUser" ColumnName="uoCreateUser" />
+          <ScalarProperty Name="uoModifyDate" ColumnName="uoModifyDate" />
+          <ScalarProperty Name="uoModifyUser" ColumnName="uoModifyUser" />
+          <ScalarProperty Name="uopAttachmentID" ColumnName="uopAttachmentID" />
+          <ScalarProperty Name="uopUserOutfitsPartID" ColumnName="uopUserOutfitsPartID" />
+          <ScalarProperty Name="uofCreateDate" ColumnName="uofCreateDate" />
+          <ScalarProperty Name="uopFrameID" ColumnName="uopFrameID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spAddShareFriends" FunctionName="uClosetSQLAdminModel.Store.spAddShareFriends">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spAddShareFriends_Result">
+          <ScalarProperty Name="shareFriendShareID" ColumnName="shareFriendShareID" />
+          <ScalarProperty Name="shareAttachmentID" ColumnName="shareAttachmentID" />
+          <ScalarProperty Name="shareFriendID" ColumnName="shareFriendID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spAddShareOutfitFriends" FunctionName="uClosetSQLAdminModel.Store.spAddShareOutfitFriends">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spAddShareOutfitFriends_Result">
+          <ScalarProperty Name="shareOutfitFriendOutfitID" ColumnName="shareOutfitFriendOutfitID" />
+          <ScalarProperty Name="shareOutfitID" ColumnName="shareOutfitID" />
+          <ScalarProperty Name="shareOutfitFriendID" ColumnName="shareOutfitFriendID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spCheck_Dup" FunctionName="uClosetSQLAdminModel.Store.spCheck_Dup" />
+    <FunctionImportMapping FunctionImportName="spChildren" FunctionName="uClosetSQLAdminModel.Store.spChildren" />
+    <FunctionImportMapping FunctionImportName="spClearShareFriends" FunctionName="uClosetSQLAdminModel.Store.spClearShareFriends">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spClearShareFriends_Result">
+          <ScalarProperty Name="shareFriendShareID" ColumnName="shareFriendShareID" />
+          <ScalarProperty Name="shareAttachmentID" ColumnName="shareAttachmentID" />
+          <ScalarProperty Name="shareFriendID" ColumnName="shareFriendID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spClearShareOutfitFriends" FunctionName="uClosetSQLAdminModel.Store.spClearShareOutfitFriends">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spClearShareOutfitFriends_Result">
+          <ScalarProperty Name="shareOutfitFriendOutfitID" ColumnName="shareOutfitFriendOutfitID" />
+          <ScalarProperty Name="shareOutfitID" ColumnName="shareOutfitID" />
+          <ScalarProperty Name="shareOutfitFriendID" ColumnName="shareOutfitFriendID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spDeleteHideOufit" FunctionName="uClosetSQLAdminModel.Store.spDeleteHideOufit">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spDeleteHideOufit_Result">
+          <ScalarProperty Name="uoUserOutfitID" ColumnName="uoUserOutfitID" />
+          <ScalarProperty Name="uoUserID" ColumnName="uoUserID" />
+          <ScalarProperty Name="uoUserOutfitDesc" ColumnName="uoUserOutfitDesc" />
+          <ScalarProperty Name="uoOutfitGroupID" ColumnName="uoOutfitGroupID" />
+          <ScalarProperty Name="uoSessionOutfit" ColumnName="uoSessionOutfit" />
+          <ScalarProperty Name="uoOutfitRank" ColumnName="uoOutfitRank" />
+          <ScalarProperty Name="uoOutfitShow" ColumnName="uoOutfitShow" />
+          <ScalarProperty Name="uoCreateDate" ColumnName="uoCreateDate" />
+          <ScalarProperty Name="uoCreateUser" ColumnName="uoCreateUser" />
+          <ScalarProperty Name="uoModifyDate" ColumnName="uoModifyDate" />
+          <ScalarProperty Name="uoModifyUser" ColumnName="uoModifyUser" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spDeleteHideWardrobeImage" FunctionName="uClosetSQLAdminModel.Store.spDeleteHideWardrobeImage">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spDeleteHideWardrobeImage_Result">
+          <ScalarProperty Name="attachID" ColumnName="attachID" />
+          <ScalarProperty Name="attachUserID" ColumnName="attachUserID" />
+          <ScalarProperty Name="attachClothingTypeID" ColumnName="attachClothingTypeID" />
+          <ScalarProperty Name="attachDocDesc" ColumnName="attachDocDesc" />
+          <ScalarProperty Name="attachFilename" ColumnName="attachFilename" />
+          <ScalarProperty Name="attachDocFiletype" ColumnName="attachDocFiletype" />
+          <ScalarProperty Name="attachSIZE" ColumnName="attachSIZE" />
+          <ScalarProperty Name="attachRank" ColumnName="attachRank" />
+          <ScalarProperty Name="attachShow" ColumnName="attachShow" />
+          <ScalarProperty Name="attachCreateDate" ColumnName="attachCreateDate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGet_File" FunctionName="uClosetSQLAdminModel.Store.spGet_File">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spGet_File_Result">
+          <ScalarProperty Name="attachID" ColumnName="attachID" />
+          <ScalarProperty Name="attachUserID" ColumnName="attachUserID" />
+          <ScalarProperty Name="attachclothingTypeID" ColumnName="attachclothingTypeID" />
+          <ScalarProperty Name="attachDocDesc" ColumnName="attachDocDesc" />
+          <ScalarProperty Name="attachDocFiletype" ColumnName="attachDocFiletype" />
+          <ScalarProperty Name="attachSIZE" ColumnName="attachSIZE" />
+          <ScalarProperty Name="CreateDTE" ColumnName="CreateDTE" />
+          <ScalarProperty Name="attachment" ColumnName="attachment" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGet_FileList" FunctionName="uClosetSQLAdminModel.Store.spGet_FileList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spGet_FileList_Result">
+          <ScalarProperty Name="attachID" ColumnName="attachID" />
+          <ScalarProperty Name="OwnerUserID" ColumnName="OwnerUserID" />
+          <ScalarProperty Name="ClothingTypeID" ColumnName="ClothingTypeID" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+          <ScalarProperty Name="attachDocDesc" ColumnName="attachDocDesc" />
+          <ScalarProperty Name="attachDocFiletype" ColumnName="attachDocFiletype" />
+          <ScalarProperty Name="attachSIZE" ColumnName="attachSIZE" />
+          <ScalarProperty Name="attachment" ColumnName="attachment" />
+          <ScalarProperty Name="ShareFriendUserID" ColumnName="ShareFriendUserID" />
+          <ScalarProperty Name="web" ColumnName="web" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGet_MerchantList" FunctionName="uClosetSQLAdminModel.Store.spGet_MerchantList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spGet_MerchantList_Result">
+          <ScalarProperty Name="mMerchantName" ColumnName="mMerchantName" />
+          <ScalarProperty Name="mMerchantDesc" ColumnName="mMerchantDesc" />
+          <ScalarProperty Name="mMerchantURL" ColumnName="mMerchantURL" />
+          <ScalarProperty Name="mMerchantRank" ColumnName="mMerchantRank" />
+          <ScalarProperty Name="mMerchantShow" ColumnName="mMerchantShow" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGet_UserGarmentAttachmentList" FunctionName="uClosetSQLAdminModel.Store.spGet_UserGarmentAttachmentList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spGet_UserGarmentAttachmentList_Result">
+          <ScalarProperty Name="attachID" ColumnName="attachID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+          <ScalarProperty Name="ClothingTypeID" ColumnName="ClothingTypeID" />
+          <ScalarProperty Name="DocDesc" ColumnName="DocDesc" />
+          <ScalarProperty Name="DocFileType" ColumnName="DocFileType" />
+          <ScalarProperty Name="DocSize" ColumnName="DocSize" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="SessionUserID" ColumnName="SessionUserID" />
+          <ScalarProperty Name="LoggedIN" ColumnName="LoggedIN" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetAttachment" FunctionName="uClosetSQLAdminModel.Store.spGetAttachment">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spGetAttachment_Result">
+          <ScalarProperty Name="attachID" ColumnName="attachID" />
+          <ScalarProperty Name="attachUserID" ColumnName="attachUserID" />
+          <ScalarProperty Name="attachClothingTypeID" ColumnName="attachClothingTypeID" />
+          <ScalarProperty Name="attachDocDesc" ColumnName="attachDocDesc" />
+          <ScalarProperty Name="attachFilename" ColumnName="attachFilename" />
+          <ScalarProperty Name="attachDocFiletype" ColumnName="attachDocFiletype" />
+          <ScalarProperty Name="attachSIZE" ColumnName="attachSIZE" />
+          <ScalarProperty Name="attachCreateDate" ColumnName="attachCreateDate" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Web" ColumnName="Web" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetFBUser" FunctionName="uClosetSQLAdminModel.Store.spGetFBUser" />
+    <FunctionImportMapping FunctionImportName="spGetFBUserList" FunctionName="uClosetSQLAdminModel.Store.spGetFBUserList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spGetFBUserList_Result">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="ShareFriendUser" ColumnName="ShareFriendUser" />
+          <ScalarProperty Name="ShareFriendUserID" ColumnName="ShareFriendUserID" />
+          <ScalarProperty Name="VendorFLG" ColumnName="VendorFLG" />
+          <ScalarProperty Name="ListPriority" ColumnName="ListPriority" />
+          <ScalarProperty Name="IDRank" ColumnName="IDRank" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetFBUserOutfitList" FunctionName="uClosetSQLAdminModel.Store.spGetFBUserOutfitList">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spGetFBUserOutfitList_Result">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="ShareFriendUser" ColumnName="ShareFriendUser" />
+          <ScalarProperty Name="ShareFriendUserID" ColumnName="ShareFriendUserID" />
+          <ScalarProperty Name="VendorFLG" ColumnName="VendorFLG" />
+          <ScalarProperty Name="ListPriority" ColumnName="ListPriority" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetOutfitUsedMenuItems" FunctionName="uClosetSQLAdminModel.Store.spGetOutfitUsedMenuItems">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spGetOutfitUsedMenuItems_Result">
+          <ScalarProperty Name="OutfitGroupID" ColumnName="OutfitGroupID" />
+          <ScalarProperty Name="OutfitGroupDesc" ColumnName="OutfitGroupDesc" />
+          <ScalarProperty Name="OutfitGroupParentID" ColumnName="OutfitGroupParentID" />
+          <ScalarProperty Name="OutfitGroupRank" ColumnName="OutfitGroupRank" />
+          <ScalarProperty Name="OutfitGroupShow" ColumnName="OutfitGroupShow" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetShareFriends" FunctionName="uClosetSQLAdminModel.Store.spGetShareFriends">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spGetShareFriends_Result">
+          <ScalarProperty Name="shareFriendShareID" ColumnName="shareFriendShareID" />
+          <ScalarProperty Name="shareAttachmentID" ColumnName="shareAttachmentID" />
+          <ScalarProperty Name="shareFriendID" ColumnName="shareFriendID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetShareOutfitFriends" FunctionName="uClosetSQLAdminModel.Store.spGetShareOutfitFriends">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spGetShareOutfitFriends_Result">
+          <ScalarProperty Name="shareOutfitFriendOutfitID" ColumnName="shareOutfitFriendOutfitID" />
+          <ScalarProperty Name="shareOutfitID" ColumnName="shareOutfitID" />
+          <ScalarProperty Name="shareOutfitFriendID" ColumnName="shareOutfitFriendID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spGetUsersUsedMenuItems" FunctionName="uClosetSQLAdminModel.Store.spGetUsersUsedMenuItems">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spGetUsersUsedMenuItems_Result">
+          <ScalarProperty Name="ClothingID" ColumnName="ClothingID" />
+          <ScalarProperty Name="ClothingDescription" ColumnName="ClothingDescription" />
+          <ScalarProperty Name="ClothingParentID" ColumnName="ClothingParentID" />
+          <ScalarProperty Name="ClothingRank" ColumnName="ClothingRank" />
+          <ScalarProperty Name="ClothingShow" ColumnName="ClothingShow" />
+          <ScalarProperty Name="CategoryRank" ColumnName="CategoryRank" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spSave_Outfit" FunctionName="uClosetSQLAdminModel.Store.spSave_Outfit">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spSave_Outfit_Result">
+          <ScalarProperty Name="uoUserOutfitID" ColumnName="uoUserOutfitID" />
+          <ScalarProperty Name="uoUserID" ColumnName="uoUserID" />
+          <ScalarProperty Name="uoUserOutfitDesc" ColumnName="uoUserOutfitDesc" />
+          <ScalarProperty Name="uoOutfitGroupID" ColumnName="uoOutfitGroupID" />
+          <ScalarProperty Name="uoSessionOutfit" ColumnName="uoSessionOutfit" />
+          <ScalarProperty Name="uoCreateDate" ColumnName="uoCreateDate" />
+          <ScalarProperty Name="uoCreateUser" ColumnName="uoCreateUser" />
+          <ScalarProperty Name="uoModifyDate" ColumnName="uoModifyDate" />
+          <ScalarProperty Name="uoModifyUser" ColumnName="uoModifyUser" />
+          <ScalarProperty Name="uopAttachmentID" ColumnName="uopAttachmentID" />
+          <ScalarProperty Name="uopUserOutfitsPartID" ColumnName="uopUserOutfitsPartID" />
+          <ScalarProperty Name="uofCreateDate" ColumnName="uofCreateDate" />
+          <ScalarProperty Name="uopFrameID" ColumnName="uopFrameID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spUserType" FunctionName="uClosetSQLAdminModel.Store.spUserType">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spUserType_Result">
+          <ScalarProperty Name="userTypeID" ColumnName="userTypeID" />
+          <ScalarProperty Name="userTypeDesc" ColumnName="userTypeDesc" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spView_ClothingCategories" FunctionName="uClosetSQLAdminModel.Store.spView_ClothingCategories">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spView_ClothingCategories_Result">
+          <ScalarProperty Name="ClothingID" ColumnName="ClothingID" />
+          <ScalarProperty Name="ClothingDescription" ColumnName="ClothingDescription" />
+          <ScalarProperty Name="ClothingParentID" ColumnName="ClothingParentID" />
+          <ScalarProperty Name="ClothingRank" ColumnName="ClothingRank" />
+          <ScalarProperty Name="ClothingShow" ColumnName="ClothingShow" />
+          <ScalarProperty Name="CategoryRank" ColumnName="CategoryRank" />
+          <ScalarProperty Name="ChildCount" ColumnName="ChildCount" />
+          <ScalarProperty Name="HasChild" ColumnName="HasChild" />
+          <ScalarProperty Name="ClothingPath" ColumnName="ClothingPath" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spView_ClothingParentCategories" FunctionName="uClosetSQLAdminModel.Store.spView_ClothingParentCategories">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spView_ClothingParentCategories_Result">
+          <ScalarProperty Name="ClothingID" ColumnName="ClothingID" />
+          <ScalarProperty Name="ClothingDescription" ColumnName="ClothingDescription" />
+          <ScalarProperty Name="ClothingParentID" ColumnName="ClothingParentID" />
+          <ScalarProperty Name="ClothingRank" ColumnName="ClothingRank" />
+          <ScalarProperty Name="ClothingShow" ColumnName="ClothingShow" />
+          <ScalarProperty Name="CategoryRank" ColumnName="CategoryRank" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spView_CustomCategories" FunctionName="uClosetSQLAdminModel.Store.spView_CustomCategories">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spView_CustomCategories_Result">
+          <ScalarProperty Name="ClothingID" ColumnName="ClothingID" />
+          <ScalarProperty Name="ClothingDescription" ColumnName="ClothingDescription" />
+          <ScalarProperty Name="ClothingParentID" ColumnName="ClothingParentID" />
+          <ScalarProperty Name="ClothingRank" ColumnName="ClothingRank" />
+          <ScalarProperty Name="ClothingShow" ColumnName="ClothingShow" />
+          <ScalarProperty Name="CategoryRank" ColumnName="CategoryRank" />
+          <ScalarProperty Name="asChildCount" ColumnName="asChildCount" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spView_FeaturedOutfit" FunctionName="uClosetSQLAdminModel.Store.spView_FeaturedOutfit">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spView_FeaturedOutfit_Result">
+          <ScalarProperty Name="uoUserOutfitID" ColumnName="uoUserOutfitID" />
+          <ScalarProperty Name="uoUserID" ColumnName="uoUserID" />
+          <ScalarProperty Name="uoUserOutfitDesc" ColumnName="uoUserOutfitDesc" />
+          <ScalarProperty Name="uoOutfitGroupID" ColumnName="uoOutfitGroupID" />
+          <ScalarProperty Name="uoSessionOutfit" ColumnName="uoSessionOutfit" />
+          <ScalarProperty Name="uoCreateDate" ColumnName="uoCreateDate" />
+          <ScalarProperty Name="uoCreateUser" ColumnName="uoCreateUser" />
+          <ScalarProperty Name="uoModifyDate" ColumnName="uoModifyDate" />
+          <ScalarProperty Name="uoModifyUser" ColumnName="uoModifyUser" />
+          <ScalarProperty Name="uopAttachmentID" ColumnName="uopAttachmentID" />
+          <ScalarProperty Name="uopUserOutfitsPartID" ColumnName="uopUserOutfitsPartID" />
+          <ScalarProperty Name="uofCreateDate" ColumnName="uofCreateDate" />
+          <ScalarProperty Name="uopFrameID" ColumnName="uopFrameID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Web" ColumnName="Web" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spView_FeatureOutfit" FunctionName="uClosetSQLAdminModel.Store.spView_FeatureOutfit">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spView_FeatureOutfit_Result">
+          <ScalarProperty Name="uoUserOutfitID" ColumnName="uoUserOutfitID" />
+          <ScalarProperty Name="uoUserID" ColumnName="uoUserID" />
+          <ScalarProperty Name="uoUserOutfitDesc" ColumnName="uoUserOutfitDesc" />
+          <ScalarProperty Name="uopAttachmentID" ColumnName="uopAttachmentID" />
+          <ScalarProperty Name="uopUserOutfitsPartID" ColumnName="uopUserOutfitsPartID" />
+          <ScalarProperty Name="uopFrameID" ColumnName="uopFrameID" />
+          <ScalarProperty Name="uoOutfitGroupID" ColumnName="uoOutfitGroupID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Web" ColumnName="Web" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spView_OutfitGroup" FunctionName="uClosetSQLAdminModel.Store.spView_OutfitGroup">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spView_OutfitGroup_Result">
+          <ScalarProperty Name="OutfitGroupID" ColumnName="OutfitGroupID" />
+          <ScalarProperty Name="OutfitGroupDesc" ColumnName="OutfitGroupDesc" />
+          <ScalarProperty Name="OutfitGroupParentID" ColumnName="OutfitGroupParentID" />
+          <ScalarProperty Name="OutfitGroupRank" ColumnName="OutfitGroupRank" />
+          <ScalarProperty Name="OutfitGroupShow" ColumnName="OutfitGroupShow" />
+          <ScalarProperty Name="ChildCount" ColumnName="ChildCount" />
+          <ScalarProperty Name="HasChild" ColumnName="HasChild" />
+          <ScalarProperty Name="OutfitGroupPath" ColumnName="OutfitGroupPath" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spView_OutfitGroupParentCategories" FunctionName="uClosetSQLAdminModel.Store.spView_OutfitGroupParentCategories">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spView_OutfitGroupParentCategories_Result">
+          <ScalarProperty Name="OutfitGroupID" ColumnName="OutfitGroupID" />
+          <ScalarProperty Name="OutfitGroupDesc" ColumnName="OutfitGroupDesc" />
+          <ScalarProperty Name="OutfitGroupParentID" ColumnName="OutfitGroupParentID" />
+          <ScalarProperty Name="OutfitGroupRank" ColumnName="OutfitGroupRank" />
+          <ScalarProperty Name="OutfitGroupShow" ColumnName="OutfitGroupShow" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spView_UserOutfit" FunctionName="uClosetSQLAdminModel.Store.spView_UserOutfit">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spView_UserOutfit_Result">
+          <ScalarProperty Name="uoUserOutfitID" ColumnName="uoUserOutfitID" />
+          <ScalarProperty Name="uoUserID" ColumnName="uoUserID" />
+          <ScalarProperty Name="uoUserOutfitDesc" ColumnName="uoUserOutfitDesc" />
+          <ScalarProperty Name="uoOutfitGroupID" ColumnName="uoOutfitGroupID" />
+          <ScalarProperty Name="uoSessionOutfit" ColumnName="uoSessionOutfit" />
+          <ScalarProperty Name="uoCreateDate" ColumnName="uoCreateDate" />
+          <ScalarProperty Name="uoCreateUser" ColumnName="uoCreateUser" />
+          <ScalarProperty Name="uoModifyDate" ColumnName="uoModifyDate" />
+          <ScalarProperty Name="uoModifyUser" ColumnName="uoModifyUser" />
+          <ScalarProperty Name="uopAttachmentID" ColumnName="uopAttachmentID" />
+          <ScalarProperty Name="uopUserOutfitsPartID" ColumnName="uopUserOutfitsPartID" />
+          <ScalarProperty Name="uofCreateDate" ColumnName="uofCreateDate" />
+          <ScalarProperty Name="uopFrameID" ColumnName="uopFrameID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Web" ColumnName="Web" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spView_UserOutfits" FunctionName="uClosetSQLAdminModel.Store.spView_UserOutfits">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spView_UserOutfits_Result">
+          <ScalarProperty Name="uoUserOutfitID" ColumnName="uoUserOutfitID" />
+          <ScalarProperty Name="uoUserID" ColumnName="uoUserID" />
+          <ScalarProperty Name="uoUserOutfitDesc" ColumnName="uoUserOutfitDesc" />
+          <ScalarProperty Name="uoOutfitGroupID" ColumnName="uoOutfitGroupID" />
+          <ScalarProperty Name="uoSessionOutfit" ColumnName="uoSessionOutfit" />
+          <ScalarProperty Name="uoCreateDate" ColumnName="uoCreateDate" />
+          <ScalarProperty Name="uoCreateUser" ColumnName="uoCreateUser" />
+          <ScalarProperty Name="uoModifyDate" ColumnName="uoModifyDate" />
+          <ScalarProperty Name="uoModifyUser" ColumnName="uoModifyUser" />
+          <ScalarProperty Name="uopAttachmentID" ColumnName="uopAttachmentID" />
+          <ScalarProperty Name="uopUserOutfitsPartID" ColumnName="uopUserOutfitsPartID" />
+          <ScalarProperty Name="uofCreateDate" ColumnName="uofCreateDate" />
+          <ScalarProperty Name="uopFrameID" ColumnName="uopFrameID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Web" ColumnName="Web" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="spView_UserOutfitsDesc" FunctionName="uClosetSQLAdminModel.Store.spView_UserOutfitsDesc">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="uClosetSQLAdminModel.spView_UserOutfitsDesc_Result">
+          <ScalarProperty Name="uoUserOutfitID" ColumnName="uoUserOutfitID" />
+          <ScalarProperty Name="uoUserID" ColumnName="uoUserID" />
+          <ScalarProperty Name="uoUserOutfitDesc" ColumnName="uoUserOutfitDesc" />
+          <ScalarProperty Name="uoOutfitGroupID" ColumnName="uoOutfitGroupID" />
+          <ScalarProperty Name="uoSessionOutfit" ColumnName="uoSessionOutfit" />
+          <ScalarProperty Name="uoCreateDate" ColumnName="uoCreateDate" />
+          <ScalarProperty Name="uoCreateUser" ColumnName="uoCreateUser" />
+          <ScalarProperty Name="uoModifyDate" ColumnName="uoModifyDate" />
+          <ScalarProperty Name="uoModifyUser" ColumnName="uoModifyUser" />
+          <ScalarProperty Name="uopAttachmentID" ColumnName="uopAttachmentID" />
+          <ScalarProperty Name="uopUserOutfitsPartID" ColumnName="uopUserOutfitsPartID" />
+          <ScalarProperty Name="uofCreateDate" ColumnName="uofCreateDate" />
+          <ScalarProperty Name="uopFrameID" ColumnName="uopFrameID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

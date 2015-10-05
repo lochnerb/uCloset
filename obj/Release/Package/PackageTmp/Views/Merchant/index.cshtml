@@ -1,0 +1,105 @@
+﻿@using fbuCloset.Models
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@model MyAppUser
+
+@{
+    ViewBag.Title = "Merchant";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(document).ready
+    (
+        function () {
+
+            //////////////////////////////////////
+            // Required to close body gap - BEGIN
+            //////////////////////////////////////
+            var bdyHght = $('#dvBodyContent').height();
+            $('#dvBodyContent').height(bdyHght + 10);
+            //////////////////////////////////////
+            // Required to close body gap - END
+            //////////////////////////////////////
+
+            var myMerchantID = "";
+            var myActiveLink = "MerchantID_"
+            myMerchantID = $.cookie('MerchantID');
+
+            if (myMerchantID == null)
+                myMerchantID = "0";
+
+            myActiveLink = "#" + myActiveLink + myMerchantID;
+
+            $(myActiveLink).css('text-decoration', 'underline');
+            $(myActiveLink).css("font-weight", "Bold");
+        }
+    );
+
+    function LoadMerchant(lmMerchantID)
+    {
+        $.cookie("MerchantID", lmMerchantID);
+
+        window.location.href = window.location.href;
+    }
+</script>
+
+<center>
+    <h2>
+        Merchant
+    </h2>
+
+    <table border="0">
+        <tr>
+            <td style="padding:5px;"><a id="MerchantID_0" name="MerchantID_0" href="javascript:LoadMerchant('0');" onclick="">0-9</a></td>
+            <td style="padding:5px;"><a id="MerchantID_a" name="MerchantID_a" href="javascript:LoadMerchant('a');" onclick="">A</a></td>
+            <td style="padding:5px;"><a id="MerchantID_b" name="MerchantID_b" href="javascript:LoadMerchant('b');" onclick="">B</a></td>
+            <td style="padding:5px;"><a id="MerchantID_c" name="MerchantID_c" href="javascript:LoadMerchant('c');" onclick="">C</a></td>
+            <td style="padding:5px;"><a id="MerchantID_d" name="MerchantID_d" href="javascript:LoadMerchant('d');" onclick="">D</a></td>
+            <td style="padding:5px;"><a id="MerchantID_e" name="MerchantID_d" href="javascript:LoadMerchant('e');" onclick="">E</a></td>
+            <td style="padding:5px;"><a id="MerchantID_f" name="MerchantID_f" href="javascript:LoadMerchant('f');" onclick="">F</a></td>
+            <td style="padding:5px;"><a id="MerchantID_g" name="MerchantID_g" href="javascript:LoadMerchant('g');" onclick="">G</a></td>
+            <td style="padding:5px;"><a id="MerchantID_h" name="MerchantID_j" href="javascript:LoadMerchant('h');" onclick="">H</a></td>
+            <td style="padding:5px;"><a id="MerchantID_i" name="MerchantID_i" href="javascript:LoadMerchant('i');" onclick="">I</a></td>
+            <td style="padding:5px;"><a id="MerchantID_j" name="MerchantID_j" href="javascript:LoadMerchant('j');" onclick="">J</a></td>
+            <td style="padding:5px;"><a id="MerchantID_k" name="MerchantID_k" href="javascript:LoadMerchant('k');" onclick="">K</a></td>
+            <td style="padding:5px;"><a id="MerchantID_l" name="MerchantID_l" href="javascript:LoadMerchant('l');" onclick="">L</a></td>
+            <td style="padding:5px;"><a id="MerchantID_m" name="MerchantID_m" href="javascript:LoadMerchant('m');" onclick="">M</a></td>
+            <td style="padding:5px;"><a id="MerchantID_n" name="MerchantID_n" href="javascript:LoadMerchant('n');" onclick="">N</a></td>
+            <td style="padding:5px;"><a id="MerchantID_o" name="MerchantID_o" href="javascript:LoadMerchant('o');" onclick="">O</a></td>
+            <td style="padding:5px;"><a id="MerchantID_p" name="MerchantID_p" href="javascript:LoadMerchant('p');" onclick="">P</a></td>
+            <td style="padding:5px;"><a id="MerchantID_q" name="MerchantID_q" href="javascript:LoadMerchant('q');" onclick="">Q</a></td>
+            <td style="padding:5px;"><a id="MerchantID_r" name="MerchantID_r" href="javascript:LoadMerchant('r');" onclick="">R</aid></td>
+            <td style="padding:5px;"><a id="MerchantID_s" name="MerchantID_s" href="javascript:LoadMerchant('s');" onclick="">S</a></td>
+            <td style="padding:5px;"><a id="MerchantID_t" name="MerchantID_t" href="javascript:LoadMerchant('t');" onclick="">T</a></td>
+            <td style="padding:5px;"><a id="MerchantID_u" name="MerchantID_u" href="javascript:LoadMerchant('u');" onclick="">U</a></td>
+            <td style="padding:5px;"><a id="MerchantID_v" name="MerchantID_v" href="javascript:LoadMerchant('v');" onclick="">V</a></td>
+            <td style="padding:5px;"><a id="MerchantID_w" name="MerchantID_w" href="javascript:LoadMerchant('w');" onclick="">W</a></td>
+            <td style="padding:5px;"><a id="MerchantID_x" name="MerchantID_x" href="javascript:LoadMerchant('x');" onclick="">X</a></td>
+            <td style="padding:5px;"><a id="MerchantID_y" name="MerchantID_y" href="javascript:LoadMerchant('y');" onclick="">Y</a></td>
+            <td style="padding:5px;"><a id="MerchantID_z" name="MerchantID_z" href="javascript:LoadMerchant('z');" onclick="">Z</a></td>
+        </tr>
+    </table>
+    <br /><br />
+</center>
+
+<div id="dvList">
+    <center>
+        <table border="0" width="70%">
+            @foreach (spGet_MerchantList_Result curMerchantList in ViewBag.myMerchantList)
+            {
+                <tr>
+                    <td>
+                        <a href="@curMerchantList.mMerchantURL" target="_blank">
+                            @curMerchantList.mMerchantName
+                        </a>
+                        <br />
+                        <label>@curMerchantList.mMerchantDesc</label>
+                    </td>
+                </tr>
+            }
+        </table>
+    </center>
+</div>
+
+

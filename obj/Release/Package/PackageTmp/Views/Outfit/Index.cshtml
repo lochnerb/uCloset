@@ -1,0 +1,2539 @@
+﻿@using fbuCloset.Models
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@model MyAppUser
+
+@{
+    ViewBag.Title = "Outfit";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<style type="text/css">
+    .Mannequin {
+        border-width: 2px;
+        border: solid;
+        border-color: black;
+        border-width: 2px;
+        z-index: 9999;
+    }
+
+        .Mannequin:active {
+            border-width: thick;
+            border: solid;
+            border-color: black;
+            border-width: 2px;
+            z-index: 9999;
+        }
+
+        .Mannequin:hover {
+            border-width: thick;
+            border: solid;
+            border-color: blue;
+            border-width: 2px;
+            z-index: 9999;
+        }
+
+    .FillMe {
+        border-width: thick;
+        border: solid;
+        border-color: blue;
+        z-index: 9999;
+    }
+
+    .ui-dialog {
+        position: absolute !important;
+    }
+
+    .ui-front {
+        z-index: 1000000 !important; /* The default is 100. !important overrides the default. */
+    }
+</style>
+
+<script>
+    $(document).ready
+    (
+        function () {
+
+            SetupInfoBoxes();
+
+            @if (ViewBag.EmptyParts == 1)
+            {
+                if (ViewBag.LoadOutfitParts != null)
+                {
+                    foreach (spView_UserOutfit_Result UserOutfitItem in ViewBag.LoadOutfitParts)
+                    {
+                        @:LoadOutfitImage('@UserOutfitItem.uopAttachmentID', @UserOutfitItem.uopFrameID, '@UserOutfitItem.uoUserOutfitDesc', '@UserOutfitItem.uoUserOutfitID', @UserOutfitItem.uoOutfitGroupID, '@UserOutfitItem.Owner', '@UserOutfitItem.Name', '@UserOutfitItem.Web', '@UserOutfitItem.Filename');
+                    }
+                }
+            }
+
+            var Gender = $.cookie('OutfitLVL1');
+
+            var OutfitID = '@ViewBag.OutfitID';
+           //alert('OutfitID: ' + OutfitID);
+
+            DisableFeatures();
+
+            var ckUserID = $.cookie("uClosetUserID");
+            var ckLoggedUserID = $.cookie("UserID");
+            var ckOutfitUserID = $("#ddlOutFit0").val();
+            var VendorID = '@ViewBag.VenderID';
+            var flgCustom = false;
+
+            //alert('Outfit UserID:' + ckOutfitUserID + ' User:' + ckLoggedUserID);
+
+            //var OutfitLBLDesc = $.cookie("ckOutfitLBLDesc");
+            //var storeLBL =  $.cookie("ckOutfitLBL");
+
+            //if (storeLBL == null)
+            //{
+            //    if (OutfitLBLDesc != null)
+            //    {
+            //            $('#bxUserOutfitDesc').val(OutfitLBLDesc);
+            //    }
+            //}
+            //else if ($.trim(storeLBL) == "")
+            //{
+            //    if (OutfitLBLDesc != null)
+            //    {
+            //        $('#bxUserOutfitDesc').val(OutfitLBLDesc);
+            //    }
+            //}
+
+            if (ckUserID != ckOutfitUserID)
+            {
+                var flgCustom = false;
+            }
+            else if (VendorID != '')
+            {
+                var flgCustom = false;
+            }
+            else
+            {
+                var flgCustom = true;
+            }
+
+            var mySave = $.cookie('ckSaveOutfit');
+            if (mySave != null)
+            {
+                if (mySave == '1')
+                {
+                    $.cookie("ckMannequinTop", '');
+                    $.cookie("ckMannequinLegs", '');
+                    $.cookie("ckMannequinFeet", '');
+                    $.cookie("ckMannequinHand", '');
+                    $.cookie("ckMannequinFoot", '');
+                    $.cookie("ckOutfitLBL", '');
+                }
+            }
+
+            //alert('OutfitID: ' + OutfitID);
+            $.cookie("ckOutfitID", OutfitID);
+            $.cookie("ckSaveOutfit", '');
+            $.cookie("ckOutfitLoadID", '');
+            $.cookie("ckShareOutFit", '');
+
+            //$('images').draggable({ appendTo: 'body' });
+
+            var bdyHght = $('#dvBodyContent').height();
+            var dvFriendHght = $('#dvUserFriends').height();
+
+            if ((Gender == null) || (Gender == 'null') || (Gender == 'Null') || (Gender == 'NULL'))
+            {
+                bdyHght = bdyHght + 10;
+            }
+            else {
+                if (Gender == "-1") {
+                    bdyHght = bdyHght + 10;
+                }
+                else if (Gender == "1") {
+                    bdyHght = bdyHght + dvFriendHght + 180;
+                }
+                else {
+                    bdyHght = bdyHght + dvFriendHght + 180;
+                }
+            }
+
+            $('#dvBodyContent').height(bdyHght);
+
+            ////////////////////////
+            //Set Manniquin
+            ////////////////////////
+            if ((Gender == null) || (Gender == 'null') || (Gender == 'Null') || (Gender == 'NULL'))
+            {
+                $('#dvMaleMannequin').hide();
+                $('#dvFemailMannequin').hide();
+                $('#dvOutfitImage').show();
+                $('#dvOutfitDesc').hide();
+                $('#dvListLBL').hide();
+                $('#dvOutfitImageListHeader').hide();
+                $('#dvOutFitImage').hide();
+                $('#dvUserFriends').hide();
+                $('#dvOutfitTools').hide();
+                $("#dvCategoryFiles").css('height', '235px');
+            }
+            else
+            {
+                if (Gender == "-1")
+                {
+                    $('#dvMaleMannequin').hide();
+                    $('#dvFemailMannequin').hide();
+                    $('#dvOutfitImage').show();
+                    $('#dvOutfitDesc').hide();
+                    $('#dvListLBL').hide();
+                    $('#dvOutfitImageListHeader').hide();
+                    $('#dvOutFitImage').hide();
+                    $('#dvUserFriends').hide();
+                    $('#dvOutfitTools').hide();
+                    $("#dvCategoryFiles").css('height', '235px');
+                }
+                else if (Gender == "1")
+                {
+                    $('#dvMaleMannequin').hide();
+                    $('#dvFemailMannequin').show();
+                    $('#dvOutfitImage').hide();
+                    $('#dvOutfitDesc').show();
+                    $('#dvListLBL').show();
+                    $('#dvOutfitImageListHeader').show();
+                    $('#dvOutFitImage').show();
+                    $('#dvUserFriends').show();
+                    //$('#dvOutfitTools').show();
+                    $("#dvCategoryFiles").css('height', '335px');
+                }
+                else
+                {
+                    $('#dvMaleMannequin').show();
+                    $('#dvFemailMannequin').hide();
+                    $('#dvOutfitImage').hide();
+                    $('#dvOutfitDesc').show();
+                    $('#dvListLBL').show();
+                    $('#dvOutfitImageListHeader').show();
+                    $('#dvOutFitImage').show();
+                    $('#dvUserFriends').show();
+                    //$('#dvOutfitTools').show();
+                    $("#dvCategoryFiles").css('height', '335px');
+                }
+
+                if ((ckOutfitUserID == ckLoggedUserID) || (ckLoggedUserID == null))
+                {
+                    //alert('sho');
+                    $('#dvOutfitTools').show();
+                    $('#dvUserFriends').show();
+                }
+                else
+                {
+                    //alert('hide');
+                    $('#dvOutfitTools').hide();
+                    $('#dvUserFriends').hide();
+                }
+            }
+
+            //Wardrobe Hide
+            if ($('#ddlList2 option').size() == 1) {
+                $('#lblList2').hide();
+                $('#ddlList2').hide();
+            }
+            else {
+                var Label2 = "";
+                Label2 = $.cookie('WardrobeLVL1TXT') + '\'s ';
+                $("#lblList2").text(Label2);
+            }
+
+            if ($('#ddlList3 option').size() == 1) {
+                $('#lblList3').hide();
+                $('#ddlList3').hide();
+            }
+            else {
+                var Label3 = "";
+                Label3 = $.cookie('WardrobeLVL1TXT') + ': ' + $.cookie('WardrobeLVL2TXT');
+                $("#lblList3").text(Label3);
+            }
+
+            if ($('#ddlList4 option').size() == 1) {
+                $('#lblList4').hide();
+                $('#ddlList4').hide();
+            }
+            else {
+                var Label4 = "";
+                Label4 = $.cookie('WardrobeLVL1TXT') + ': ' + $.cookie('WardrobeLVL3TXT');
+                $("#lblList4").text(Label4);
+            }
+
+            if ($('#ddlList5 option').size() == 1) {
+                $('#lblList5').hide();
+                $('#ddlList5').hide();
+            }
+            else {
+                var Label5 = "";
+                Label5 = $.cookie('WardrobeLVL1TXT') + ': ' + $.cookie('WardrobeLVL4TXT');
+                $("#lblList5").text(Label5);
+            }
+
+            if ($('#ddlList6 option').size() == 1) {
+                $('#lblList6').hide();
+                $('#ddlList6').hide();
+            }
+            else {
+                var Label6 = "";
+                Label6 = $.cookie('WardrobeLVL1TXT') + ': ' + $.cookie('WardrobeLVL5TXT');
+                $("#lblList6").text(Label6);
+            }
+
+            //Outfit Hide
+            if ($('#ddlOutFit2 option').size() == 1) {
+                $('#lblOutFit2').hide();
+                $('#ddlOutFit2').hide();
+            }
+            else{
+                var Label2 = "";
+                Label2 = $.cookie('OutfitLVL1TXT') + '\'s';
+                $("#lblOutFit2").text(Label2);
+            }
+
+            if ($('#ddlOutFit3 option').size() == 1) {
+                $('#lblOutFit3').hide();
+                $('#ddlOutFit3').hide();
+            }
+            else {
+                var Label3 = "";
+                Label3 = $.cookie('OutfitLVL1TXT') + ': ' + $.cookie('OutfitLVL2TXT');
+                $("#lblOutFit3").text(Label3);
+            }
+
+            if ($('#ddlOutFit4 option').size() == 1) {
+                $('#lblOutFit4').hide();
+                $('#ddlOutFit4').hide();
+            }
+            else {
+                var Label4 = "";
+                Label4 = $.cookie('OutfitLVL1TXT') + ': ' + $.cookie('OutfitLVL3TXT');
+                $("#lblOutFit4").text(Label4);
+            }
+
+            if ($('#ddlOutFit5 option').size() == 1) {
+                $('#lblOutFit5').hide();
+                $('#ddlOutFit5').hide();
+            }
+            else if (flgCustom == false) {
+                var Label5 = "";
+                Label5 = $.cookie('OutfitLVL1TXT') + ': ' + $.cookie('OutfitLVL4TXT');
+                $("#lblOutFit5").text(Label5);
+            }
+
+            if ($('#ddlOutFit6 option').size() == 1) {
+                $('#lblOutFit6').hide();
+                $('#ddlOutFit6').hide();
+            }
+            else if (flgCustom == false) {
+                var Label6 = "";
+                Label6 = $.cookie('OutfitLVL1TXT') + ': ' + $.cookie('OutfitLVL5TXT');
+                $("#lblOutFit6").text(Label6);
+            }
+        }
+    );
+
+    function DeleteOutfit()
+    {
+        var DeleteOutfit = confirm('Delete Outfit "@ViewBag.OutfitDesc"?');
+
+        return DeleteOutfit;
+    }
+
+    function SetWardrobe(swlvl) {
+
+        var WardrobeID;
+        var OutfitDesc;
+
+        OutfitDesc = $("#bxUserOutfitDesc").val();
+
+
+        if (OutfitDesc.trim() == '')
+        {
+            //Do Nothing    
+        }
+        else
+        {
+            //Save Description
+            $.cookie("tmpOutfitDesc", OutfitDesc);
+        }
+
+        if (swlvl == 0) {
+            UserID = $("#ddlList0").val();
+            UserTXT = $("#ddlList0 option:selected").text();
+            WardrobeID = -1;
+
+            $.cookie("WardrobeLVL0", UserID);
+            $.cookie("WardrobeLVL0TXT", UserTXT);
+
+            $.cookie("WardrobeLVL1", null);
+            $.cookie("WardrobeLVL2", null);
+            $.cookie("WardrobeLVL3", null);
+            $.cookie("WardrobeLVL4", null);
+            $.cookie("WardrobeLVL5", null);
+            $.cookie("WardrobeLVL6", null);
+
+            $.cookie("WardrobeLVL1", WardrobeID);
+        }
+        else if (swlvl == 1) {
+            WardrobeID = $("#ddlList1").val();
+            WardrobeTXT = $("#ddlList1 option:selected").text();
+
+            $.cookie("WardrobeLVL2", null);
+            $.cookie("WardrobeLVL3", null);
+            $.cookie("WardrobeLVL4", null);
+            $.cookie("WardrobeLVL5", null);
+            $.cookie("WardrobeLVL6", null);
+
+            $.cookie("WardrobeLVL1", WardrobeID);
+            $.cookie("WardrobeLVL1TXT", WardrobeTXT);
+        }
+        if (swlvl == 2) {
+            WardrobeID = $("#ddlList2").val();
+            WardrobeTXT = $("#ddlList2 option:selected").text();
+
+            $.cookie("WardrobeLVL2", WardrobeID);
+            $.cookie("WardrobeLVL3", null);
+            $.cookie("WardrobeLVL4", null);
+            $.cookie("WardrobeLVL5", null);
+            $.cookie("WardrobeLVL6", null);
+
+            $.cookie("WardrobeLVL2", WardrobeID);
+            $.cookie("WardrobeLVL2TXT", WardrobeTXT);
+        }
+        if (swlvl == 3) {
+            WardrobeID = $("#ddlList3").val();
+            WardrobeTXT = $("#ddlList3 option:selected").text();
+
+            $.cookie("WardrobeLVL3", WardrobeID);
+            $.cookie("WardrobeLVL4", null);
+            $.cookie("WardrobeLVL5", null);
+            $.cookie("WardrobeLVL6", null);
+
+            $.cookie("WardrobeLVL3", WardrobeID);
+            $.cookie("WardrobeLVL3TXT", WardrobeTXT);
+        }
+        if (swlvl == 4) {
+            WardrobeID = $("#ddlList4").val();
+            WardrobeTXT = $("#ddlList4 option:selected").text();
+
+            $.cookie("WardrobeLVL4", WardrobeID);
+            $.cookie("WardrobeLVL5", null);
+            $.cookie("WardrobeLVL6", null);
+
+            $.cookie("WardrobeLVL4", WardrobeID);
+            $.cookie("WardrobeLVL4TXT", WardrobeTXT);
+        }
+        if (swlvl == 5) {
+            WardrobeID = $("#ddlList5").val();
+            WardrobeTXT = $("#ddlList5 option:selected").text();
+
+            $.cookie("WardrobeLVL5", WardrobeID);
+            $.cookie("WardrobeLVL5TXT", WardrobeTXT);
+            $.cookie("WardrobeLVL6", null);
+        }
+        if (swlvl == 6) {
+            WardrobeID = $("#ddlList6").val();
+            WardrobeTXT = $("#ddlList6 option:selected").text();
+
+            $.cookie("WardrobeLVL6", WardrobeID);
+            $.cookie("WardrobeLVL6TXT", WardrobeTXT);
+        }
+
+        //alert('WardrobeTXT: ' + WardrobeTXT);
+
+        $.cookie("bxOutfitWardrobeClothingtypeID", WardrobeID);
+
+        var LoadID = $('#bxOutFitID').val();
+        if (LoadID == ' ')
+        {
+            LoadID = '';
+        }
+        $.cookie("ckOutfitLoadID", LoadID);
+
+        //location.reload(true);
+        window.location.href = window.location.href;
+
+        return false;
+    }
+
+    function SetOutfit(soLvl) {
+
+        var OutfitID;
+
+        //alert('Outfit Level: ' + soLvl);
+
+        //alert('soLvl:' + soLvl);
+
+        if (soLvl == 0) {
+            OutfitID = $("#ddlOutFit0").val();
+            OutfitTXT = $("#ddlOutFit0 option:selected").text();
+
+            if (OutfitID == 0) {
+                OutfitID = -1;
+            }
+
+            //alert('OutfitID Answer:' + OutfitID);
+
+            $.cookie("OutfitLVL0", OutfitID);
+            $.cookie("GenderID", OutfitID);
+            $.cookie("OutfitLVL0TXT", OutfitTXT);
+            $.cookie("OutfitLVL1", null);
+            $.cookie("OutfitLVL2", null);
+            $.cookie("OutfitLVL3", null);
+            $.cookie("OutfitLVL4", null);
+            $.cookie("OutfitLVL5", null);
+            $.cookie("OutfitLVL6", null);
+
+            SaveOutfit('tmpOutfit');
+        }
+
+        if (soLvl == 1) {
+            OutfitID = $("#ddlOutFit1").val();
+            OutfitTXT = $("#ddlOutFit1 option:selected").text();
+
+            if (OutfitID == 0)
+            {
+                OutfitID = -1;
+            }
+
+            //alert('OutfitID Answer:' + OutfitID);
+
+            $.cookie("OutfitLVL1", OutfitID);
+            $.cookie("OutfitLVL1TXT", OutfitTXT);
+            $.cookie("OutfitLVL2", null);
+            $.cookie("OutfitLVL3", null);
+            $.cookie("OutfitLVL4", null);
+            $.cookie("OutfitLVL5", null);
+            $.cookie("OutfitLVL6", null);
+
+            SaveOutfit('tmpOutfit');
+        }
+        if (soLvl == 2) {
+            OutfitID = $("#ddlOutFit2").val();
+            OutfitTXT = $("#ddlOutFit2 option:selected").text();
+
+            if (OutfitID == '0')
+            {
+                OutfitID = $("#ddlOutFit1").val();
+                OutfitTXT = $("#ddlOutFit1 option:selected").text();
+
+                $.cookie("OutfitLVL1", OutfitID);
+                $.cookie("OutfitLVL1TXT", OutfitTXT);
+                $.cookie("OutfitLVL2", null);
+                $.cookie("OutfitLVL3", null);
+                $.cookie("OutfitLVL4", null);
+                $.cookie("OutfitLVL5", null);
+                $.cookie("OutfitLVL6", null);
+            }
+            else
+            {
+                $.cookie("OutfitLVL2", OutfitID);
+                $.cookie("OutfitLVL2TXT", OutfitTXT);
+                $.cookie("OutfitLVL3", null);
+                $.cookie("OutfitLVL4", null);
+                $.cookie("OutfitLVL5", null);
+                $.cookie("OutfitLVL6", null);
+            }
+
+            SaveOutfit('tmpOutfit');
+        }
+        if (soLvl == 3) {
+            OutfitID = $("#ddlOutFit3").val();
+            OutfitTXT = $("#ddlOutFit3 option:selected").text();
+
+            if (OutfitID == '0')
+            {
+                OutfitID = $("#ddlOutFit2").val();
+                OutfitTXT = $("#ddlOutFit2 option:selected").text();
+
+                $.cookie("OutfitLVL2", OutfitID);
+                $.cookie("OutfitLVL2TXT", OutfitTXT);
+                $.cookie("OutfitLVL3", null);
+                $.cookie("OutfitLVL4", null);
+                $.cookie("OutfitLVL5", null);
+                $.cookie("OutfitLVL6", null);
+            }
+            else
+            {
+                $.cookie("OutfitLVL3", OutfitID);
+                $.cookie("OutfitLVL3TXT", OutfitTXT);
+                $.cookie("OutfitLVL4", null);
+                $.cookie("OutfitLVL5", null);
+                $.cookie("OutfitLVL6", null);
+            }
+
+            SaveOutfit('tmpOutfit');
+        }
+        if (soLvl == 4) {
+            OutfitID = $("#ddlOutFit4").val();
+            OutfitTXT = $("#ddlOutFit4 option:selected").text();
+
+            $.cookie("OutfitLVL4", OutfitID);
+            $.cookie("OutfitLVL4TXT", OutfitTXT);
+            $.cookie("OutfitLVL5", null);
+            $.cookie("OutfitLVL6", null);
+
+            SaveOutfit('tmpOutfit');
+        }
+        if (soLvl == 5) {
+            OutfitID = $("#ddlOutFit5").val();
+            OutfitTXT = $("#ddlOutFit5 option:selected").text();
+
+            $.cookie("OutfitLVL5", OutfitID);
+            $.cookie("OutfitLVL5TXT", OutfitTXT);
+            $.cookie("OutfitLVL6", null);
+
+            SaveOutfit('tmpOutfit');
+        }
+        if (soLvl == 6) {
+            OutfitID = $("#ddlOutFit6").val();
+            OutfitTXT = $("#ddlOutFit6 option:selected").text();
+
+            $.cookie("OutfitLVL6", OutfitID);
+            $.cookie("OutfitLVL6TXT", OutfitTXT);
+
+            SaveOutfit('tmpOutfit');
+        }
+
+        //alert('OutfitID:' + OutfitID);
+
+        $.cookie("bxOutFitCategoryID", OutfitID);
+
+        var LoadID = $('#bxOutFitID').val();
+        $.cookie("ckOutfitID", '');
+        $.cookie("ckOutfitLoadID", '');
+        $.cookie("ckMannequinTop", '');
+        $.cookie("ckMannequinLegs", '');
+        $.cookie("ckMannequinFeet", '');
+        $.cookie("ckMannequinHand", '');
+        $.cookie("ckMannequinFoot", '');
+        $.cookie("ckOutfitLBL", ' ');
+        $.cookie("ckSaveOutfit", ' ');
+        
+        //location.reload(true);
+        window.location.href = window.location.href;
+
+        return false;
+    }
+
+    function DisableFeatures() {
+        var ckuClosetUserID = $.cookie("uClosetUserID");
+        var ckUserID = $.cookie("UserID");
+        var ckWardrobeUserID = $.cookie("WardrobeLVL0");
+        var Gender = $('#ddlOutFit1').val();
+        var ckOutfitUserID = $("#ddlOutFit0").val();
+        var VendorID = '@ViewBag.VenderID';
+        var ckOutfitCategoryID = + $.cookie("bxOutFitCategoryID");
+
+        //alert('ckUserID:' + ckUserID);
+        if (($.trim(ckUserID) == '') && ($.trim(ckUserID) == ''))
+        {
+            alert('uCloset.net requires cookies to properly function.  Please enable cookies.')
+            window.location.href = 'http://www.ucloset.net';
+        }
+
+        if (ckOutfitCategoryID == 'null')
+        {
+            ckOutfitCategoryID = -1;
+        }
+        
+        $('#bxOutFitCategoryID').val(ckOutfitCategoryID);
+
+        //alert('cookie: ' + ckOutfitCategoryID);
+        //alert('Category: ' + $('#bxOutFitCategoryID').val());
+
+        //alert('Gender:' + Gender);
+
+        //Show Categories
+        if (Gender > 0)
+        {
+            if (ckUserID != ckOutfitUserID)
+            {
+                //alert("hide categories 1");
+                $('#dvOutfitCreateCategories').hide();
+            }
+            else if (VendorID != '')
+            {
+                //alert("hide categories 2");
+                $('#dvOutfitCreateCategories').hide();
+            }
+            else
+            {
+                //alert('show categories');
+                $('#dvOutfitCreateCategories').show();
+                SetOutfitCustom();
+            }
+        }
+        else 
+        {
+            $('#dvOutfitCreateCategories').hide();
+        }
+
+        //Display Ability to create outfits
+        if (ckUserID != ckOutfitUserID)
+        {
+            $('#btnNew').hide();
+            $('#btnShare').hide();
+            $('#btnSave').hide();
+        }
+        else
+        {
+            $('#btnNew').show();
+            $('#btnShare').show();
+            $('#btnSave').show();
+        }
+
+
+        //alert('ckUserID: ' + ckUserID + ' - ckWardrobeUserID: ' + ckWardrobeUserID);
+        //alert('ckUserID: ' + ckUserID + ' - OutfitUserID: ' + ckOutfitUserID);
+        //(ckUserID != ckWardrobeUserID) && (ckWardrobeUserID != null) && 
+
+        if ((ckUserID != ckOutfitUserID) && (ckOutfitUserID != null)) {
+            $('#dvUserFriends').hide();
+            $('#dvAddFile').hide();
+            //alert('disable hide');
+        }
+        else {
+            $('#dvUserFriends').show();
+            $('#dvAddFile').show();
+            //alert('disable show');
+        }
+    }
+
+    function SetOutfitCustom()
+    {
+        var Outfitlst2CNT = '@(ViewBag.OutfitLine2 != null ? ViewBag.OutfitLine2.Count : "-1")';
+        var Outfitlst3CNT = '@(ViewBag.OutfitLine3 != null ? ViewBag.OutfitLine3.Count : "-1")';
+        var Outfitlst4CNT = '@(ViewBag.OutfitLine4 != null ? ViewBag.OutfitLine4.Count : "-1")';
+        var Outfitlst5CNT = '@(ViewBag.OutfitLine5 != null ? ViewBag.OutfitLine5.Count : "-1")';
+        var Outfitlst6CNT = '@(ViewBag.OutfitLine6 != null ? ViewBag.OutfitLine6.Count : "-1")';
+
+        //alert('2: ' + Outfitlst2CNT + ', 3: ' + Outfitlst3CNT + ', 4: ' + Outfitlst4CNT + ", 5: " + Outfitlst5CNT + ', 6: ' + Outfitlst6CNT);
+
+        if (Outfitlst6CNT > 0) {
+            //alert('6');
+            //$('#dvOutfitCreateCategories').hide();
+            //$('#dvListLBL').css({ top: '555px' });
+            //$('#dvOutFitImage').css({ top: '575px' });
+            $('#dvOutfitCreateCategories').hide();
+        }
+        else if (Outfitlst5CNT > 0) {
+            //alert('5');
+            //$('#dvOutfitCreateCategories').hide();
+            //$('#dvListLBL');
+            //$('#dvOutFitImage').css({ top: '535px' });
+            $('#dvOutfitCreateCategories').hide();
+        }
+        else if (Outfitlst4CNT > 0) {
+            //alert('4');
+            $('#dvOutfitCreateCategories').css({ top: '400px' });
+            $('#dvListLBL').css({ top: '465px' });
+            $('#dvOutFitImage').css({ top: '495px' });
+            $('#dvOutfitCreateCategories').hide();
+        }
+        else if (Outfitlst3CNT > 0) {
+            //alert('3');
+            $('#dvOutfitCreateCategories').css({ top: '360px' });
+            $('#dvListLBL').css({ top: '425px' });
+            $('#dvOutFitImage').css({ top: '455px' });
+            $('#dvOutfitCreateCategories').hide();
+        }
+        else {
+            //alert('2');
+            $('#dvOutfitCreateCategories').css({ top: '325px' });
+            $('#dvListLBL').css({ top: '405px' });
+            $('#dvOutFitImage').css({ top: '435px' });
+        }
+    }
+
+    function LoadImage(liImageID) {
+        $.cookie("ckSelectImageID", liImageID);
+        location.reload(true);
+    }
+
+    function FriendShare(fsShare) {
+        if (fsShare == 1) {
+            var allCheckboxes = $("input[type=checkbox]");
+
+            // Put all the unique name attributes in an array.
+            allCheckboxes.each(function () {
+                $(this).removeAttr('checked');
+                $(this).prop('checked', true);
+            });
+        }
+        else {
+            var allCheckboxes = $("input[type=checkbox]");
+
+            // Put all the unique name attributes in an array.
+            allCheckboxes.each(function () {
+                $(this).removeAttr('checked');
+                $(this).prop('checked', false);
+            });
+        }
+
+        return false;
+    }
+
+    function SaveLabel()
+    {
+        //var OutfitLBL = $('#bxUserOutfitDesc').val();
+        //$.cookie("ckOutfitLBLDesc", OutfitLBL);
+    }
+
+    function SetupInfoBoxes()
+    {
+        $("#dvShareOutfit").dialog(
+        {
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 0
+            },
+            hide:
+                {
+                    duration: 0
+                },
+            draggable: false,
+            resizable: false,
+            width: 500,
+            height: 500
+        });
+
+        $("#dlgMannequinTop").dialog(
+        {
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 0
+            },
+            hide:
+                {
+                    duration: 0
+                },
+            draggable: false,
+            resizable: false
+        });
+
+        $("#dlgMannequinLegs").dialog(
+        {
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 0
+            },
+            hide:
+                {
+                    duration: 0
+                },
+            draggable: false,
+            resizable: false
+        });
+
+        $("#dlgMannequinFeet").dialog(
+        {
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 0
+            },
+            hide:
+                {
+                    duration: 0
+                },
+            draggable: false,
+            resizable: false
+        });
+
+        $("#dlgMannequinHand").dialog(
+        {
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 0
+            },
+            hide:
+                {
+                    duration: 0
+                },
+            draggable: false,
+            resizable: false
+        });
+
+        $("#dlgMannequinFoot").dialog(
+        {
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 0
+            },
+            hide:
+                {
+                    duration: 0
+                },
+            draggable: false,
+            resizable: false,
+            zindex: 1005
+        });
+
+    }
+
+    function StringCode(scInputSTR)
+    {
+        var NewCode = "";
+        NewCode = scInputSTR
+
+        //alert('NewCode: ' + NewCode);
+
+        NewCode = NewCode.replace("&#39;", "'");
+        NewCode = NewCode.replace("%60", "`");
+        NewCode = NewCode.replace("%40", "@("@")");
+        NewCode = NewCode.replace("%23", "#");
+        NewCode = NewCode.replace("%24", "$");
+        NewCode = NewCode.replace("%25", "%");
+        NewCode = NewCode.replace("%5E", "^");
+        NewCode = NewCode.replace("%26", "&");
+        NewCode = NewCode.replace("%7B", "_");
+        NewCode = NewCode.replace("%7D", "_");
+        NewCode = NewCode.replace("%2B", "+");
+        NewCode = NewCode.replace("%3", "=");
+        NewCode = NewCode.replace("%D", "]");
+        NewCode = NewCode.replace("%7C", "|");
+        NewCode = NewCode.replace("%5C", "\\");
+        NewCode = NewCode.replace("%3A", ";");
+        NewCode = NewCode.replace('%22', '"');
+        NewCode = NewCode.replace("%", "");
+        NewCode = NewCode.replace("%", "");
+        NewCode = NewCode.replace("%", "");
+        NewCode = NewCode.replace("%", "");
+        NewCode = NewCode.replace("%", "");
+        NewCode = NewCode.replace("%", "");
+        NewCode = NewCode.replace("%", "");
+        NewCode = NewCode.replace("%", "");
+        NewCode = NewCode.replace("%", "");
+
+        //alert('NewCode Replaced: ' + NewCode);
+
+        return NewCode;
+    }
+
+    function openMannequinTopDialog() {
+        //alert('open');
+        var left = 100;
+        var top = 200;
+
+        var eTop = $('#imgWomanTop').offset().top; //get the offset top of the element
+        top = eTop - $(window).scrollTop();
+
+        if (top < 200)
+            top = 200 - top;
+
+        if ($("#dlgMannequinTop").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinTop").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinTop").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinLegs").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinLegs").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinLegs").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinFeet").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinFeet").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinFeet").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinHand").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinHand").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinHand").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinFoot").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinFoot").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinFoot").dialog("close");
+            }
+        }
+
+        $("#dlgMannequinLegs").dialog("option", "position", [left, top]);
+        $("#dlgMannequinTop").dialog("open");
+    }
+
+    function openMannequinLegsDialog() {
+        //alert('open');
+        var left = 100;
+        var top = 200;
+
+        var eTop = $('#imgWomanLegs').offset().top; //get the offset top of the element
+        top = eTop - $(window).scrollTop();
+
+        if (top < 375)
+            top = 375 - top;
+
+        if ($("#dlgMannequinTop").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinTop").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinTop").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinLegs").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinLegs").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinLegs").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinFeet").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinFeet").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinFeet").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinHand").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinHand").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinHand").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinFoot").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinFoot").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinFoot").dialog("close");
+            }
+        }
+
+        $("#dlgMannequinLegs").dialog("option", "position", [left, top]);
+        $('#dlgMannequinLegs').dialog("open");
+    }
+
+    function openMannequinFeetDialog() {
+        //alert('open');
+        var left = 100;
+        var top = 200;
+
+        var eTop = $('#imgWomanFeet').offset().top; //get the offset top of the element
+        top = eTop - $(window).scrollTop();
+
+        if (top < 950)
+            top = 950 - top;
+
+        if ($("#dlgMannequinTop").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinTop").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinTop").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinLegs").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinLegs").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinLegs").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinFeet").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinFeet").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinFeet").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinHand").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinHand").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinHand").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinFoot").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinFoot").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinFoot").dialog("close");
+            }
+        }
+
+        $("#dlgMannequinFeet").dialog("option", "position", [left, top]);
+        $("#dlgMannequinFeet").dialog("open");
+    }
+
+    function openMannequinHandDialog() {
+        //alert('open');
+        var left = 680;
+        var top = 200;
+
+        var eTop = $('#imgWomanHand').offset().top; //get the offset top of the element
+        top = eTop - $(window).scrollTop();
+
+        if (top < 205)
+            top = 205 - top;
+
+        if ($("#dlgMannequinTop").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinTop").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinTop").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinLegs").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinLegs").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinLegs").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinFeet").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinFeet").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinFeet").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinHand").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinHand").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinHand").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinFoot").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinFoot").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinFoot").dialog("close");
+            }
+        }
+
+        $("#dlgMannequinHand").dialog("option", "position", [left, top]);
+        $('#dlgMannequinHand').dialog("open");
+    }
+
+    function openMannequinFootDialog() {
+        //alert('open');
+        var left = 680;
+        var top = 200;
+
+        var eTop = $('#imgWomanFeetTrim').offset().top; //get the offset top of the element
+        top = eTop - $(window).scrollTop();
+
+        if (top < 400)
+            top = 400 - top;
+
+        if ($("#dlgMannequinTop").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinTop").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinTop").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinLegs").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinLegs").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinLegs").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinFeet").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinFeet").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinFeet").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinHand").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinHand").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinHand").dialog("close");
+            }
+        }
+        if ($("#dlgMannequinFoot").hasClass('ui-dialog-content')) {
+            // do whatever
+            if ($("#dlgMannequinFoot").dialog( "isOpen" )===true) {
+                //true
+                $("#dlgMannequinFoot").dialog("close");
+            }
+        }
+        //alert('finish check');
+
+        $("#dlgMannequinFoot").dialog("option", "position", [left, top]);
+        $("#dlgMannequinFoot").dialog("open");
+    }
+</script>
+<input type="hidden" id="bxSessionID" value="" />
+<input type="hidden" id="bxUserID" value="" />
+
+<!-- Wardrobe Category Header -->
+<div id="dvWardrobeCategoryHeader" style="left:50px; top:170px;position:absolute;width:150px;flex-align:center;flex-item-align:center; text-align:center;">
+    <label id="lblWardrobeCategoryHeader" style="font-size:x-large;font-weight:bold;">Wardrobe</label>
+</div>
+
+<!-- Wardrobe Category -->
+<div id="dvWardrobeCategory" style="left:35px; width:400px; top:200px;position:absolute;overflow:no-display">
+    <input type="hidden" id="bxOutfitWardrobeClothingtypeID" value="0" />
+
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList0" style="padding:0px;">Closet Owner</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList0" style="width: 150px; font-size: x-small;vertical-align:top;" onchange="SetWardrobe(0);">
+                    @if (ViewBag.ShareUsers != null)
+                    {
+                        foreach (spGetFBUserList_Result ShareUsersItem in ViewBag.ShareUsers)
+                        {
+                            <option class="@(ShareUsersItem.ShareFriendUserID == "" ? "mnuHeader" : "mnuHeaderItem")" @(ShareUsersItem.ShareFriendUserID == "" ? "disabled" : "") value="@ShareUsersItem.ShareFriendUserID" style="font-size:x-small" @(ShareUsersItem.ShareFriendUserID == ViewBag.WardrobeUserID ? "selected" : "")>@ShareUsersItem.ShareFriendUser</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList1" style="padding: 0px; font-size: xx-small;">Gender</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList1" style="width: 150px; font-size: x-small; vertical-align: top;" onchange="SetWardrobe(1);">
+                    <option value="0" style="font-size:x-small">Select Gender</option>
+                    @if (ViewBag.WardrobeLine1 != null)
+                    {
+                        foreach (spGetUsersUsedMenuItems_Result GarmentGender in ViewBag.WardrobeLine1)
+                        {
+                            <option value="@GarmentGender.ClothingID" style="font-size:x-small" @(GarmentGender.ClothingID == ViewBag.WardrobeLine1ck ? "selected" : "")>@GarmentGender.ClothingDescription</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList2" style="padding: 0px; font-size: xx-small;">List 2</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList2" style="width: 150px; font-size: x-small; vertical-align: top;" onchange="SetWardrobe(2);">
+                    <option value="0" style="font-size:x-small">Please Choose ...</option>
+                    @if (ViewBag.WardrobeLine2 != null)
+                    {
+                        foreach (spGetUsersUsedMenuItems_Result WardrobeLine in ViewBag.WardrobeLine2)
+                        {
+                            <option value="@WardrobeLine.ClothingID" style="font-size:x-small" @(WardrobeLine.ClothingID == ViewBag.WardrobeLine2ck ? "selected" : "")>@WardrobeLine.ClothingDescription</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList3" style="padding: 0px; font-size: xx-small;">List 3</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList3" style="width: 150px; font-size: x-small; vertical-align: top;" onchange="SetWardrobe(3);">
+                    <option value="0" style="font-size:x-small">Please Choose ...</option>
+                    @if (ViewBag.WardrobeLine3 != null)
+                    {
+                        foreach (spGetUsersUsedMenuItems_Result WardrobeLine in ViewBag.WardrobeLine3)
+                        {
+                            <option value="@WardrobeLine.ClothingID" style="font-size:x-small" @(WardrobeLine.ClothingID == ViewBag.WardrobeLine3ck ? "selected" : "")>@WardrobeLine.ClothingDescription</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList4" style="padding: 0px; font-size: xx-small;">List 4</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList4" style="width: 150px; font-size: x-small; vertical-align: top;" onchange="SetWardrobe(4);">
+                    <option value="0" style="font-size:x-small">Please Choose ...</option>
+                    @if (ViewBag.WardrobeLine4 != null)
+                    {
+                        foreach (spGetUsersUsedMenuItems_Result WardrobeLine in ViewBag.WardrobeLine4)
+                        {
+                            <option value="@WardrobeLine.ClothingID" style="font-size:x-small" @(WardrobeLine.ClothingID == ViewBag.WardrobeLine4ck ? "selected" : "")>@WardrobeLine.ClothingDescription</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList5" style="padding: 0px; font-size: xx-small;">List 5</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList5" style="width: 150px; font-size: x-small; vertical-align: top;" onchange="SetWardrobe(5);">
+                    <option value="0" style="font-size:x-small">Please Choose ...</option>
+                    @if (ViewBag.WardrobeLine5 != null)
+                    {
+                        foreach (spGetUsersUsedMenuItems_Result WardrobeLine in ViewBag.WardrobeLine5)
+                        {
+                            <option value="@WardrobeLine.ClothingID" style="font-size:x-small" @(WardrobeLine.ClothingID == ViewBag.WardrobeLine5ck ? "selected" : "")>@WardrobeLine.ClothingDescription</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList6" style="padding:0px;font-size:xx-small;">List 6</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList6" style="width: 150px; font-size: x-small; vertical-align: top;" onchange="SetWardrobe(6);">
+                    <option value="0" style="font-size:x-small">Please Choose ...</option>
+                    @if (ViewBag.WardrobeLine6 != null)
+                    {
+                        foreach (spGetUsersUsedMenuItems_Result WardrobeLine in ViewBag.WardrobeLine6)
+                        {
+                            <option value="@WardrobeLine.ClothingID" style="font-size:x-small" @(WardrobeLine.ClothingID == ViewBag.WardrobeLine6ck ? "selected" : "")>@WardrobeLine.ClothingDescription</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- Wardrobe Image List -->
+<div id="myCustomerOutfit">
+    <div id="dvImageSpacer" class="ui-widget ui-helper-clearfix" style="border-left-color: black; border-right-color: black; border-top-color: black; border-left-width: thin; border-left: solid; border-right-width: thin; border-right-style: solid; border-top-width: thin; border-top-style: solid; position: absolute; background: #e7dede; width: 160px; top: 190px; height: 15px; left: 210px; overflow: hidden; overflow-x: hidden; ">
+    </div>
+    <div id="dvCategoryFiles" class="ui-widget ui-helper-clearfix sidebar" style="border-left-color: black; border-right-color: black; border-bottom-color: black; border-left-width: thin; border-left: solid; border-right-width: thin; border-right-style: solid; border-bottom-width: thin; border-bottom-style: solid; position: absolute; background: #e7dede; width: 160px; top: 205px; height: 235px; left: 210px; overflow: scroll; overflow-x: hidden; ">
+        <div id="dvFiles" style="position:relative;top:15px;">
+            <center>
+                @if (ViewBag.OutfitWardrobeClothingList != null)
+                {
+                    foreach (spGet_FileList_Result GarmentWardrobe in ViewBag.OutfitWardrobeClothingList)
+                    {
+                        <script>
+                            //alert('Wardrobe File: @GarmentWardrobe.Filename');
+                        </script>
+                        <img draggable="true" style="z-index: 1002;" class="Garments grmImages" data-item="@GarmentWardrobe.Name" data-web="@GarmentWardrobe.web" data-owner="@GarmentWardrobe.Owner" alt="@GarmentWardrobe.attachID" id="@GarmentWardrobe.attachID" width="100" height="100" title="@GarmentWardrobe.Name" src='@GarmentWardrobe.Filename' />
+                        <br /><br />
+                    }
+                }
+            </center>
+        </div>
+    </div>
+    <!-- Image List Header -->
+    <div id="dvbtnFolder" style="position:absolute;top:180px;left:250px;height:25px">
+        <button id="btn1" title="Garment(s)" value="Garment(s)" style="font-size:x-small;font-weight:bold;">Garment(s)</button>
+    </div>
+
+    <!-- No Garment -->
+    <div id="dvOutfitImage" class="myTrash" style="position:absolute;top:180px;left:400px;height:250px">
+        <div id="dvTrash" class="myTrash">
+            <div class="dvTrash_list">
+                <img id="imgNoOutfit" class="myTrash" width="330" height="260" style="border:solid;border-color:black; border-width:2px;" src="Images/BeginOutfit.gif" />
+            </div>
+        </div>
+    </div>
+
+    <div id="dvOutfitDesc" style="position:absolute;top:160px;left:410px;height:75px;width:400px;">
+        <label id="lblUserOutfitDesc" style="font-weight:bold;">Outfit Description:</label>
+        <input id="bxUserOutfitDesc" style="font-size:smaller;" value="@ViewBag.OutfitDesc" onblur="SaveLabel();" width="170" />
+    </div>
+
+    <!-- Mannequin Male Body -->
+    <div id="dvMaleMannequin" class="myOutfit" style="position:absolute;top:200px;left:400px;height:450px;">
+        <img id="imgMaleUpper" alt="" title="Mannequin: Male Upper" data-FrameID="6" class="Mannequin" style="z-index:500;" width="230" height="175" src="Images/Mannequin_Man_Top.jpg" />
+        <br />
+        <img id="imgMaleLower" alt="" title="Mannequin: Male Lower" data-frameid="7" class="Mannequin" style="z-index:500;" width="230" height="125" src="Images/Mannequin_Man_Bottom_Legs.jpg" />
+        <br />
+        <img id="imgMaleFeet" alt="" title="Mannequin: Male Feet" data-frameid="8" class="Mannequin" style="z-index:500;" width="230" height="50" src="Images/Mannequin_Man_Full_Bottom_Feet.jpg" />
+
+        <img id="imgMaleHand" alt="" title="Mannequin: Male Hand" data-frameid="9" class="Mannequin" width="100" height="150" style="position:absolute;top:5px;left:240px;z-index:500;" src="Images/Mannequin_Man_Arm_Hand_Trim.jpg" />
+        <img id="imgMaleFoot" alt="" title="Mannequin: Male Foot" data-frameid="10" class="Mannequin" width="100" height="150" style="position:absolute;top:200px;left:240px;z-index:500;" src="Images/Mannequin_Man_Full_Bottom_Foot.jpg" />
+    </div>
+
+    <!-- Mannequi Female Body -->
+    <div id="dvFemailMannequin" class="myOutfit" style="position: absolute; top: 200px; left: 400px; height: 450px; ">
+        <img id="imgWomanTop" alt="" title="Mannequin: Woman Top" data-frameid="1" class="Mannequin" style="z-index:500;" width="230" height="175" src="Images/Mannequin_Woman_Top.jpg" />
+        <br />
+        <img id="imgWomanLegs" alt="" title="Mannequin: Woman Legs" data-frameid="2" class="Mannequin" style="z-index:500;" width="230" height="125" src="Images/Mannequin_Woman_Lower.jpg" />
+        <br />
+        <img id="imgWomanFeet" alt="" title="Mannequin: Woman Feet" data-frameid="3" class="Mannequin" style="z-index:500;" width="230" height="50" src="Images/Mannequin_Woman_Feet.jpg" />
+
+        <img id="imgWomanHand" alt="" title="Mannequin: Woman Hand" data-frameid="4" class="Mannequin" width="100" height="150" style="position:absolute;top:5px;left:240px;z-index:500;" src="Images/Mannequin_Woman_Right_Hand.jpg" />
+        <img id="imgWomanFeetTrim" alt="" title="Mannequin: Woman Feet" data-frameid="5" class="Mannequin" width="100" height="150" style="position:absolute;top:200px;left:240px;z-index:500;" src="Images/Mannequin_Woman_Feet_trim.jpg" />
+    </div>
+</div>
+
+<!-- Outfit Tools -->
+<div id="dvOutfitTools" style="position:absolute;z-index:1003;top:550px;left:400px;height:60px;width:340px;background-image:url('Images/btnBackground.gif'); border-image-repeat:repeat;">
+    <label>&nbsp;&nbsp;&nbsp;</label>
+    <input id="btnNew" type="image" onclick="NewOutfit();" src="~/Images/btnNew.jpg" alt="New Outfit" />
+    <div id="dvShare" style="position:absolute;Left:125px;top:15px">
+        <input type="image" id="btnShare" onclick="ShareOutfit();" src="~/Images/FacebookPIC.PNG" alt="Share Outfit" />
+    </div>
+    <div id="dvSave" style="position:absolute;Left:195px;top:5px">
+        <input id="btnSave" type="image" onclick="SaveOutfit('');" src="~/Images/btnSaveDisk.gif" alt="Save Outfit" />
+    </div>
+    <div id="dvDelete" style="position:absolute;left:255px;top:5px">
+        @using (Html.BeginForm("DeleteOutfit", "Outfit", FormMethod.Post))
+        {
+            <input type="hidden" name="OutfitID" id="OutfitID" value="@ViewBag.OutfitID" />
+            <input type="image" id="btnDelete" onclick="return DeleteOutfit();" width="69" height="45" src="~/Images/btnDelete_Gray.png" alt="Delete!" style="border-style: none;" />
+        }
+    </div>
+</div>
+
+<!--Outfit Header -->
+<div id="dvOutfitHeader" style="left:800px; top:150px;width:150px;position:absolute;text-align:center;">
+    <label id="LblHeader" style="font-size:x-large;font-weight:bold;">Outfit</label>
+</div>
+
+<!-- Outfit Categories -->
+<div id="dvOutfitCategories" style="left:800px; top:190px;position:absolute;">
+    <input type="hidden" id="bxOutFitCategoryID" value="" />
+    <input type="hidden" id="bxOutFitID" value="@ViewBag.OutfitID" />
+
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList0" style="padding:0px;">Outfit Creator</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlOutFit0" style="width: 150px; font-size: x-small;vertical-align:top;" onchange="SetOutfit(0);">
+                        @foreach (spGetFBUserOutfitList_Result ShareUsersOutfitItem in ViewBag.ShareOutfitUsers)
+                        {
+                            <option class="@(ShareUsersOutfitItem.ShareFriendUserID == "" ? "mnuHeader" : "mnuHeaderItem")" @(ShareUsersOutfitItem.ShareFriendUserID == "" ? "disabled" : "") value="@ShareUsersOutfitItem.ShareFriendUserID" style="font-size:x-small" @(ShareUsersOutfitItem.ShareFriendUserID == ViewBag.OutfitClosetUserID ? "selected" : "")>@ShareUsersOutfitItem.ShareFriendUser</option>
+                        }
+                </select>
+            </td>
+        </tr>
+    </table>
+
+    <label id="lblOutFit1" style="font-size:x-small">Gender</label>
+    <br />
+    <select id="ddlOutFit1" style="width: 150px; font-size: x-small; vertical-align: top;" onchange="SetOutfit(1);">
+        <option value="0" style="font-size:x-small">Select Gender</option>
+        @if (ViewBag.OutfitLine1 != null)
+        {
+            foreach (spGetOutfitUsedMenuItems_Result OutfitGender in ViewBag.OutfitLine1)
+            {
+                <option value="@OutfitGender.OutfitGroupID" style="font-size:x-small" @(OutfitGender.OutfitGroupID == ViewBag.OutfitLVL1ck ? "selected" : "")>@OutfitGender.OutfitGroupDesc</option>
+            }
+        }
+    </select>
+
+    <br />
+    <label id="lblOutFit2" style="font-size:x-small">Level 2</label>
+    <br />
+    <select id="ddlOutFit2" style="width: 150px; font-size: x-small; vertical-align: top;" onchange="SetOutfit(2);">
+        <option value="0" style="font-size:x-small">Please Choose ...</option>
+        @if (ViewBag.OutfitLine2 != null)
+        {
+            foreach (spGetOutfitUsedMenuItems_Result OutfitLevel2 in ViewBag.OutfitLine2)
+            {
+                <option value="@OutfitLevel2.OutfitGroupID" style="font-size:x-small" @(OutfitLevel2.OutfitGroupID == ViewBag.OutfitLVL2ck ? "selected" : "")>@OutfitLevel2.OutfitGroupDesc</option>
+            }    
+        }
+    </select>
+    <br />
+    <label id="lblOutFit3" style="font-size:x-small">Level 3</label>
+    <br />
+    <select id="ddlOutFit3" style="width: 150px; font-size: x-small; vertical-align: top;" onchange="SetOutfit(3);">
+        <option value="0" style="font-size:x-small">Please Choose ...</option>
+        @if (ViewBag.OutfitLine3 != null)
+        {
+            foreach (spGetOutfitUsedMenuItems_Result OutfitLevel3 in ViewBag.OutfitLine3)
+            {
+                <option value="@OutfitLevel3.OutfitGroupID" style="font-size:x-small" @(OutfitLevel3.OutfitGroupID == ViewBag.OutfitLVL3ck ? "selected" : "")>@OutfitLevel3.OutfitGroupDesc</option>
+            }
+        }
+    </select>
+    <br />
+    <label id="lblOutFit4" style="font-size:x-small">Level 4</label>
+    <br />
+    <select id="ddlOutFit4" style="width: 150px; font-size: x-small; vertical-align: top;" onchange="SetOutfit(4);">
+        <option value="0" style="font-size:x-small">Please Choose ...</option>
+        @if (ViewBag.OutfitLine4 != null)
+        {
+            foreach (spGetOutfitUsedMenuItems_Result OutfitLevel4 in ViewBag.OutfitLine4)
+            {
+                <option value="@OutfitLevel4.OutfitGroupID" style="font-size:x-small" @(OutfitLevel4.OutfitGroupID == ViewBag.OutfitLVL4ck ? "selected" : "")>@OutfitLevel4.OutfitGroupDesc</option>
+            }
+        }
+    </select>
+    <br />
+    <label id="lblOutFit5" style="font-size:x-small">Level 5</label>
+    <br />
+    <select id="ddlOutFit5" style="width: 150px; font-size: x-small; vertical-align: top;" onchange="SetOutfit(5);">
+        <option value="0" style="font-size:x-small">Please Choose ...</option>
+        @if (ViewBag.OutfitLine5 != null)
+        {
+            foreach (spGetOutfitUsedMenuItems_Result OutfitLevel5 in ViewBag.OutfitLine5)
+            {
+                <option value="@OutfitLevel5.OutfitGroupID" style="font-size:x-small" @(OutfitLevel5.OutfitGroupID == ViewBag.OutfitLVL5ck ? "selected" : "")>@OutfitLevel5.OutfitGroupDesc</option>
+            }
+        }
+    </select>
+    <br />
+    <label id="lblOutFit6" style="font-size:x-small">Level 6</label>
+    <br />
+    <select id="ddlOutFit6" style="width: 150px; font-size: x-small; vertical-align: top;" onchange="SetOutfit(6);">
+        <option value="0" style="font-size:x-small">Please Choose ...</option>
+        @if (ViewBag.OutfitLine6 != null)
+        {
+            foreach (spGetOutfitUsedMenuItems_Result OutfitLevel6 in ViewBag.OutfitLine6)
+            {
+                <option value="@OutfitLevel6.OutfitGroupID" style="font-size:x-small" @(OutfitLevel6.OutfitGroupID == ViewBag.OutfitLVL6ck ? "selected" : "")>@OutfitLevel6.OutfitGroupDesc</option>
+            }
+        }
+    </select>
+    <br />
+</div>
+
+<!-- Creating Outfit Customer Categories-->
+<div id="dvOutfitCreateCategories" style="left:800px; top:270px;position:absolute;width:150px;text-align:center;">
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <div id="dvLabelOutfitCustomCategory" style="position:relative;top:8px;">
+                    <label id="lblOutfitCustomerCategory" style="padding: 0px; font-size: xx-small;">Custom Outfit Category</label>
+                </div>
+
+                @using (Html.BeginForm("AddOutfitCategory", "Outfit", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <input id="inpOutfitCustomCategoryID" name="inpOutfitCustomCategoryID" type="hidden" value="" />
+                    <input id="inpOutfitCustomDesc" name="inpOutfitCustomDesc" style="padding: 0px;font-size: xx-small;" type="text" value="" size="27" />
+                                                                    <br />
+                    <input type="image" src="~/Images/btnAddOutfitCustom_STD.png" alt="Create Custom Outfit Category" />
+                }
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- Image List Header -->
+<div id="dvOutfitImageListHeader" class="ui-widget-content ui-state-default" style="position:absolute;top:415px;left:900px;height:25px;z-index:1002;">
+    <asp:Button ID="btnOutfitListHeader" Text="Outfit(s)" runat="server" Font-Size="X-Small" Font-Bold="true" />
+</div>
+
+<!-- Outfit List -->
+<div id="dvListLBL" style="position: absolute; height: 25px; left: 825px; top: 415px;z-index: 1002; width: 175px;">
+    <label id="lblOutfitListLBL" style="padding:0px;">Outfit List:</label>
+    
+    <div id="dvListLBLInstr" style="top:-15px;position:relative;left:-15px">
+        <label id="lblLoadOutfitDesc" style="padding:0px;font-size:xx-small">(Double Click To Load)</label>
+    </div>
+</div>
+<div id="dvOutFitImage" style="position: absolute; background: white; height: 150px; left: 775px; top: 435px; overflow: scroll; overflow-x:hidden;z-index: 1002; width: 175px; border-color: black; border-style: solid;">
+    <select id="ddlOutFitLST" multiple onclick="return false;" ondblclick="return LoadOutfit();" style="height:150px;width: 175px; font-size: x-small; vertical-align: top;">
+        @if (ViewBag.OutfitList != null)
+        { 
+            foreach (spView_UserOutfitsDesc_Result OutfitItem in ViewBag.OutfitList)
+            {
+                <option value="@OutfitItem.uoUserOutfitID" style="font-size:x-small">@OutfitItem.uoUserOutfitDesc</option>
+            }
+        }
+    </select>
+</div>
+
+<!-- Share With Friends Section -->
+<article id="UserFriends">
+    <div id="dvUserFriends" class="left" style="align-content:center;align-items:center;align-self:center; text-align:center;grid-column-align:center;position: absolute; top: 625px; left: 250px; padding:0px; margin:0px;border-color:black;border-style:solid;border-width:thin; width:490px;">
+        <center><label style="font-weight:bolder;font-size:xx-large;">Friends</label></center>
+
+        <a href='' onclick='FriendShare(1); return false;'>Select All</a> / <a href='' onclick='FriendShare(2); return false;'>UnSelect All</a>
+
+        @if (Model.Friends != null && Model.Friends.Data != null && Model.Friends.Data.Count > 0)
+{
+    using (Html.BeginForm("UpdateFriends", "Outfit"))
+    {
+        foreach (var myFriend in @Model.Friends.Data)
+        {
+            ViewBag.ShareOutfitFG = false;
+
+            if (ViewBag.ShareOutfitFriends != null)
+            {
+                foreach (var myShareFriend in ViewBag.ShareOutfitFriends)
+                {
+                    if (@myFriend.Id.ToString() == myShareFriend.shareOutfitFriendID)
+                    {
+                        ViewBag.ShareOutfitFG = true;
+                    }
+                }
+            }
+            <table>
+                <tr>
+                    <td align="center">
+                        <center>
+                            <div class="photoTile">
+                                <label>@myFriend.Name</label>
+                                @if (myFriend.Picture != null && myFriend.Picture.Data != null)
+                                {
+                                    <img src="@myFriend.Picture.Data.Url" title="@myFriend.Id" />
+                                }
+                            </div>
+                        </center>
+                    </td>
+                    <td>
+                        @if ((ViewBag.OutfitLBL != "tmpOutfit") && (ViewBag.OutfitLBL != "") && (ViewBag.userID == ViewBag.uClosetUserID))
+                        {
+                            if (ViewBag.ShareOutfitFG)
+                            {
+                                @Html.CheckBox("ShareFriends", true, new { value = @myFriend.Id })
+                            }
+                            else
+                            {
+                                @Html.CheckBox("ShareFriends", false, new { value = @myFriend.Id })
+                            }
+                        }
+                    </td>
+                </tr>
+            </table>
+        }
+
+                <input type="hidden" name="ShareOutfitID" id="ShareOutfitID" value="@ViewBag.ShareOutfitID" />
+                <input type="image" src="~/Images/btnUpdate.jpg" alt="Save data" />
+
+                <div style="position: absolute; top: 20px; left: 400px; padding:0px; margin:0px;">
+                    <input type="image" src="~/Images/btnUpdate.jpg" alt="Save data" />
+                </div>
+            }
+        }
+        else
+        {
+            <p>No friends found.</p>
+        }
+    </div>
+</article>
+
+<div id="dlgMannequinTop" title="Mannequin Outfit's Top">
+    <p>
+        <img id="imgDLGMannequinTop" alt='Mannequin Top' width="50" height="50" src="~/Images/Mannequin_Woman_Top.jpg" />
+        <br />
+        Item: <span id="spanMannequinTopItem"></span>
+        <br />
+        Owner: <span id="spanMannequinTopOwner"></span>
+        <p id="pMannequinTop">
+            Buy: <a id="lnkMannequinTopBuyMe" href="" target="_blank">Click Here</a>
+        </p>
+    </p>
+</div>
+
+<div id="dlgMannequinLegs" title="Mannequin Outfit's Legs">
+    <p>
+        <img id="imgDLGMannequinLegs" alt='Mannequin Legs' width="50" height="50" src="~/Images/Mannequin_Woman_Lower.jpg" />
+        <br />
+        Item: <span id="spanMannequinLegsItem"></span>
+        <br />
+        Owner: <span id="spanMannequinLegsOwner"></span>
+        <p id="pMannequinLegs">
+        Buy: <a id="lnkMannequinLegsBuyMe" href="" target="_blank">Click Here</a>
+        </p>
+    </p>
+</div>
+
+<div id="dlgMannequinFeet" title="Mannequin Outfit's Feet">
+    <p>
+        <img id="imgDLGMannequinFeet" alt='Mannequin Feet' width="50" height="50" src="~/Images/Mannequin_Woman_Feet.jpg" />
+        <br />
+        Item: <span id="spanMannequinFeetItem"></span>
+        <br />
+        Owner: <span id="spanMannequinFeetOwner"></span>
+        <p id="pMannequinFeet">
+        Buy: <a id="lnkMannequinFeetBuyMe" href="" target="_blank">Click Here</a>
+        </p>
+    </p>
+</div>
+
+<div id="dlgMannequinHand" title="Mannequin Outfit's Hand">
+    <p>
+        <img id="imgDLGMannequinHand" alt='Mannequin Hand' width="50" height="50" src="~/Images/Mannequin_Woman_Right_Hand.jpg" />
+        <br />
+        Item: <span id="spanMannequinHandItem"></span>
+        <br />
+        Owner: <span id="spanMannequinHandOwner"></span>
+        <p id="pMannequinHand">
+        Buy: <a id="lnkMannequinHandBuyMe" href="" target="_blank">Click Here</a>
+        </P>
+    </p>
+</div>
+
+<div id="dlgMannequinFoot" title="Mannequin Outfit's Foot">
+    <p>
+        <img id="imgDLGMannequinFoot" alt='Mannequin Foot' width="50" height="50" src="~/Images/Mannequin_Woman_Feet_trim.jpg" />
+        <br />
+        Item: <span id="spanMannequinFootItem"></span>
+        <br />
+        Owner: <span id="spanMannequinFootOwner"></span>
+        <p id="pMannequinFoot">
+        Buy: <a id="lnkMannequinFootBuyMe" href="" target="_blank">Click Here</a>
+        </p>
+    </p>
+</div>
+
+<div id="dvShareOutfit" title="Post Outfit to Facebook?">
+    <canvas id="myCanvas" width="578" height="300"></canvas>
+
+    <div id="dvPost" style="position:absolute;">
+        <p>
+            Post outfit to Facebook wall?
+        </p>
+
+        @using (Html.BeginForm("FacebookPOST", "Outfit", FormMethod.Post))
+        {
+            <input type="hidden" name="ShareOutfitIDTools" value="@ViewBag.ShareOutfitID" />
+            <input type="hidden" name="ShareOutfitGender" id="ShareOutfitGender" value="x" />
+            <input type="image" id="btnShare" onclick="OKShareOutfit();" src="~/Images/btnOK_STD.png" alt="OK!" style="border-style: none;" />
+            <input type="image" id="btnNo" onclick="CloseShareOutfit();return false;" src="~/Images/btnNo_STD.png" alt="NO!" style="border-style: none;" />
+        }
+    </div>
+</div>
+
+<script>
+    ////////////////////////
+    //Set Draggable
+    ////////////////////////
+    $(".Garments").draggable({
+        appendTo: 'body',
+        cursorAt: { top: 30, left: 30 },
+        revert: "valid",
+        helper: "clone",
+        opacity: 0.6,
+        containment: '.myCustomerOutfit',
+        refreshPositions: true,
+        cursor: 'move',
+        drag: function (event, ui) {
+            //alert('start drag');
+            //$('.Mannequin').addClass('FillMe');
+        },
+        stop: function (event, ui) {
+            //alert('stop drag');
+            $('.Mannequin').removeClass('FillMe');
+        }
+    });
+
+    ///////////////////////////////////////////////////////////
+    //make Garments Droppable
+    ///////////////////////////////////////////////////////////
+    $(".Mannequin").droppable({
+        hoverClass: "FillMe",
+        drop: function (event, ui) {
+            var targetElem = $(this).attr("id");
+            var myID = $(this).attr("id");
+
+            $(this).attr('src', $(ui.draggable).attr('src'));
+            $(this).attr('alt', $(ui.draggable).attr('alt'));
+
+            $(this).data("web",$(ui.draggable).data("web"));
+            $(this).data('item',$(ui.draggable).data("item"));
+            $(this).data('owner',$(ui.draggable).data("owner"));
+
+            var MannequinImage;
+            var MannequinDIV;
+            var MannequinDIVImage;
+            var MannequinDIVItem;
+            var MannequinDIVOwner;
+            var MannequinDIVBuyMe;
+            var MannequinP;
+
+            if (myID == "imgWomanTop")
+            {
+                //alert('ckMannequinTop-->' + $(ui.draggable).attr('alt'));
+                //alert('-->' + $(ui.draggable).attr('alt'));
+                $.cookie("ckMannequinTop", $(ui.draggable).attr('alt'));
+
+                MannequinImage = '#imgWomanTop';
+                MannequinDIV = '#dlgMannequinTop';
+                MannequinDIVImage = '#imgDLGMannequinTop';
+                MannequinDIVItem = '#spanMannequinTopItem';
+                MannequinDIVOwner = '#spanMannequinTopOwner';
+                MannequinDIVBuyMe = '#lnkMannequinTopBuyMe';
+                MannequinP = '#pMannequinTop';
+                $.cookie("ckMannequinTop", $(ui.draggable).attr('alt'));
+
+                var left = 100;
+                var top = 200;
+
+                $("#dlgMannequinTop").dialog("option", "position", [left, top]);
+
+                $(MannequinImage).hoverIntent(openMannequinTopDialog);
+            }
+            else if (myID == "imgMaleUpper") {
+                //alert('ckMannequinTop-->' + $(ui.draggable).attr('alt'));
+                $.cookie("ckMannequinTop", $(ui.draggable).attr('alt'));
+
+                MannequinImage = '#imgMaleUpper';
+                MannequinDIV = '#dlgMannequinTop';
+                MannequinDIVImage = '#imgDLGMannequinTop';
+                MannequinDIVItem = '#spanMannequinTopItem';
+                MannequinDIVOwner = '#spanMannequinTopOwner';
+                MannequinDIVBuyMe = '#lnkMannequinTopBuyMe';
+                MannequinP = '#pMannequinTop';
+                $.cookie("ckMannequinTop", $(ui.draggable).attr('alt'));
+
+                var left = 100;
+                var top = 200;
+                $("#dlgMannequinTop").dialog("option", "position", [left, top]);
+                $(MannequinImage).hoverIntent(openMannequinTopDialog);
+            }
+            else if (myID == "imgWomanLegs")
+            {
+                //alert('ckMannequinLegs-->' + $(ui.draggable).attr('alt'));
+                $.cookie("ckMannequinLegs", $(ui.draggable).attr('alt'));
+
+                MannequinImage = '#imgWomanLegs';
+                MannequinDIV = '#dlgMannequinLegs';
+                MannequinDIVImage = '#imgDLGMannequinLegs';
+                MannequinDIVItem = '#spanMannequinLegsItem';
+                MannequinDIVOwner = '#spanMannequinLegsOwner';
+                MannequinDIVBuyMe = '#lnkMannequinLegsBuyMe';
+                MannequinP = '#pMannequinLegs';
+                $.cookie("ckMannequinLegs", $(ui.draggable).attr('alt'));
+
+                var left = 100;
+                var top = 375;
+                $("#dlgMannequinLegs").dialog("option", "position", [left, top]);
+                $(MannequinImage).hoverIntent(openMannequinLegsDialog);
+            }
+            else if (myID == "imgMaleLower") {
+                //alert('ckMannequinLegs-->' + $(ui.draggable).attr('alt'));
+                $.cookie("ckMannequinLegs", $(ui.draggable).attr('alt'));
+
+                MannequinImage = '#imgMaleLower';
+                MannequinDIV = '#dlgMannequinLegs';
+                MannequinDIVImage = '#imgDLGMannequinLegs';
+                MannequinDIVItem = '#spanMannequinLegsItem';
+                MannequinDIVOwner = '#spanMannequinLegsOwner';
+                MannequinDIVBuyMe = '#lnkMannequinLegsBuyMe';
+                MannequinP = '#pMannequinLegs';
+                $.cookie("ckMannequinLegs", $(ui.draggable).attr('alt'));
+
+                var left = 100;
+                var top = 375;
+                $("#dlgMannequinLegs").dialog("option", "position", [left, top]);
+                $(MannequinImage).hoverIntent(openMannequinLegsDialog);
+            }
+            else if (myID == "imgWomanFeet")
+            {
+                //alert('ckMannequinFeet-->' + $(ui.draggable).attr('alt'));
+                $.cookie("ckMannequinFeet", $(ui.draggable).attr('alt'));
+                $(this).width(230);
+                $(this).height(175);
+
+                var dvFriendTop = $('#dvUserFriends').position().top;
+                var dvToolsTop = $('#dvOutfitTools').position().top;
+
+                alert('40px Wommen Fee');
+
+                var dvPositionFriedTop = dvToolsTop + 20 + 'px';
+                var dvPositionToolsTop = dvFriendTop + 20 + 'px';
+
+                $("#dvOutfitTools").css('top', dvPositionFriedTop);
+                $("#dvUserFriends").css('top', dvPositionToolsTop);
+
+                MannequinImage = '#imgWomanFeet';
+                MannequinDIV = '#dlgMannequinFeet';
+                MannequinDIVImage = '#imgDLGMannequinFeet';
+                MannequinDIVItem = '#spanMannequinFeetItem';
+                MannequinDIVOwner = '#spanMannequinFeetOwner';
+                MannequinDIVBuyMe = '#lnkMannequinFeetBuyMe';
+                MannequinP = '#pMannequinFeet';
+                $.cookie("ckMannequinFeet", $(ui.draggable).attr('alt'));
+
+                var left = 100;
+                var top = 950;
+                $("#dlgMannequinFeet").dialog("option", "position", [left, top]);
+                $(MannequinImage).hoverIntent(openMannequinFeetDialog);
+            }
+            else if (myID == "imgMaleFeet")  {
+                //alert('ckMannequinFeet-->' + $(ui.draggable).attr('alt'));
+                $.cookie("ckMannequinFeet", $(ui.draggable).attr('alt'));
+                $(this).width(230);
+                $(this).height(175);
+
+                var dvFriendTop = $('#dvUserFriends').position().top;
+                var dvToolsTop = $('#dvOutfitTools').position().top;
+
+                alert('40 male feet');
+
+                var dvPositionFriedTop = dvToolsTop + 20 + 'px';
+                var dvPositionToolsTop = dvFriendTop + 20 + 'px';
+
+                $("#dvOutfitTools").css('top', dvPositionFriedTop);
+                $("#dvUserFriends").css('top', dvPositionToolsTop);
+
+                MannequinImage = '#imgMaleFeet';
+                MannequinDIV = '#dlgMannequinFeet';
+                MannequinDIVImage = '#imgDLGMannequinFeet';
+                MannequinDIVItem = '#spanMannequinFeetItem';
+                MannequinDIVOwner = '#spanMannequinFeetOwner';
+                MannequinDIVBuyMe = '#lnkMannequinFeetBuyMe';
+                MannequinP = '#pMannequinFeet';
+                $.cookie("ckMannequinFeet", $(ui.draggable).attr('alt'));
+
+                var left = 100;
+                var top = 950;
+                $("#dlgMannequinFeet").dialog("option", "position", [left, top]);
+                $(MannequinImage).hoverIntent(openMannequinFeetDialog);
+            }
+            else if (myID == "imgWomanHand")
+            {
+                //alert('ckMannequinHand-->' + $(ui.draggable).attr('alt'));
+                $.cookie("ckMannequinHand", $(ui.draggable).attr('alt'));
+
+                MannequinImage = '#imgWomanHand';
+                MannequinDIV = '#dlgMannequinHand';
+                MannequinDIVImage = '#imgDLGMannequinHand';
+                MannequinDIVItem = '#spanMannequinHandItem';
+                MannequinDIVOwner = '#spanMannequinHandOwner';
+                MannequinDIVBuyMe = '#lnkMannequinHandBuyMe';
+                MannequinP = '#pMannequinHand';
+                $.cookie("ckMannequinHand", $(ui.draggable).attr('alt'));
+
+                var left = 680;
+                var top = 205;
+                $("#dlgMannequinHand").dialog("option", "position", [left, top]);
+                $(MannequinImage).hoverIntent(openMannequinHandDialog);
+            }
+            else if (myID == "imgMaleHand") {
+                //alert('ckMannequinHand-->' + $(ui.draggable).attr('alt'));
+                $.cookie("ckMannequinHand", $(ui.draggable).attr('alt'));
+
+                MannequinImage = '#imgMaleHand';
+                MannequinDIV = '#dlgMannequinHand';
+                MannequinDIVImage = '#imgDLGMannequinHand';
+                MannequinDIVItem = '#spanMannequinHandItem';
+                MannequinDIVOwner = '#spanMannequinHandOwner';
+                MannequinDIVBuyMe = '#lnkMannequinHandBuyMe';
+                MannequinP = '#pMannequinHand';
+                $.cookie("ckMannequinHand", $(ui.draggable).attr('alt'));
+
+                var left = 680;
+                var top = 205;
+                $("#dlgMannequinHand").dialog("option", "position", [left, top]);
+                $(MannequinImage).hoverIntent(openMannequinHandDialog);
+            }
+            else if (myID == "imgWomanFeetTrim")
+            {
+                //alert('ckMannequinFoot-->' + $(ui.draggable).attr('alt'));
+                $.cookie("ckMannequinFoot", $(ui.draggable).attr('alt'));
+
+                MannequinImage = '#imgWomanFeetTrim';
+                MannequinDIV = '#dlgMannequinFoot';
+                MannequinDIVImage = '#imgDLGMannequinFoot';
+                MannequinDIVItem = '#spanMannequinFootItem';
+                MannequinDIVOwner = '#spanMannequinFootOwner';
+                MannequinDIVBuyMe = '#lnkMannequinFootBuyMe';
+                MannequinP = '#pMannequinFoot';
+                $.cookie("ckMannequinFoot", $(ui.draggable).attr('alt'));
+
+                var left = 680;
+                var top = 400;
+                $("#dlgMannequinFoot").dialog("option", "position", [left, top]);
+                $(MannequinImage).hoverIntent(openMannequinFootDialog);
+            }
+            else if (myID == "imgMaleFoot") {
+                //alert('ckMannequinFoot-->' + $(ui.draggable).attr('alt'));
+                $.cookie("ckMannequinFoot", $(ui.draggable).attr('alt'));
+
+                MannequinImage = '#imgMaleFoot';
+                MannequinDIV = '#dlgMannequinFoot';
+                MannequinDIVImage = '#imgDLGMannequinFoot';
+                MannequinDIVItem = '#spanMannequinFootItem';
+                MannequinDIVOwner = '#spanMannequinFootOwner';
+                MannequinDIVBuyMe = '#lnkMannequinFootBuyMe';
+                MannequinP = '#pMannequinFoot';
+                $.cookie("ckMannequinFoot", $(ui.draggable).attr('alt'));
+                
+                var left = 680;
+                var top = 400;
+                $("#dlgMannequinFoot").dialog("option", "position", [left, top]);
+                $(MannequinImage).hoverIntent(openMannequinFootDialog);
+            }
+            else
+            {
+                //alert('2 MyID: ' + myID);
+            }
+
+            //alert('Name:' + $(MannequinImage).data("Name"));
+
+            
+            var myName = $(MannequinImage).data("item");
+            myName = $('<div/>').html(myName).text();
+
+            var myURL = $(ui.draggable).attr('src');
+            myURL = $('<div/>').html(myURL).text();
+
+            $(MannequinDIVImage).attr('src', myURL);
+            $(MannequinDIVItem).text(myName);
+            $(MannequinDIVOwner).text($(MannequinImage).data("owner"));
+
+            //alert('Web->' + $(MannequinImage).data("web") + '<-');
+
+            if ($(MannequinImage).data("web") == '')
+            {
+                $(MannequinDIVBuyMe).hide();
+                $(MannequinP).hide();
+            }
+            else
+            {
+                $(MannequinP).show();
+                $(MannequinDIVBuyMe).attr("href", $(MannequinImage).data("web"));
+            }
+        }
+    });
+
+    function ShareOutfit()
+    {
+        //alert('Outfit Type->' + $("#ddlOutFit1").val() + '<-');
+
+        $("#ShareOutfitGender").val($("#ddlOutFit1").val());
+
+        //alert('Gender:' + $("#ShareOutfitGender").val());
+
+        if ($("#ddlOutFit1").val().trim() == "2")
+        {
+            var img1 = document.getElementById('imgMaleUpper');
+            var img2 = document.getElementById('imgMaleLower');
+            var img3 = document.getElementById('imgMaleFeet');
+            var img4 = document.getElementById('imgMaleHand');
+            var img5 = document.getElementById('imgMaleFoot');
+        }
+        else if ($("#ddlOutFit1").val().trim() == "1")
+        {
+            var img1 = document.getElementById('imgWomanTop');
+            var img2 = document.getElementById('imgWomanLegs');
+            var img3 = document.getElementById('imgWomanFeet');
+            var img4 = document.getElementById('imgWomanHand');
+            var img5 = document.getElementById('imgWomanFeetTrim');
+        }
+
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+
+        canvas.width = 340;
+        canvas.height = 375;
+
+        context.drawImage(img1, 0, 0, 230,175);
+        context.drawImage(img2, 0, 180, 230, 125);
+        context.drawImage(img3, 0, 310, 230, 50);
+        context.drawImage(img4, 235, 0, 100, 150);
+        context.drawImage(img5, 235, 200, 100, 150);
+
+        $("#dvShareOutfit").dialog("open");
+    }
+
+    function CloseShareOutfit()
+    {
+        $("#dvShareOutfit").dialog("close");
+    }
+
+    function OKShareOutfit()
+    {
+        //alert('Yes Share Me');
+
+        $.cookie("ckShareOutFit", 'Y');
+
+        $("#dvShareOutfit").dialog("close");
+
+        window.location.href = window.location.href;
+    }
+
+    function NewOutfit()
+    {
+        $('#bxUserOutfitDesc').val('');
+        $('#bxOutFitID').val('');
+        $('#ckOutfitLBL').val('');
+        $('#ckOutfitID').val('');
+        $('#ckOutfitLoadID').val('');
+        $("#bxUserOutfitDesc").removeAttr("disabled");
+
+        $.cookie("ckMannequinTop", '');
+        $.cookie("ckMannequinLegs", '');
+        $.cookie("ckMannequinFeet", '');
+        $.cookie("ckMannequinHand", '');
+        $.cookie("ckMannequinFoot", '');
+        $.cookie("ckOutfitLBL", '');
+        $.cookie("ckOutfitLoadID", '');
+        $.cookie("ckOutfitID", '');
+
+        $('#imgWomanTop').attr('src', 'Images/Mannequin_Woman_Top.jpg');
+        $('#imgWomanTop').attr('title', 'Mannequin: Woman Top');
+        $('#imgWomanTop').attr('alt', '');
+
+        $('#imgWomanLegs').attr('src', 'Images/Mannequin_Woman_Lower.jpg');
+        $('#imgWomanLegs').attr('title', 'annequin: Woman Legs');
+        $('#imgWomanLegs').attr('alt', '');
+
+        $('#imgWomanFeet').attr('src', 'Images/Mannequin_Woman_Feet.jpg');
+        $('#imgWomanFeet').attr('title', 'Mannequin: Woman Feet');
+        $('#imgWomanFeet').attr('alt', '');
+        $('#imgWomanFeet').width(230);
+        $('#imgWomanFeet').height(50);
+
+        $('#imgWomanHand').attr('src', 'Images/Mannequin_Woman_Right_Hand.jpg');
+        $('#imgWomanHand').attr('title', 'Mannequin: Woman Hand');
+        $('#imgWomanHand').attr('alt', '');
+
+        $('#imgWomanFeetTrim').attr('src', 'Images/Mannequin_Woman_Feet_trim.jpg');
+        $('#imgWomanFeetTrim').attr('title', 'Mannequin: Woman Foot');
+        $('#imgWomanFeetTrim').attr('alt', '');
+
+        $('#imgMaleUpper').attr('src', 'Images/Mannequin_Man_Top.jpg');
+        $('#imgMaleUpper').attr('title', 'Mannequin: Male Upper');
+        $('#imgMaleUpper').attr('alt', '');
+
+        $('#imgMaleLower').attr('src', 'Images/Mannequin_Man_Bottom_Legs.jpg');
+        $('#imgMaleLower').attr('title', 'Mannequin: Male Lower');
+        $('#imgMaleLower').attr('alt', '');
+
+        $('#imgMaleFeet').attr('src', 'Images/Mannequin_Man_Full_Bottom_Feet.jpg');
+        $('#imgMaleFeet').attr('title', 'Mannequin: Male Feet');
+        $('#imgMaleFeet').attr('alt', '');
+        $('#imgMaleFeet').width(230);
+        $('#imgMaleFeet').height(50);
+
+        $('#imgMaleHand').attr('src', 'Images/Mannequin_Man_Arm_Hand_Trim.jpg');
+        $('#imgMaleHand').attr('title', 'Mannequin: Male Hand');
+        $('#imgMaleHand').attr('alt', '');
+
+        $('#imgMaleFoot').attr('src', 'Images/Mannequin_Man_Full_Bottom_Foot.jpg');
+        $('#imgMaleFoot').attr('title', 'Mannequin: Male Foot');
+        $('#imgMaleFoot').attr('alt', '');
+
+        $("#dvOutfitTools").css('top', '555px');
+        $("#dvUserFriends").css('top', '625px');
+
+        $('#bxUserOutfitDesc').css('visibility', 'visible');
+    }
+
+    function SaveOutfit(soOutfitLBL)
+    {
+        $.cookie("ckSaveOutfit", '0');
+
+        var OutfitLBL = $('#bxUserOutfitDesc').val();
+        OutfitID = $("#ddlOutFit1").val();
+        OutfitTXT = $("#ddlOutFit1 option:selected").text();
+
+        var GenderID = $("#ddlOutFit1").val();
+        $.cookie("GenderID", GenderID);
+
+        if ((OutfitLBL == '') && (soOutfitLBL != 'tmpOutfit')) {
+            //alert('soOutfitLBL: ' + soOutfitLBL);
+            alert("Please, complete the 'Outfit Description'!");
+        }
+        else if ((OutfitLBL == '') && (soOutfitLBL == 'tmpOutfit')) {
+            $.cookie("ckSaveOutfit", '0');
+
+            $.cookie("ckOutfitLBL", OutfitLBL);
+
+            var LoadID = $('#bxOutFitID').val();
+            if (LoadID == ' ')
+            {
+                LoadID = '';
+            }
+            $.cookie("ckOutfitLoadID", LoadID);
+
+            window.location.href = window.location.href;
+        }
+        else if ((OutfitLBL != '')) {
+            $.cookie("ckSaveOutfit", '1');
+
+            $.cookie("ckOutfitLBL", OutfitLBL);
+
+            var LoadID = $('#bxOutFitID').val();
+            if (LoadID == ' ')
+            {
+                LoadID = '';
+            }
+            $.cookie("ckOutfitLoadID", LoadID);
+
+            window.location.href = window.location.href;
+        }
+    }
+
+    function LoadOutfit()
+    {
+        var OutfitLBL = $('#ddlOutFitLST :selected').text();
+        var OutfitID = $('#ddlOutFitLST :selected').val();
+
+        var UserOutfitLBL = $('#ddlOutFit0 :selected').text();
+        var UserOutfitID = $('#ddlOutFit0 :selected').val();
+        
+        $.cookie("ckOutfitLBL", OutfitLBL);
+
+        if (OutfitID == ' ')
+        {
+            OutfitID = '';
+        }
+        $.cookie("ckOutfitLoadID", OutfitID);
+
+        //$('#imgWomanFeet').attr('src', '/Wardrobe/ShowImage?siFileID=0FE066FC-B645-48A0-8FC8-10B0F370F1F7');
+
+        //alert('hm: ' + OutfitLBL + '--->' + OutfitID);
+
+        //Clear Prior Outfit
+        $.cookie("ckMannequinTop", '');
+        $.cookie("ckMannequinLegs", '');
+        $.cookie("ckMannequinFeet", '');
+        $.cookie("ckMannequinHand", '');
+        $.cookie("ckMannequinFoot", '');
+        $.cookie("ckOutfitLBL", '');
+        $.cookie("ckOutfitID", '');
+
+        window.location.href = window.location.href;
+
+        return false;
+    }
+
+    function LoadOutfitImage(loiAttachID, loiFrameID, loiOutfitDesc, lioOutfitID, lioOutfitCategoryID, liOwner, liName, liWeb, liFilename)
+    {
+
+        liWeb = liWeb.replace("&amp;", "&"); 
+
+        loiOutfitDesc = StringCode(loiOutfitDesc);
+
+        $.cookie("ckOutfitID", lioOutfitID)
+        
+        if (loiOutfitDesc == 'tmpOutfit')
+        {
+            $('#bxUserOutfitDesc').val('');
+            $('#bxUserOutfitDesc').css('visibility', 'visible');
+            $("#bxUserOutfitDesc").removeAttr("disabled"); 
+        }
+        else
+        {
+            if ((loiOutfitDesc == 'null') || (loiOutfitDesc == 'Null') || (loiOutfitDesc == 'NULL'))
+            {
+                $('#bxUserOutfitDesc').val('');
+                $('#bxUserOutfitDesc').css('visibility', 'visible');
+                $("#bxUserOutfitDesc").removeAttr("disabled"); 
+            }
+            else
+            {
+                $('#bxUserOutfitDesc').val(loiOutfitDesc);
+                $("#bxUserOutfitDesc").attr("disabled", "disabled");
+            }
+        }
+
+        $('#bxOutFitCategoryID').val(lioOutfitCategoryID);
+        $.cookie("ckOutfitID", lioOutfitID);
+
+        //alert('Desc: ' + loiOutfitDesc);
+
+        var ImageSRC = '';
+        ImageSRC = "./_UserGarments/" + liFilename;
+        
+        var MannequinP;
+
+        if (loiFrameID == 1)
+        {
+            $('#imgWomanTop').attr('src', ImageSRC);
+            $('#imgWomanTop').attr('alt', loiAttachID);
+
+            MannequinImage = '#imgWomanTop';
+            MannequinDIV = '#dlgMannequinTop';
+            MannequinDIVImage = '#imgDLGMannequinTop';
+            MannequinDIVItem = '#spanMannequinTopItem';
+            MannequinDIVOwner = '#spanMannequinTopOwner';
+            MannequinDIVBuyMe = '#lnkMannequinTopBuyMe';
+            MannequinP = '#pMannequinTop';
+
+            $.cookie("ckMannequinTop", loiAttachID);
+
+            var left = 100;
+            var top = 200;
+
+            $("#dlgMannequinTop").dialog("option", "position", [left, top]);
+            $(MannequinImage).hoverIntent(openMannequinTopDialog);
+        }
+        else if (loiFrameID == 2)
+        {
+            $('#imgWomanLegs').attr('src', ImageSRC);
+            $('#imgWomanLegs').attr('alt', loiAttachID);
+
+            MannequinImage = '#imgWomanLegs';
+            MannequinDIV = '#dlgMannequinLegs';
+            MannequinDIVImage = '#imgDLGMannequinLegs';
+            MannequinDIVItem = '#spanMannequinLegsItem';
+            MannequinDIVOwner = '#spanMannequinLegsOwner';
+            MannequinDIVBuyMe = '#lnkMannequinLegsBuyMe';
+            MannequinP = '#pMannequinLegs';
+
+            $.cookie("ckMannequinLegs", loiAttachID);
+
+            var left = 100;
+            var top = 375;
+            $("#dlgMannequinLegs").dialog("option", "position", [left, top]);
+            $(MannequinImage).hoverIntent(openMannequinLegsDialog);
+        }
+        else if (loiFrameID == 3)
+        {
+            $('#imgWomanFeet').attr('src', ImageSRC);
+            $('#imgWomanFeet').attr('alt', loiAttachID);
+
+            MannequinImage = '#imgWomanFeet';
+            MannequinDIV = '#dlgMannequinFeet';
+            MannequinDIVImage = '#imgDLGMannequinFeet';
+            MannequinDIVItem = '#spanMannequinFeetItem';
+            MannequinDIVOwner = '#spanMannequinFeetOwner';
+            MannequinDIVBuyMe = '#lnkMannequinFeetBuyMe';
+            MannequinP = '#pMannequinFeet';
+
+            $.cookie("ckMannequinFeet", loiAttachID);
+
+            $('#imgWomanFeet').width(230);
+            $('#imgWomanFeet').height(175);
+
+            var dvFriendTop = $('#dvUserFriends').position().top;
+            var dvToolsTop = $('#dvOutfitTools').position().top;
+
+            //alert('-10 -> 140');
+
+            var dvPositionFriedTop = dvToolsTop + 130 + 'px';
+            var dvPositionToolsTop = dvFriendTop + 130 + 'px';
+
+            $("#dvOutfitTools").css('top', dvPositionFriedTop);
+            $("#dvUserFriends").css('top', dvPositionToolsTop);
+
+            var left = 100;
+            var top = 950;
+            $("#dlgMannequinFeet").dialog("option", "position", [left, top]);
+            $(MannequinImage).hoverIntent(openMannequinFeetDialog);
+
+        }
+        else if (loiFrameID == 4)
+        {
+            $('#imgWomanHand').attr('src', ImageSRC);
+            $('#imgWomanHand').attr('alt', loiAttachID);
+            
+            MannequinImage = '#imgWomanHand';
+            MannequinDIV = '#dlgMannequinHand';
+            MannequinDIVImage = '#imgDLGMannequinHand';
+            MannequinDIVItem = '#spanMannequinHandItem';
+            MannequinDIVOwner = '#spanMannequinHandOwner';
+            MannequinDIVBuyMe = '#lnkMannequinHandBuyMe';
+            MannequinP = '#pMannequinHand';
+
+            $.cookie("ckMannequinHand", loiAttachID);
+
+            var left = 680;
+            var top = 205;
+
+            $("#dlgMannequinHand").dialog("option", "position", [left, top]);
+            $(MannequinImage).hoverIntent(openMannequinHandDialog);
+        }
+        else if (loiFrameID == 5)
+        {
+            $('#imgWomanFeetTrim').attr('src', ImageSRC);
+            $('#imgWomanFeetTrim').attr('alt', loiAttachID);
+
+            MannequinImage = '#imgWomanFeetTrim';
+            MannequinDIV = '#dlgMannequinFoot';
+            MannequinDIVImage = '#imgDLGMannequinFoot';
+            MannequinDIVItem = '#spanMannequinFootItem';
+            MannequinDIVOwner = '#spanMannequinFootOwner';
+            MannequinDIVBuyMe = '#lnkMannequinFootBuyMe';
+            MannequinP = '#pMannequinFoot';
+
+            $.cookie("ckMannequinFoot", loiAttachID);
+
+            var left = 680;
+            var top = 400;
+
+            $("#dlgMannequinFoot").dialog("option", "position", [left, top]);
+            $(MannequinImage).hoverIntent(openMannequinFootDialog);
+        }
+        else if (loiFrameID == 6)
+        {
+            $('#imgMaleUpper').attr('src', ImageSRC);
+            $('#imgMaleUpper').attr('alt', loiAttachID);
+
+            MannequinImage = '#imgMaleUpper';
+            MannequinDIV = '#dlgMannequinTop';
+            MannequinDIVImage = '#imgDLGMannequinTop';
+            MannequinDIVItem = '#spanMannequinTopItem';
+            MannequinDIVOwner = '#spanMannequinTopOwner';
+            MannequinDIVBuyMe = '#lnkMannequinTopBuyMe';
+            MannequinP = '#pMannequinTop';
+
+            $.cookie("ckMannequinTop", loiAttachID);
+
+            var left = 100;
+            var top = 200;
+
+            $("#dlgMannequinTop").dialog("option", "position", [left, top]);
+            $(MannequinImage).hoverIntent(openMannequinTopDialog);
+        }
+        else if (loiFrameID == 7)
+        {
+            $('#imgMaleLower').attr('src', ImageSRC);
+            $('#imgMaleLower').attr('alt', loiAttachID);
+
+            MannequinImage = '#imgMaleLower';
+            MannequinDIV = '#dlgMannequinLegs';
+            MannequinDIVImage = '#imgDLGMannequinLegs';
+            MannequinDIVItem = '#spanMannequinLegsItem';
+            MannequinDIVOwner = '#spanMannequinLegsOwner';
+            MannequinDIVBuyMe = '#lnkMannequinLegsBuyMe';
+            MannequinP = '#pMannequinLegs';
+
+            $.cookie("ckMannequinLegs", loiAttachID);
+
+            var left = 100;
+            var top = 375;
+
+            $("#dlgMannequinLegs").dialog("option", "position", [left, top]);
+            $(MannequinImage).hoverIntent(openMannequinLegsDialog);
+        }
+        else if (loiFrameID == 8)
+        {
+            $('#imgMaleFeet').attr('src', ImageSRC);
+            $('#imgMaleFeet').attr('alt', loiAttachID);
+
+            MannequinImage = '#imgMaleFeet';
+            MannequinDIV = '#dlgMannequinFeet';
+            MannequinDIVImage = '#imgDLGMannequinFeet';
+            MannequinDIVItem = '#spanMannequinFeetItem';
+            MannequinDIVOwner = '#spanMannequinFeetOwner';
+            MannequinDIVBuyMe = '#lnkMannequinFeetBuyMe';
+            MannequinP = '#pMannequinFeet';
+
+            $.cookie("ckMannequinFeet", loiAttachID);
+
+            $('#imgMaleFeet').width(230);
+            $('#imgMaleFeet').height(175);
+
+            var dvFriendTop = $('#dvUserFriends').position().top;
+            var dvToolsTop = $('#dvOutfitTools').position().top;
+
+            //alert('10px');
+
+            var dvPositionFriedTop = dvToolsTop + 10 + 'px';
+            var dvPositionToolsTop = dvFriendTop + 10 + 'px';
+
+            $("#dvOutfitTools").css('top', dvPositionFriedTop);
+            $("#dvUserFriends").css('top', dvPositionToolsTop);
+
+            $.cookie("ckMannequinFeet", loiAttachID);
+
+            var left = 100;
+            var top = 950;
+
+            $("#dlgMannequinFeet").dialog("option", "position", [left, top]);
+            $(MannequinImage).hoverIntent(openMannequinFeetDialog);
+        }
+        else if (loiFrameID == 9)
+        {
+            $('#imgMaleHand').attr('src', ImageSRC);
+            $('#imgMaleHand').attr('alt', loiAttachID);
+
+            MannequinImage = '#imgMaleHand';
+            MannequinDIV = '#dlgMannequinHand';
+            MannequinDIVImage = '#imgDLGMannequinHand';
+            MannequinDIVItem = '#spanMannequinHandItem';
+            MannequinDIVOwner = '#spanMannequinHandOwner';
+            MannequinDIVBuyMe = '#lnkMannequinHandBuyMe';
+            MannequinP = '#pMannequinHand';
+
+            $.cookie("ckMannequinHand", loiAttachID);
+
+            var left = 680;
+            var top = 205;
+
+            $("#dlgMannequinHand").dialog("option", "position", [left, top]);
+            $(MannequinImage).hoverIntent(openMannequinHandDialog);
+        }
+        else if (loiFrameID == 10) {
+            $('#imgMaleFoot').attr('src', ImageSRC);
+            $('#imgMaleFoot').attr('alt', loiAttachID);
+
+            MannequinImage = '#imgMaleFoot';
+            MannequinDIV = '#dlgMannequinFoot';
+            MannequinDIVImage = '#imgDLGMannequinFoot';
+            MannequinDIVItem = '#spanMannequinFootItem';
+            MannequinDIVOwner = '#spanMannequinFootOwner';
+            MannequinDIVBuyMe = '#lnkMannequinFootBuyMe';
+            MannequinP = '#pMannequinFoot';
+
+            $.cookie("ckMannequinFoot", loiAttachID);
+
+            var left = 680;
+            var top = 400;
+
+            $("#dlgMannequinFoot").dialog("option", "position", [left, top]);
+            $(MannequinImage).hoverIntent(openMannequinFootDialog);
+        }
+
+        if ((liWeb == '') || (liWeb == 'undefined'))
+        {
+            $(MannequinDIVBuyMe).hide();
+            $(MannequinP).hide();
+        }
+        else
+        {
+            $(MannequinP).show();
+            $(MannequinDIVBuyMe).attr("href", liWeb);
+        }
+
+        $(MannequinDIVImage).attr('src', ImageSRC);
+        $(MannequinDIVItem).text(liName);
+        $(MannequinDIVOwner).text(liOwner);
+        //$(MannequinDIVBuyMe).attr("href", liWeb);
+    }
+</script>
+
+<script>
+    var myALT;
+    var myName;
+
+    $('.grmImages').each(function (i, obj)
+    {
+        //alert('-->' + $(this).attr('data-item'));
+        myName = $(this).attr('data-item');
+
+        myALT = $(this).attr('alt');
+        myALT = $('<div/>').html(myALT).text();
+
+        //alert('ALT:' + myALT);
+
+        $(this).attr('alt', myALT);
+        $(this).attr('title', myName);
+    });
+
+</script>

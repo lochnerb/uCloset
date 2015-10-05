@@ -1,0 +1,55 @@
+﻿@using fbuCloset.Models
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@model MyAppUser
+
+@{
+    ViewBag.Title = "How to create a wardrobe category";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<script>
+    $(document).ready
+    (
+        function () {
+
+            //////////////////////////////////////
+            // Required to close body gap - BEGIN
+            //////////////////////////////////////
+            var bdyHght = $('#dvBodyContent').height();
+            $('#dvBodyContent').height(bdyHght + 10);
+            //////////////////////////////////////
+            // Required to close body gap - END
+            //////////////////////////////////////
+        }
+    );
+</script>
+
+<center>
+    <h2>
+        How to create a wardrobe category
+    </h2>
+    <p>
+        <b>Step 1. Go To The Wardrobe Page.</b>
+        <br />
+        <img src="~/Images/WardrobeCategoryStep1.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 2. Choose <font color="#01b2fc">u</font><font color="#c239db">Closet</font> parent category to create new category under.</b>
+        <br />
+        <img src="~/Images/WardrobeCategoryStep2.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 3. Enter new category name into the text box 'Custom Category'.</b>
+        <br />
+        <img src="~/Images/WardrobeCategoryStep3.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 4. Click the button 'Add Custom'.</b>
+        <br />
+        <img src="~/Images/WardrobeCategoryStep4.PNG" width="400" height="200" />
+        <br /><br />
+        <b>Step 5. New category has been created.</b>
+        <br />
+        <img src="~/Images/WardrobeCategoryStep5.PNG" width="400" height="200" />
+        <br /><br />
+    </p>
+</center>
+

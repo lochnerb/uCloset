@@ -1,0 +1,888 @@
+﻿@using fbuCloset.Models
+@using Microsoft.AspNet.Mvc.Facebook.Models
+@using System.Web.Mvc
+@model MyAppUser
+
+@{
+    ViewBag.Title = "Wardrobe";
+}
+
+@Scripts.Render("~/bundles/jquery")
+
+<style type="text/css">
+    .ui-dialog {
+        position: absolute !important;
+    }
+
+    .ui-front {
+        z-index: 1000000 !important; /* The default is 100. !important overrides the default. */
+    }
+</style>
+
+<script>
+    $(document).ready
+    (
+        function () {
+            DisableFeatures();
+            LoadBuyMe();
+            DisplayError();
+
+            var VendorID = '@ViewBag.VenderID';
+            var ckDisplayError = $.cookie("DisplayError");
+
+            if (VendorID == "") {
+                //alert('VendorID:' + VendorID)
+                $('#dvAddAdittionalInfo').hide();
+            }
+            else {
+                //alert('Show Friends and adjust friends')
+                $('#dvAddAdittionalInfo').show();
+
+                if ((ckDisplayError == null) || (ckDisplayError == '0')) {
+                    $('#dvUserFriends').css({ top: '585px' });
+                }
+            }
+
+            //alert('VendorID:' + VendorID)
+
+            var bdyHght = $('#dvBodyContent').height();
+            var dvFriendHght = $('#dvUserFriends').height();
+            bdyHght = bdyHght + dvFriendHght;
+            $('#dvBodyContent').height(bdyHght);
+
+            var ckUserID = $.cookie("uClosetUserID");
+            var ckWardrobeUserID = $.cookie("ckWardrobeLVL0");
+            var myUserID = "";
+
+            if (ckWardrobeUserID == null)
+            {
+                myUserID = ckUserID;
+            }
+            else
+            {
+                myUserID = ckWardrobeUserID;
+            }
+
+            if ($('#ddlList2 option').size() == 1) {
+                $('#lblList2').hide();
+                $('#ddlList2').hide();
+            }
+            else {
+                var Label2 = "";
+                Label2 = $.cookie('ckWardrobeLVL1TXT') + '\'s';
+                $("#lblList2").text(Label2);
+            }
+
+            if ($('#ddlList3 option').size() == 1) {
+                $('#lblList3').hide();
+                $('#ddlList3').hide();
+            }
+            else {
+                var Label3 = "";
+                Label3 = $.cookie('ckWardrobeLVL1TXT') + ': ' + $.cookie('ckWardrobeLVL2TXT');
+                $("#lblList3").text(Label3);
+            }
+
+            if ($('#ddlList4 option').size() == 1) {
+                $('#lblList4').hide();
+                $('#ddlList4').hide();
+            }
+            else {
+                var Label4 = "";
+                Label4 = $.cookie('ckWardrobeLVL1TXT') + ': ' + $.cookie('ckWardrobeLVL3TXT');
+                $("#lblList4").text(Label4);
+            }
+
+            if ($('#ddlList5 option').size() == 1) {
+                $('#lblList5').hide();
+                $('#ddlList5').hide();
+            }
+            else {
+                var Label5 = "";
+                Label5 = $.cookie('ckWardrobeLVL1TXT') + ': ' + $.cookie('ckWardrobeLVL4TXT');
+                $("#lblList5").text(Label5);
+            }
+
+            if ($('#ddlList6 option').size() == 1) {
+                $('#lblList6').hide();
+                $('#ddlList6').hide();
+            }
+            else {
+                var Label6 = "";
+                Label6 = $.cookie('ckWardrobeLVL1TXT') + ': ' + $.cookie('ckWardrobeLVL5TXT');
+                $("#lblList6").text(Label6);
+            }
+
+            jQuery.support.cors = true;
+
+            $('#BtnGetCustomer').click
+            (
+                function () {
+                }
+            )
+        }
+    );
+
+    function DisplayError() {
+        var ckDisplayError = $.cookie("DisplayError");
+
+        //alert("Display Error:" + ckDisplayError + "<-");
+
+        if ((ckDisplayError == null) || (ckDisplayError == '0')) 
+        {
+            //alert("zero out:" + ckDisplayError + "<-");
+            ckDisplayError = 0;
+        }
+
+        if (ckDisplayError == '1')
+        {
+            //alert("Error ->" + ckDisplayError + "<-");
+            $('#dvUploadError').show();
+
+            //Move Down Friend List
+            $('#dvUserFriends').css({ top: '510px' });
+
+        }
+        else
+        {
+            //alert("No error->" + ckDisplayError + "<-");
+            $('#dvUploadError').hide();
+        }
+    }
+
+    function DeleteImage() {
+        var DeleteImage = $('#WardrobeName').val();
+        var result = confirm('Delete Image? ' + DeleteImage + '<--');
+
+        return result;
+    }
+
+    function DisableFeatures() {
+        var ckuClosetUserID = $.cookie("uClosetUserID");
+        var ckUserID = $.cookie("UserID");
+        var ckWardrobeUserID = $("#ddlList0").val();
+
+        //alert('uClosetUserID:' + $.cookie("uClosetUserID") + '<--');
+        //alert('UserID:' + $.cookie("UserID") + '<--');
+
+        //alert('ckUserID:' + ckUserID);
+        if (($.trim(ckuClosetUserID) == '') && ($.trim(ckUserID) == ''))
+        {
+            //alert('1');
+            alert('uCloset.net requires cookies to properly function.  Please enable cookies.')
+            window.location.href = 'http://www.ucloset.net';
+        }
+
+        //ddlList0
+        var VendorID;
+        var ckImageLoadID = $.cookie("ckSelectImageGUID");
+
+        if ((ckImageLoadID == null) || (ckImageLoadID == 'null') || (ckImageLoadID == 'NULL') || (ckImageLoadID == 'Null') || (ckImageLoadID == ''))
+        {
+            //alert('2');
+            //alert('Show Now');
+            $('#FileUpload1').show();
+            $('#Submit').show();
+            $('#dvAddNew').hide();
+            $('#dvDelete').hide();
+
+        }
+        else
+        {
+            //alert('3');
+            //alert('hide now:' + ckImageLoadID + '<-');
+            $("#inpItemName").attr("disabled", "true");
+            $("#inpItemWeb").attr("disabled", "true");
+            
+            $('#FileUpload1').hide();
+            $('#Submit').hide();
+            $('#dvAddNew').show();
+            $('#dvDelete').show();
+        }
+
+
+        var VendorUserID = '@ViewBag.VenderID';
+        //alert('VendorUserID:' + VendorUserID);
+
+        VendorID = false;
+
+        //alert('Hide - ckUserID:' + ckUserID + '<- WardrobeUserID:' + ckWardrobeUserID);
+        if ((ckUserID != ckWardrobeUserID) && (ckWardrobeUserID != null)) {
+            //alert('4');
+            //alert('bad - hide File');
+            $('#dvUserFriends').hide();
+            $('#dvAddFile').hide();
+            VendorID = true;
+
+            $('#dvAddNew').css({ top: '0px' });
+            $('#dvDelete').css({ top: '0px' });
+        }
+        else
+        {
+            //alert('5');
+            //alert('show me - show file');
+            $('#dvUserFriends').show();
+            $('#dvAddFile').show();
+            VendorID = false;
+            $('#dvAddNew').css({ top: '-10px' });
+            $('#dvDelete').css({ top: '-10px' });
+        }
+
+        if (VendorUserID != '')
+        {
+            //alert('6');
+            $('#dvUserFriends').hide();
+            //$('#dvAddFile').hide();
+        }
+
+        //Set ability to create custom categories
+        //alert('ddList:' + $("#ddlList1").val());
+        //alert('VendorID:' + VendorID);
+        //alert('VenderUserID->' + VendorUserID + '<-');
+        //
+        if (($("#ddlList1").val() >= 1) && (VendorID == false) && (VendorUserID == '')) {
+            //alert('8');
+            //alert('show: ' + $("#ddlList1").val())
+            $('#dvCreateCategories').show();
+            SetCustomCategory();
+        }
+        else {
+            //alert('9');
+            //alert('hide: ' + $("#ddlList1").val());
+            $('#dvCreateCategories').hide();
+        }
+    }
+
+    function SetCustomCategory() {
+
+        var lst2CNT = '@(ViewBag.WardrobeLine2 != null ? ViewBag.WardrobeLine2.Count : "-1")';
+        var lst3CNT = '@(ViewBag.WardrobeLine3 != null ? ViewBag.WardrobeLine3.Count : "-1")';
+        var lst4CNT = '@(ViewBag.WardrobeLine4 != null ? ViewBag.WardrobeLine4.Count : "-1")';
+        var lst5CNT = '@(ViewBag.WardrobeLine5 != null ? ViewBag.WardrobeLine5.Count : "-1")';
+        var lst6CNT = '@(ViewBag.WardrobeLine6 != null ? ViewBag.WardrobeLine6.Count : "-1")';
+
+        //alert('2: ' + lst2CNT + ', 3: ' + lst3CNT + ', 4: ' + lst4CNT + ", 5: " + lst5CNT + ', 6: ' + lst6CNT);
+
+        if (lst6CNT > 0) {
+            $('#dvCreateCategories').css({ top: '460px' });
+        }
+        else if (lst5CNT > 0) {
+            $('#dvCreateCategories').css({ top: '420px' });
+        }
+        else if (lst4CNT > 0) {
+            $('#dvCreateCategories').css({ top: '380px' });
+        }
+        else if (lst3CNT > 0) {
+            $('#dvCreateCategories').css({ top: '340px' });
+        }
+        else {
+            $('#dvCreateCategories').css({ top: '300px' });
+        }
+    }
+
+    function LoadBuyMe()
+    {
+        var SelectedImage = $.cookie("ckSelectImageID");
+
+        $("#dlgSelectedImage").dialog(
+        {
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide:
+                {
+                    effect: "explode",
+                    duration: 1000
+                },
+            draggable: false,
+            resizable: false,
+            zindex: 1005
+        });
+
+        if (SelectedImage != null) {
+            //alert('-->' + SelectedImage);
+
+            var left = 680;
+            var top = 400;
+
+            $("#dlgSelectedImage").dialog("option", "position", [left, top]);
+            $("#imgSelectedImage").hoverIntent(openSelectedImageDialog);
+
+            var ImageURL = '@ViewBag.SelectImageURL';
+            ImageURL = ImageURL.replace('&amp;', '&');
+
+            var ImageID = '@ViewBag.SelectImageID';
+
+            var ImageTitle = '@ViewBag.SelectedTitle';
+            ImageTitle = ImageTitle.replace('&amp;', '&');
+            var ImageALT = '@ViewBag.SelectedTitle';
+            ImageALT = ImageALT.replace('&amp;', '&');
+
+            //alert('ImageID:' + ImageID);
+
+            $('#imgDLGSelectedImage').attr('src', ImageID);
+            $('#spanSelectedImage').text(ImageTitle);
+            $('#spanSelectedImage').text(ImageALT);
+
+            //alert('Web->' + $(MannequinImage).data("web") + '<-');
+
+            if (ImageURL == '') {
+                $('#pSelectedImage').hide();
+                $('#lnkSelectedImageBuyMe').hide();
+            }
+            else {
+                $('#pSelectedImage').show();
+                $('#lnkSelectedImageBuyMe').attr("href", ImageURL);
+            }
+        }
+        else {
+            //alert('Its not there');
+        }
+    }
+
+    function openSelectedImageDialog() {
+        //alert('open');
+        $("#dlgSelectedImage").dialog("open");
+    }
+
+    function SetWardrobe(swlvl) {
+        var WardrobeID;
+
+        if (swlvl == 0) {
+            UserID = $("#ddlList0").val();
+            UserTXT = $("#ddlList0 option:selected").text();
+            WardrobeID = -1;
+
+            $.cookie("ckWardrobeLVL0", UserID);
+            $.cookie("ckWardrobeLVL0TXT", UserTXT);
+
+            $.cookie("ckSelectImageID", null);
+            $.cookie("ckSelectImageTitle", null);
+            $.cookie("ckSelectImageALT", null);
+            $.cookie("ckSelectImageGUID", null);
+            
+
+            $.cookie("ckWardrobeLVL1", null);
+            $.cookie("ckWardrobeLVL2", null);
+            $.cookie("ckWardrobeLVL3", null);
+            $.cookie("ckWardrobeLVL4", null);
+            $.cookie("ckWardrobeLVL5", null);
+            $.cookie("ckWardrobeLVL6", null);
+        }
+
+        if (swlvl == 1) {
+            WardrobeID = $("#ddlList1").val();
+            WardrobeTXT = $("#ddlList1 option:selected").text();
+
+            $.cookie("ckWardrobeLVL1", WardrobeID);
+            $.cookie("ckWardrobeLVL1TXT", WardrobeTXT);
+
+            $.cookie("ckWardrobeLVL2", null);
+            $.cookie("ckWardrobeLVL3", null);
+            $.cookie("ckWardrobeLVL4", null);
+            $.cookie("ckWardrobeLVL5", null);
+            $.cookie("ckWardrobeLVL6", null);
+        }
+        if (swlvl == 2) {
+            WardrobeID = $("#ddlList2").val();
+            WardrobeTXT = $("#ddlList2 option:selected").text();
+
+            if (WardrobeID == 0) {
+                WardrobeID = $("#ddlList1").val();
+                WardrobeTXT = $("#ddlList1 option:selected").text();
+            }
+
+            //alert('ckWardrobeLVL2:' + WardrobeID);
+            $.cookie("ckWardrobeLVL2", WardrobeID);
+            $.cookie("ckWardrobeLVL2TXT", WardrobeTXT);
+
+            $.cookie("ckWardrobeLVL3", null);
+            $.cookie("ckWardrobeLVL4", null);
+            $.cookie("ckWardrobeLVL5", null);
+            $.cookie("ckWardrobeLVL6", null);
+        }
+        if (swlvl == 3) {
+            WardrobeID = $("#ddlList3").val();
+            WardrobeTXT = $("#ddlList3 option:selected").text();
+
+            if (WardrobeID == 0) {
+                WardrobeID = $("#ddlList2").val();
+                WardrobeTXT = $("#ddlList2 option:selected").text();
+            }
+
+            $.cookie("ckWardrobeLVL3", WardrobeID);
+            $.cookie("ckWardrobeLVL3TXT", WardrobeTXT);
+
+            $.cookie("ckWardrobeLVL4", null);
+            $.cookie("ckWardrobeLVL5", null);
+            $.cookie("ckWardrobeLVL6", null);
+        }
+        if (swlvl == 4) {
+            WardrobeID = $("#ddlList4").val();
+            WardrobeTXT = $("#ddlList4 option:selected").text();
+
+            if (WardrobeID == 0) {
+                WardrobeID = $("#ddlList3").val();
+                WardrobeTXT = $("#ddlList3 option:selected").text();
+            }
+
+            $.cookie("ckWardrobeLVL4", WardrobeID);
+            $.cookie("ckWardrobeLVL4TXT", WardrobeTXT);
+
+            $.cookie("ckWardrobeLVL5", null);
+            $.cookie("ckWardrobeLVL6", null);
+        }
+        if (swlvl == 5) {
+            WardrobeID = $("#ddlList5").val();
+            WardrobeTXT = $("#ddlList5 option:selected").text();
+
+            if (WardrobeID == 0) {
+                WardrobeID = $("#ddlList4").val();
+                WardrobeTXT = $("#ddlList4 option:selected").text();
+            }
+
+            $.cookie("ckWardrobeLVL5", WardrobeID);
+            $.cookie("ckWardrobeLVL5TXT", WardrobeTXT);
+
+            $.cookie("ckWardrobeLVL6", null);
+        }
+        if (swlvl == 6) {
+            WardrobeID = $("#ddlList6").val();
+            WardrobeTXT = $("#ddlList6 option:selected").text();
+
+            if (WardrobeID == 0)
+            {
+                WardrobeID = $("#ddlList5").val();
+                WardrobeTXT = $("#ddlList5 option:selected").text();
+            }
+
+            $.cookie("ckWardrobeLVL6", WardrobeID);
+            $.cookie("ckWardrobeLVL6TXT", WardrobeTXT);
+        }
+
+        //alert('typeID: ' + WardrobeID);
+        $.cookie("bxClothingtypeID", WardrobeID);
+
+        //location.reload(true);
+        window.location.href = window.location.href;
+
+        return false;
+    }
+
+    function LoadImage(liImageID, liImageTitle, liImageALT, liImageGUID) {
+        $.cookie("ckSelectImageGUID", liImageGUID);
+        $.cookie("ckSelectImageID", liImageID);
+        $.cookie("ckSelectImageTitle", liImageTitle);
+        $.cookie("ckSelectImageALT", liImageALT);
+
+        //$('#inpItemName').val(decodeURIComponent(liImageTitle.replace(/\+/g, " ")));
+        //location.reload(true);
+        window.location.href = window.location.href;
+    }
+
+    function FriendShare(fsShare) {
+        if (fsShare == 1) {
+            var allCheckboxes = $("input[type=checkbox]");
+
+            // Put all the unique name attributes in an array.
+            allCheckboxes.each(function () {
+                $(this).removeAttr('checked');
+                $(this).prop('checked', true);
+            });
+        }
+        else {
+            var allCheckboxes = $("input[type=checkbox]");
+
+            // Put all the unique name attributes in an array.
+            allCheckboxes.each(function () {
+                $(this).removeAttr('checked');
+                $(this).prop('checked', false);
+            });
+        }
+
+        return false;
+    }
+
+    function SetNewImage()
+    {
+        $('#inpItemName').val('');
+        $('#inpItemWeb').val('');
+
+        $.cookie("ckSelectImageGUID", '');
+        $.cookie("ckSelectImageID", '');
+        $.cookie("ckSelectImageTitle", '');
+        $.cookie("ckSelectImageALT", '');
+
+        window.location.href = window.location.href;
+
+        return false;
+    }
+</script>
+
+<!-- Garments Type-->
+<div id="dvGarmentType" style="width:300px;">
+    <input type="hidden" id="bxClothingtypeID" value="0" />
+
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList0" style="padding:0px;">Closet Owner</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList0" style="width: 200px; font-size: x-small;vertical-align:top;" onchange="SetWardrobe(0);">
+                    @if (ViewBag.ShareUsers != null)
+                    {
+                        foreach (spGetFBUserList_Result ShareUsersItem in ViewBag.ShareUsers)
+                        {
+                            <option class="@(ShareUsersItem.ShareFriendUserID == "" ? "mnuHeader" : "mnuHeaderItem")" @(ShareUsersItem.ShareFriendUserID == "" ? "disabled" : "") value="@ShareUsersItem.ShareFriendUserID" style="font-size:x-small" @(ShareUsersItem.ShareFriendUserID == ViewBag.WardrobeUserID ? "selected" : "")>@ShareUsersItem.ShareFriendUser</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList1" style="padding: 0px; font-size: xx-small;">Gender</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList1" style="width: 200px; font-size: x-small;vertical-align:top;" onchange="SetWardrobe(1);">
+                    <option value="0" style="font-size:x-small">Select Gender</option>
+                    @if (ViewBag.WardrobeLine1 != null)
+                    {
+                        foreach (spGetUsersUsedMenuItems_Result GarmentGender in ViewBag.WardrobeLine1)
+                        {
+                            <option value="@GarmentGender.ClothingID" style="font-size:x-small" @(GarmentGender.ClothingID == ViewBag.WardrobeLine1ck ? "selected" : "")>@GarmentGender.ClothingDescription</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList2" style="padding: 0px; font-size: xx-small;">List 2</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList2" style="width: 200px; font-size: x-small; vertical-align: top;" onchange="SetWardrobe(2);">
+                    <option value="0" style="font-size:x-small">Please Choose ...</option>
+                    @if (ViewBag.WardrobeLine2 != null)
+                    {
+                        foreach (spGetUsersUsedMenuItems_Result WardrobeLevel in ViewBag.WardrobeLine2)
+                        {
+                            <option value="@WardrobeLevel.ClothingID" style="font-size:x-small" @(WardrobeLevel.ClothingID == ViewBag.WardrobeLine2ck ? "selected" : "")>@WardrobeLevel.ClothingDescription</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList3" style="padding: 0px; font-size: xx-small;">List 3</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList3" style="width: 200px; font-size: x-small; vertical-align: top;" onchange="SetWardrobe(3);">
+                    <option value="0" style="font-size:x-small">Please Choose ...</option>
+                    @if (ViewBag.WardrobeLine3 != null)
+                    {
+                        foreach (spGetUsersUsedMenuItems_Result WardrobeLevel in ViewBag.WardrobeLine3)
+                        {
+                            <option value="@WardrobeLevel.ClothingID" ondblclick="" style="font-size:x-small" @(WardrobeLevel.ClothingID == ViewBag.WardrobeLine3ck ? "selected" : "")>@WardrobeLevel.ClothingDescription</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList4" style="padding: 0px; font-size: xx-small;">List 4</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList4" style="width: 200px; font-size: x-small; vertical-align: top;" onchange="SetWardrobe(4);">
+                    <option value="0" style="font-size:x-small">Please Choose ...</option>
+                    @if (ViewBag.WardrobeLine4 != null)
+                    {
+                        foreach (spGetUsersUsedMenuItems_Result WardrobeLevel in ViewBag.WardrobeLine4)
+                        {
+                            <option value="@WardrobeLevel.ClothingID" style="font-size:x-small" @(WardrobeLevel.ClothingID == ViewBag.WardrobeLine4ck ? "selected" : "")>@WardrobeLevel.ClothingDescription</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList5" style="padding: 0px; font-size: xx-small;">List 5</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList5" style="width: 200px; font-size: x-small; vertical-align: top;" onchange="SetWardrobe(5);">
+                    <option value="0" style="font-size:x-small">Please Choose ...</option>
+                    @if (ViewBag.WardrobeLine5 != null)
+                    {
+                        foreach (spGetUsersUsedMenuItems_Result WardrobeLevel in ViewBag.WardrobeLine5)
+                        {
+                            <option value="@WardrobeLevel.ClothingID" style="font-size:x-small" @(WardrobeLevel.ClothingID == ViewBag.WardrobeLine5ck ? "selected" : "")>@WardrobeLevel.ClothingDescription</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px; height: 5px">
+            <td style="margin:0px;padding:0px;height:5px">
+                <label id="lblList6" style="padding: 0px; font-size: xx-small;">List 6</label>
+            </td>
+        </tr>
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <select id="ddlList6" style="width: 200px; font-size: x-small; vertical-align: top;" onchange="SetWardrobe(6);">
+                    <option value="0" style="font-size:x-small">Please Choose ...</option>
+                    @if (ViewBag.WardrobeLine6 != null)
+                    {
+                        foreach (spGetUsersUsedMenuItems_Result WardrobeLevel in ViewBag.WardrobeLine6)
+                        {
+                            <option value="@WardrobeLevel.ClothingID" style="font-size:x-small;" @(WardrobeLevel.ClothingID == ViewBag.WardrobeLine6ck ? "selected" : "")>@WardrobeLevel.ClothingDescription</option>
+                        }
+                    }
+                </select>
+            </td>
+        </tr>
+    </table>
+    <br />
+</div>
+
+<!-- Creating Customer Categories-->
+<div id="dvCreateCategories" style="left:35px; top:300px;position:absolute;width:150px;text-align:center;">
+    <table style="margin: 0px;padding:0px; border-width: thick; border-color: black" border="0" cellpadding="0" cellspacing="0">
+        <tr style="margin: 0px; padding: 0px">
+            <td style="margin: 0px; padding: 0px; height: 5px; ">
+                <div id="dvLabelCustomCategory" style="position:relative;top:8px;">
+                    <label id="lblCustomerCategory" style="padding: 0px; font-size: xx-small;">Custom Category</label>
+                </div>
+
+                @using (Html.BeginForm("AddCategory", "Wardrobe", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <input id="inpCustomerCategory" name="inpCustomerCategory" style="padding: 0px;font-size: xx-small;" type="text" value="" size="37" />
+                    <br />
+                    <input type="image" src="~/Images/btnAddOutfitCustom_STD.png" alt="Create Custom Category" />
+                }
+            </td>
+        </tr>
+    </table>
+</div>
+
+<!-- Image List Header -->
+<div id="dvbxGarment" style="position:absolute;top:180px;left:250px;width:150px;height:295px;border-style:solid;border-width:thin;border-color:black;align-content:center;align-items:center;overflow:scroll">
+    <center>
+        @if (ViewBag.ClothingList != null)
+        {
+            foreach (spGet_FileList_Result GarmentWardrobe in ViewBag.ClothingList)
+            {
+                <img class="grmImages" width="50" height="50" ondblclick="LoadImage('@GarmentWardrobe.Filename', '@GarmentWardrobe.Name', '@GarmentWardrobe.Name', '@GarmentWardrobe.attachID');" title="@GarmentWardrobe.Name" alt="@GarmentWardrobe.Name" src='@GarmentWardrobe.Filename' />
+                <br /><br />
+            }
+        }
+    </center>
+</div>
+<div id="dvbtnGarment" style="position:absolute;top:165px;left:270px;height:25px;">
+    <input id="bnt1" type="button" value="Garment File(s)" />
+</div>
+
+<!-- Selected Image -->
+<div id="dvSelectedImage" style="position:absolute;top:180px;left:410px;height:250px">
+    <img alt="@ViewBag.SelectImageALT" id="imgSelectedImage" title="@ViewBag.SelectImageTitle" src='@ViewBag.SelectImageID' width="330" height="260" style="border:solid;border-color:black; border-width:2px;">
+</div>
+
+<!-- Image Tools -->
+<div id="dvImgTools" style="position: absolute; top: 445px; left: 410px; height: 70px; width: 333px; background-image: url('./Images/btnBackground.gif'); border-image-repeat: repeat; visibility:hidden ">
+    &nbsp;&nbsp;&nbsp;
+    <img id="btnDeleteModifications" alt="Delete Image Modifications" height="50" width="50" src="./Images/btnDelete.gif" />
+    &nbsp;&nbsp;&nbsp;
+    <img id="btnRotateLeft" alt="Rotate Image Left" height="50" width="50" src="./Images/btnRotateLeft.gif" />
+    &nbsp;&nbsp;&nbsp;
+    <img id="btnRotateRight" alt="Rotate Image Right" height="50" width="50" src="./Images/btnRotateRight.gif" />
+    &nbsp;&nbsp;&nbsp;
+    <img id="btnSaveDisk" alt="Save Image" height="50" width="50" src="./Images/btnSaveDisk.gif" />
+</div>
+
+<!-- Upload Image Section -->
+<div id="dvAddFile" style="position: absolute; top: 450px; left: 410px; padding:0px; margin:0px;">
+    @using (Html.BeginForm("Upload", "Wardrobe", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="FileUpload1" id="FileUpload1" size="18" />
+
+        <div id="dvAddFileSubmit" style="position:absolute; top:-5px; left:260px;">
+            <input type="submit" name="Submit" id="Submit" value="Upload" />
+        </div>
+        
+        <div id="dvAddNew" style="position:absolute;left:55px;top:40px">
+            <a href="" onclick="return SetNewImage();">
+                <img src="./Images/btnNew_White.jpg" />
+            </a>
+        </div>
+                
+        <div id="dvUploadError" style="position:absolute;left:25px;top:30px;width:200px;">
+            <font id="fntUploadError" style="color:red;">
+                File could not be uploaded!
+            </font>
+        </div>
+        
+        <div id="dvAddAdittionalInfo" style="position:absolute; top:25px; left:0px;">
+            <label>Item's Name</label>
+            <br />
+            <input type="text" alt="Item's Name" value="@ViewBag.SelectedTitle" name="inpItemName" id="inpItemName" />
+            <br />
+            <label>Item's WebPage</label>
+            <br />
+            <input type="text" alt="Item's WebPage" value="@ViewBag.SelectImageURL" size="35" name="inpItemWeb" id="inpItemWeb" />
+        </div>
+    }
+
+    <div id="dvDelete" style="position:absolute;left:205px;top:0px">
+        @using (Html.BeginForm("DeleteSelectedImage", "Wardrobe", FormMethod.Post))
+        {
+            <input type="hidden" name="SelectedImageID" id="WardrobeID" value="@ViewBag.SelectImageGUID" />
+            <input type="hidden" name="SelectedImageName" id="WardrobeName" value="@ViewBag.SelectImageALT" />
+            <input type="image" id="btnDelete" onclick="return DeleteImage();" width="69" height="45" src="~/Images/btnDeleteTweet.png" alt="Delete!" style="border-style: none;" />
+
+                <!-- DeleteImage(); -->
+        }
+    </div>
+
+</div>
+
+<!-- Share With Friends Section -->
+    <article id="UserFriends">
+        <div id="dvUserFriends" class="left" style="align-content:center;align-items:center;align-self:center; text-align:center;grid-column-align:center;position: absolute; top: 485px; left: 250px; padding:0px; margin:0px;border-color:black;border-style:solid;border-width:thin; width:490px;">
+            <center><label style="font-weight:bolder;font-size:xx-large;">Friends</label></center>
+            
+            <a href='' onclick='FriendShare(1); return false;'>Select All</a> / <a href='' onclick='FriendShare(2); return false;'>UnSelect All</a>
+            
+            @if (Model.Friends != null && Model.Friends.Data != null && Model.Friends.Data.Count > 0)
+            {
+                using (Html.BeginForm("UpdateFriends", "Wardrobe"))
+                {
+                    foreach (var myFriend in @Model.Friends.Data)
+                    {
+                        ViewBag.ShareFG = false;
+
+                         if (ViewBag.ShareFriends != null)
+                         { 
+                            foreach (var myShareFriend in ViewBag.ShareFriends)
+                            {
+                                if (@myFriend.Id.ToString() == myShareFriend.shareFriendID)
+                                {
+                                    ViewBag.ShareFG = true;
+                                }    
+                            }
+                         }
+                        <table>
+                            <tr>
+                                <td align="center">
+                                    <center>
+                                        <div class="photoTile">
+                                            <label>@myFriend.Name</label>
+                                            @if (myFriend.Picture != null && myFriend.Picture.Data != null)
+                                            {
+                                                <img src="@myFriend.Picture.Data.Url" title="@myFriend.Id" />
+                                            }
+                                        </div>
+                                    </center>
+                                </td>
+                                <td>
+                                    @if (ViewBag.SelectImageID != "./Images/No_Garment.jpg")
+                                    {
+                                        if (ViewBag.ShareFG)
+                                        {
+                                            @Html.CheckBox("ShareFriends", true, new { value = @myFriend.Id })
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBox("ShareFriends", false, new { value = @myFriend.Id })
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        </table>
+                    }
+                    <input type="hidden" name="AttachedID" value="@ViewBag.SelectImageGUID" />
+                    <input type="image" src="~/Images/btnUpdate.jpg" alt="Save data" />
+
+                    <div style="position: absolute; top: 20px; left: 400px; padding:0px; margin:0px;">
+                        <input type="image" src="~/Images/btnUpdate.jpg" alt="Save data" />
+                    </div>    
+                }
+            }
+            else
+            {
+                <p>No friends found.</p>
+            }
+        </div>
+    </article>
+
+<script>
+    var myALT;
+
+    $('.grmImages').each(function (i, obj)
+    {
+        myALT = $(this).attr('alt');
+        myALT = $('<div/>').html(myALT).text();
+        $(this).attr('alt', myALT);
+        $(this).attr('title', myALT);
+    });
+
+</script>
+
+<div class="hidden">
+    <script type="text/javascript">
+		<!--//--><![CDATA[//><!--
+            var Selectimages = new Array();
+            function preSelectload() {
+                for (i = 0; i < preSelectload.arguments.length; i++) {
+                    Selectimages[i] = new Image()
+                    Selectimages[i].src = preSelectload.arguments[i]
+                }
+			}
+
+			preSelectload(
+				"http://www.ucloset.net/@ViewBag.SelectImageID"
+			);
+
+		//--><!]]>
+    </script>
+</div>
+
+<div id="dlgSelectedImage" title="Selected Image">
+    <p>
+        <img id="imgDLGSelectedImage" alt='Selected Image' width="50" height="50" src="~/Images/Mannequin_Woman_Feet_trim.jpg" />
+        <br />
+        Item: <span id="spanSelectedImage"></span>
+        <br />
+    <p id="pSelectedImage">
+        Buy: <a id="lnkSelectedImageBuyMe" href="" target="_blank">Click Here</a>
+    </p>
+    </p>
+</div>

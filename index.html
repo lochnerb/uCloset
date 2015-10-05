@@ -1,0 +1,214 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Home Page - My ASP.NET MVC Application</title>
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/site.css" rel="stylesheet" />
+
+    <script src="/Scripts/modernizr-2.6.2.js"></script>
+
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/jquery-1.4.4.js"></script>
+    <script src="/Scripts/jquery-1.8.2.js"></script>
+    <script src="/Scripts/jquery-2.0.3.js"></script>
+    <script src="/Scripts/jquery-ui-1.10.3.js"></script>
+    <script src="/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="/Scripts/jquery.validate.js"></script>
+    <script src="/Scripts/jquery.hoverIntent.js"></script>
+    <script src="/Scripts/jquery.event.drag.js"></script>
+    <script src="/Scripts/autoscroll.js"></script>
+    <script src="/Scripts/jquery.cookie.js"></script>
+
+    <link href="/Content/themes/base/jquery.ui.core.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.resizable.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.selectable.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.accordion.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.autocomplete.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.button.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.dialog.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.slider.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.tabs.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.progressbar.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.theme.css" rel="stylesheet" />
+    <link href="/Content/main.css" rel="stylesheet" />
+
+</head>
+<body id="bdyMain">
+    <div id="dvPage" style="width: 1000px; height: 610px; border: hidden; padding: 0; display: table; padding: 0px;">
+        <div id="dvHeaderTopRow" style="display:table-row; border-style: hidden; border-width: 0px; padding: 0; height: 25px; background-color: #8e8787; ">
+            <div id="dvLeftTopHeader" style="display:block; border-style: hidden; border-width: 0px; padding: 0; background-image: url('./Images/leftHeaderCorner.gif'); background-color: #8e8787; height: 25px; width: 35px; display: table-cell; background-repeat: repeat; margin: 0px;"></div>
+            <div id="dvMiddleTopHeader" style="display: block; border-style: hidden; border-width: 0px; padding: 0; background-image: url('./Images/MiddleHeader.gif'); background-color: #8e8787; height: 25px; width: 708px; display: table-cell; background-repeat: repeat; margin: 0px;"></div>
+            <div id="dvMiddleRightTopHeader" style="display: block; border-style: hidden; border-width: 0px; padding: 0; background-image: url('./Images/MiddleHeader.gif'); background-color: #8e8787; height: 25px; width: 22px; display: table-cell; background-repeat: repeat; margin: 0px;"></div>
+            <div id="dvRightTopHeader" style="display: block; border-style: hidden; border-width: 0px; padding: 0; background-image: url('./Images/RightHeaderCorner.gif'); background-color: #8e8787; height: 25px; width: 35px; display: table-cell; background-repeat: repeat; margin: 0px;"></div>
+        </div>
+
+        <div id="dvHeaderBar" style="z-index:1004;display: table-row; height: 50px; width: 713px; background-color: #8e8787;">
+            <div id="dvLeftHeaderBar" style="display:table-column;background-image: url(./Images/LeftHeaderBar.gif); background-color: #8e8787; height: 30px; width: 35px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+            <div id="dvBackground" style="z-index: 1004; display: table-cell; background-image: url(./Images/HeaderBackground.gif); background-color: #8e8787; height: 30px; width: 708px; display: table-cell; background-repeat: repeat; padding: 0px;">
+                <img src="Images/Hangers.png" height="129" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img style="z-index:1004;" src="Images/uCloset_Title.gif" />
+            </div>
+            <div id="dvRightHeaderIMG" style="display: table-column; background-image: url(./Images/grayFiller.jpg); background-color: #8e8787; height: 30px; width: 222px; display: table-cell; padding: 0px; background-repeat: repeat; ">
+                <img src="Images/Mannequin_Stand.jpg" />
+            </div>
+            <div id="dvRightHeaderBar" style="display: table-column; background-image: url(./Images/RightHeaderBar.gif); background-color: #8e8787; height: 30px; width: 35px; display: table-cell; background-repeat: repeat; padding: 0px; "></div>
+        </div>
+
+        <div class="navbar navbar-inverse navbar-fixed-top" style="z-index:999;vertical-align:top;border-style:hidden;border-color:black;border-width:thin;width: 475px; position: absolute; top:95px; height: 10px; left: 265px; text-align: right; background-color: #8e8787; text-decoration-color: white;">
+            <ul class="nav navbar-nav" style="z-index: 999; text-align: right; align-content: flex-end; border-style: hidden; align-items: flex-end; text-align-last: right; text-decoration-color: white; text-emphasis-color: white;">
+                <li style="z-index: 999;"><a id=" a1" href="/"><asp:label id="lblHome" style="border:hidden;" forecolor="White">Home</asp:label></a></li>
+                <li style="z-index: 999;"><a href="/About">About</a></li>
+                <li style="z-index: 999;"><a href="/Wardrobe">Wardrobe</a></li>
+                <li style="z-index: 999;"><a href="/Outfit">Outfit</a></li>
+                <li style="z-index: 999;"><a href="/FAQ">F.A.Q.</a></li>
+                <li style="z-index: 999;"><a href="/Contact">Contact</a></li>
+            </ul>
+        </div>
+
+        <div id="dvBody" style="display: table-row; height: 25px; width: 813px; background-color: #8e8787;">
+            <div id="dvBodyLeftBorder" style="background-image: url(./Images/LeftBodyBar.gif); background-color: #8e8787; height: 438px; width: 35px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+            <div id="dvBodyContent" style="background-image: url(./Images/BodyFillerWhite.gif); background-color: #8e8787; height: 438px; width: 555px; display: table-cell; background-repeat: repeat; padding: 0px;">
+
+
+
+                <script src="/Scripts/jquery-1.10.2.js"></script>
+                <script src="/Scripts/jquery-1.4.4.js"></script>
+                <script src="/Scripts/jquery-1.8.2.js"></script>
+                <script src="/Scripts/jquery-2.0.3.js"></script>
+                <script src="/Scripts/jquery-ui-1.10.3.js"></script>
+                <script src="/Scripts/jquery.unobtrusive-ajax.js"></script>
+                <script src="/Scripts/jquery.validate.js"></script>
+                <script src="/Scripts/jquery.hoverIntent.js"></script>
+                <script src="/Scripts/jquery.event.drag.js"></script>
+                <script src="/Scripts/autoscroll.js"></script>
+                <script src="/Scripts/jquery.cookie.js"></script>
+
+
+                <script>
+                    $(document).ready
+                    (
+                        function () {
+                            //////////////////////////////////////
+                            // Required to close body gap - BEGIN
+                            //////////////////////////////////////
+                            var bdyHght = $('#dvBodyContent').height();
+                            $('#dvBodyContent').height(bdyHght + 10);
+                            //////////////////////////////////////
+                            // Required to close body gap - END
+                            //////////////////////////////////////
+
+                            //$.cookie("uClosetUserID", '38D0319B-DCD1-444E-AA09-3735FD0CA6DD');
+                            $.cookie("uClosetUserID", '');
+
+                            ClearOutfitCK();
+                            ClearWardrobeCK();
+                            ClearSelectionTxT();
+                        }
+                    );
+
+
+                    function ClearWardrobeCK() {
+                        $.cookie("bxClothingtypeID", null);
+
+                        $.cookie("WardrobeLVL0", null);
+                        $.cookie('WardrobeLVL1', null);
+                        $.cookie('WardrobeLVL2', null);
+                        $.cookie('WardrobeLVL3', null);
+                        $.cookie('WardrobeLVL4', null);
+                        $.cookie('WardrobeLVL5', null);
+                        $.cookie('WardrobeLVL6', null);
+                    }
+
+                    function ClearOutfitCK() {
+                        ClearWardrobeCK();
+
+                        $.cookie("bxOutFitCategoryID", null);
+                        $.cookie("GenderID", null);
+                        $.cookie('ckOutfitID', null);
+                        $.cookie('ckSaveOutfit', null);
+                        $.cookie('ckOutfitLoadID', null);
+                        $.cookie('bxClothingtypeID', null);
+                        $.cookie('ckSelectImageID', null);
+                        $.cookie('ckSelectImageTitle', null);
+                        $.cookie('ckSelectImageALT', null);
+                        $.cookie('ckSelectImageGUID', null);
+                        $.cookie('ckMannequinTop', null);
+                        $.cookie('ckMannequinLegs', null);
+                        $.cookie('ckMannequinFeet', null);
+                        $.cookie('ckMannequinHand', null);
+                        $.cookie('ckMannequinFoot', null);
+                        $.cookie('ckOutfitLBL', null);
+
+                        $.cookie('OutfitLVL1', null);
+                        $.cookie('OutfitLVL2', null);
+                        $.cookie('OutfitLVL3', null);
+                        $.cookie('OutfitLVL4', null);
+                        $.cookie('OutfitLVL5', null);
+                        $.cookie('OutfitLVL6', null);
+                    }
+
+                    function ClearSelectionTxT() {
+                        $.cookie('WardrobeLVL0TXT', null);
+                        $.cookie('WardrobeLVL1TXT', null);
+                        $.cookie('WardrobeLVL2TXT', null);
+                        $.cookie('WardrobeLVL3TXT', null);
+                        $.cookie('WardrobeLVL4TXT', null);
+                        $.cookie('WardrobeLVL5TXT', null);
+                        $.cookie('WardrobeLVL6TXT', null);
+                    }
+
+                </script>
+
+                <div id="dvTest" style="position:absolute;left:75px;width:650px;">
+                    <h3>
+                        Welcome to <font color="red">u</font>Closet.net-an innovative way to organize your closet and share fashion with friends!
+                    </h3>
+                </div>
+
+                <br /><br /><br />
+                <div id="dv3Steps" style="position:absolute;Left:270px;">
+                    <center>
+                        <h3>Just 3 simple steps:</h3>
+                    </center>
+                    1)	take pictures of your clothes<br />
+                    2)	upload your pictures to uCloset<br />
+                    3)	create outfits and share with friends!<br />
+                </div>
+                <br /><br /><br /><br /><br />
+                <center>
+                    <h2>
+                        You’ll never lose track of another piece of clothing in your closet again!
+                    </h2>
+                </center>
+            </div>
+            <div id="dvBodyMenu" style="background-image: url(./Images/RightMenuFiller.gif); background-color: #8e8787; height: 438px; width: 188px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+            <div id="dvBodyRight" style="background-image: url(./Images/RightBodyBar.gif); background-color: #8e8787; height: 438px; width: 35px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+        </div>
+
+        <div id="dvBottom" style="display: table-row; height: 15px; background-color: #8e8787;">
+            <div id="dvBottomLeftCorner" style="background-image: url(./Images/LeftBottomCorner.gif); background-color: #8e8787; height: 15px; width: 35px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+            <div id="dvBottomFiller" style="background-image: url(./Images/LeftBottomMiddleFiller.gif); background-color: #8e8787; height: 15px; width: 555px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+            <div id="dvBottomMiddle" style="background-image: url(./Images/PageBottomRighFiller.gif); background-color: #8e8787; height: 15px; width: 188px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+            <div id="dvBottomRightCorner" style="background-image: url(./Images/PageBottomRightCorner.gif); background-color: #8e8787; height: 15px; width: 35px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+        </div>
+    </div>
+
+    <script src="/Scripts/jquery-1.10.2.js"></script>
+    <script src="/Scripts/jquery-1.4.4.js"></script>
+    <script src="/Scripts/jquery-1.8.2.js"></script>
+    <script src="/Scripts/jquery-2.0.3.js"></script>
+    <script src="/Scripts/jquery-ui-1.10.3.js"></script>
+    <script src="/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="/Scripts/jquery.validate.js"></script>
+    <script src="/Scripts/jquery.hoverIntent.js"></script>
+    <script src="/Scripts/jquery.event.drag.js"></script>
+    <script src="/Scripts/autoscroll.js"></script>
+    <script src="/Scripts/jquery.cookie.js"></script>
+
+
+</body>
+</html>

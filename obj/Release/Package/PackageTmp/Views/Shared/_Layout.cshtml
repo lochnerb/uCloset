@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - My ASP.NET MVC Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/themes/base/css")
+
+    <link href="/Content/bootstrap.css" rel="stylesheet" />
+    <link href="/Content/site.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.core.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.resizable.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.selectable.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.accordion.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.autocomplete.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.button.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.dialog.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.slider.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.tabs.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.datepicker.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.progressbar.css" rel="stylesheet" />
+    <link href="/Content/themes/base/jquery.ui.theme.css" rel="stylesheet" />
+    <link href="/Content/main.css" rel="stylesheet" />
+
+</head>
+<body id="bdyMain">
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '@Microsoft.AspNet.Mvc.Facebook.GlobalFacebookConfiguration.Configuration.AppId', // App ID
+                status: true, // check login status
+                cookie: true, // enable cookies to allow the server to access the session
+                xfbml: true  // parse XFBML
+            });
+        };
+
+        // Load the SDK Asynchronously
+        (function (d) {
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) { return; }
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document));
+    </script>
+
+    <div id="dvPage" style="width: 1000px; height: 610px; border: hidden; padding: 0; display: table; padding: 0px;">
+        <div id="dvHeaderTopRow" style="display:table-row; border-style: hidden; border-width: 0px; padding: 0; height: 25px; background-color: #8e8787; ">
+            <div id="dvLeftTopHeader" style="display:block; border-style: hidden; border-width: 0px; padding: 0; background-image: url('./Images/leftHeaderCorner.gif'); background-color: #8e8787; height: 25px; width: 35px; display: table-cell; background-repeat: repeat; margin: 0px;" ></div>
+            <div id="dvMiddleTopHeader" style="display: block; border-style: hidden; border-width: 0px; padding: 0; background-image: url('./Images/MiddleHeader.gif'); background-color: #8e8787; height: 25px; width: 708px; display: table-cell; background-repeat: repeat; margin: 0px;" ></div>
+            <div id="dvMiddleRightTopHeader" style="display: block; border-style: hidden; border-width: 0px; padding: 0; background-image: url('./Images/MiddleHeader.gif'); background-color: #8e8787; height: 25px; width: 22px; display: table-cell; background-repeat: repeat; margin: 0px;" ></div>
+            <div id="dvRightTopHeader" style="display: block; border-style: hidden; border-width: 0px; padding: 0; background-image: url('./Images/RightHeaderCorner.gif'); background-color: #8e8787; height: 25px; width: 35px; display: table-cell; background-repeat: repeat; margin: 0px;" ></div>
+        </div>
+
+        <div id="dvHeaderBar" style="z-index:1004;display: table-row; height: 50px; width: 713px; background-color: #8e8787;">
+            <div id="dvLeftHeaderBar" style="display:table-column;background-image: url(./Images/LeftHeaderBar.gif); background-color: #8e8787; height: 30px; width: 35px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+            <div id="dvBackground" style="z-index: 1004; display: table-cell; background-image: url(./Images/HeaderBackground.gif); background-color: #8e8787; height: 30px; width: 708px; display: table-cell; background-repeat: repeat; padding: 0px;">
+                <img src="Images/Hangers.png" height="129" />
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <img style="z-index:1004;" src="Images/uCloset_Title_1140823.gif" />
+            </div>
+            <div id="dvRightHeaderIMG" style="display: table-column; background-image: url(./Images/grayFiller.jpg); background-color: #8e8787; height: 30px; width: 222px; display: table-cell; padding: 0px; background-repeat: repeat; ">
+                <img src="Images/Mannequin_Stand.jpg" />
+            </div>
+            <div id="dvRightHeaderBar" style="display: table-column; background-image: url(./Images/RightHeaderBar.gif); background-color: #8e8787; height: 30px; width: 35px; display: table-cell; background-repeat: repeat; padding: 0px; "></div>
+        </div>
+
+        <div class="navbar navbar-inverse navbar-fixed-top" style="z-index:999;vertical-align:top;border-style:hidden;border-color:black;border-width:thin;width: 475px; position: absolute; top:95px; height: 10px; left: 265px; text-align: right; background-color: #8e8787; text-decoration-color: white;">
+            <ul class="nav navbar-nav" style="z-index: 999; text-align: right; align-content: flex-end; border-style: hidden; align-items: flex-end; text-align-last: right; text-decoration-color: black; text-emphasis-color: black;">
+                <!--<li style="z-index: 999;"><a id=" a1" href="~/"><asp:label id="lblHome" style="border:hidden;" forecolor="White">Home</asp:label></a></li>-->
+                <li style="z-index: 999;">@Html.ActionLink("Home", "Index", "Landing")</li>
+                <!-- <li style="z-index: 999;">@Html.ActionLink("About", "Index", "About")</li> -->
+                <li style="z-index: 999;">@Html.ActionLink("Wardrobe", "Index", "Wardrobe")</li>
+                <li style="z-index: 999;">@Html.ActionLink("Outfit", "Index", "Outfit")</li>
+                <li style="z-index: 999;">@Html.ActionLink("F.A.Q.", "Index", "FAQ")</li>
+                <li style="z-index: 999;">@Html.ActionLink("Merchant", "Index", "Merchant")</li>
+                <li style="z-index: 999;">@Html.ActionLink("Contact", "Index", "Contact")</li>
+            </ul>
+        </div>
+
+        <div id="dvBody" style="display: table-row; height: 25px; width: 813px; background-color: #8e8787;">
+            <div id="dvBodyLeftBorder" style="background-image: url(./Images/LeftBodyBar.gif); background-color: #8e8787; height: 438px; width: 35px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+            <div id="dvBodyContent" style="background-image: url(./Images/BodyFillerWhite.gif); background-color: #8e8787; height: 438px; width: 555px; display: table-cell; background-repeat: repeat; padding: 0px;">
+                @RenderBody()
+            </div>
+            <div id="dvBodyMenu" style="background-image: url(./Images/RightMenuFiller.gif); background-color: #8e8787; height: 438px; width: 188px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+            <div id="dvBodyRight" style="background-image: url(./Images/RightBodyBar.gif); background-color: #8e8787; height: 438px; width: 35px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+        </div>
+
+        <div id="dvBottom" style="display: table-row; height: 15px; background-color: #8e8787;">
+            <div id="dvBottomLeftCorner" style="background-image: url(./Images/LeftBottomCorner.gif); background-color: #8e8787; height: 15px; width: 35px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+            <div id="dvBottomFiller" style="background-image: url(./Images/LeftBottomMiddleFiller.gif); background-color: #8e8787; height: 15px; width: 555px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+            <div id="dvBottomMiddle" style="background-image: url(./Images/PageBottomRighFiller.gif); background-color: #8e8787; height: 15px; width: 188px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+            <div id="dvBottomRightCorner" style="background-image: url(./Images/PageBottomRightCorner.gif); background-color: #8e8787; height: 15px; width: 35px; display: table-cell; background-repeat: repeat; padding: 0px;"></div>
+        </div>
+    </div>
+
+    <div id="dvVigiLink" style="position:relative; top:-50px; left:35px;">
+        <a href="https://www.viglink.com/legal/disclosures/users?vgtag=badge">
+            <img alt="VigLink badge" height="31" src="//www.viglink.com/images/badges/88x31.png" title="Links monetized by VigLink" width="88" />
+        </a>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+        var vglnk = {
+            api_url: '//api.viglink.com/api',
+            key: '284d840e8a266804349aef282f0ff6ae'
+        };
+
+        (function (d, t) {
+            var s = d.createElement(t); s.type = 'text/javascript'; s.async = true;
+            s.src = ('https:' == document.location.protocol ? vglnk.api_url :
+                     '//cdn.viglink.com/api') + '/vglnk.js';
+            var r = d.getElementsByTagName(t)[0]; r.parentNode.insertBefore(s, r);
+        }(document, 'script'));
+    </script>
+</body>
+</html>
